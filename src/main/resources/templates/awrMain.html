@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        td.adcImg{
+            width: 40%;
+            word-break: break-all;
+        }
+        td.supImg{
+            width: 40%;
+            word-break: break-all;
+        }
+        td.adc{
+            width: 5%;
+            font-size: 15px;
+            font-weight: bold;
+            vertical-align: top;
+            text-align: right;
+            word-break: break-all;
+
+        }
+        td.winrate{
+            font-size: 32px;
+            font-weight: bold;
+            text-align: center;
+
+        }
+        td.sup{
+            width: 5%;
+            font-size: 15px;
+            font-weight: bold;
+            vertical-align: bottom;
+            text-align: left;
+            word-break: break-all;
+
+        }
+        tr{
+            border: black;
+            outline: thin solid;
+        }
+
+
+        img{
+            width: 100%;
+        }
+
+    </style>
+
+</head>
+<body>
+<div align="center">
+    <table width="35%">
+        <!--
+       <thead>
+       <tr>
+
+           <th>원딜그림</th>
+           <th>원딜</th>
+           <th>승률</th>
+           <th>서폿</th>
+           <th>서폿그림</th>
+
+       </tr>
+       </thead>
+       -->
+        <tbody>
+
+        <tr th:each="awrL:${allWinrateList}">
+            <!--<td th:text="${awrL.whole}"></td> //총전적
+            <td th:text="${awrL.win}"></td> //승 수
+            <td th:text="${awrL.lose}"></td>//패 수-->
+            <td class="adcImg"><img th:src="@{/centered/}+${awrL.engAdc}+@{_0.jpg}" th:height="120px"></td>
+            <td class="adc" th:text="${awrL.adc}">원딜</td>
+            <td class="winrate" th:text="${awrL.win_rate}+'%'">승률</td>
+            <td class="sup" th:text="${awrL.sup}">서폿</td>
+            <td class="supImg"><img th:src="@{/centered/}+${awrL.engSup}+@{_0.jpg}" th:height="120px"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
