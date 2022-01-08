@@ -29,4 +29,10 @@ public class FreeBoard {
     private String writer;
     private Date regDate;
     private int viewCnt;
+
+    public FreeBoard(String title, String content,String writer){
+        this.title = title;
+        this.content = content;
+        this.writer = writer;
+    }
 }
