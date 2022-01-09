@@ -5,6 +5,10 @@
     <title>Title</title>
 </head>
 <body>
+<div>
+    <a th:href="@{|/free_board/${freeBoard.bno}/update|}">글 수정</a>
+    <a th:href="@{/free_board/list}">글 목록</a>
+</div>
 <table>
     <thead>
     <tr>
@@ -27,5 +31,9 @@
     </tr>
     </tbody>
 </table>
+<div>
+    <a th:href="@{|/free_board/${freeBoard.bno}/update|}">글 수정</a>
+    <a th:href="@{/free_board/list}">글 목록</a>
+</div>
 </body>
 </html>

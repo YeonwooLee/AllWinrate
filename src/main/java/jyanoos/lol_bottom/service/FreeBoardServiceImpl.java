@@ -43,6 +43,17 @@ public class FreeBoardServiceImpl implements FreeBoardService {
     }
 
 
+    //글번호로 제목, 내용, 작성자 수정, 성공시 수정된 글 번호, 실패시 0 리턴
+    @Override
+    public int updateFreeBoard(int bno, String title, String content, String writer) {
+        //번호가 n번인 글의 제목 저자 내용을 title, content, writer로 수정
+        boolean updateBno = freeBoardMapper.freeBoardUpdate(title,content,writer,bno);
+        if(updateBno) return bno;
+        return 0;
+        //
+    }
+
+
     //tblExist("lol_data","lol_red");
     public int isTblExist(String dBName, String tableName) {
         int exist = freeBoardMapper.tblExist(dBName,tableName);

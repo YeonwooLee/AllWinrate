@@ -21,20 +21,21 @@ public class FreeBoardController {
         this.freeBoardService = freeBoardService;
     }
 
+    //게시글 리스트
     @RequestMapping("/list")
     public String freeBoardList(Model model){
         List<FreeBoard> freeBoardList = freeBoardService.freeBoardList();
-        model.addAttribute("freeBoardList",freeBoardList);
+            model.addAttribute("freeBoardList",freeBoardList);
         return "freeBoard";
     }
 
-
+    //get 요청시 글 등록 폼
     @GetMapping("/write")
     public String writePage(){
         return "write";
     }
     
-    //글 등록
+    //post 요청시 글 등록 후 글 상세 조회로 redirect
     @PostMapping("/write")
     public String writeFreeBoard(@ModelAttribute("freeBoard")FreeBoard freeBoard, RedirectAttributes redirectAttributes){
         int bno = freeBoardService.writeFreeBoard(freeBoard); //저장성공시 글번호, 실패시 0 리턴
@@ -51,4 +52,23 @@ public class FreeBoardController {
         return "freeBoardArticle";
 
     }
+
+
+    //{bno} 글 수정창으로 이동
+    @GetMapping("/{bno}/update")
+    public String updateFreeBoardForm(@PathVariable("bno") int bno, Model model){
+        FreeBoard freeBoard = freeBoardService.findByBno(bno);
+        model.addAttribute("freeBoard",freeBoard);
+        return "updateFreeBoard";
+    }
+
+    @PostMapping("/{bno}/update")
+    public String updateFreeBoard(@ModelAttribute("freeBoard") FreeBoard freeBoard, RedirectAttributes redirectAttributes){
+        int bno = freeBoardService.updateFreeBoard(freeBoard.getBno(), freeBoard.getTitle(), freeBoard.getContent(), freeBoard.getWriter());
+        redirectAttributes.addAttribute("bno",bno);
+        return "redirect:/free_board/{bno}";
+
+    }
+
+
 }

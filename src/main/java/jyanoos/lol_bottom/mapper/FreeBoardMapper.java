@@ -2,10 +2,7 @@ package jyanoos.lol_bottom.mapper;
 
 
 import jyanoos.lol_bottom.domain.FreeBoard;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -24,7 +21,7 @@ public interface FreeBoardMapper {
             "AS flag")
     int tblExist(@Param("DBName") String DBName, @Param("tableName") String tableName);
 
-    //최신글 번호 조회
+    //가장 최근에 등록된 글 번호 조회
     @Select("SELECT MAX(bno) FROM tbl_free_board")
     int getMaxBno();
 
@@ -47,4 +44,14 @@ public interface FreeBoardMapper {
 
 
 
+
+    @Update("UPDATE tbl_free_board\n" +
+            "SET\n" +
+            "title = #{titleSql}, content=#{contentSql}, writer=#{writerSql}\n" +
+            "WHERE\n" +
+            "bno=${bnoSql}")
+    boolean freeBoardUpdate(@Param("titleSql") String title,
+                                 @Param("contentSql") String content,
+                                 @Param("writerSql") String writer,
+                                 @Param("bnoSql") int bno);
 }

@@ -1,5 +1,14 @@
 # BottomOfLegend - AllWinrate(총전적 관련)
 
+일지
+
+#### 2021/01/09
+
+> freeBoard 수정
+>
+> 1. freeBoard.html(글 목록)에 글쓰기 버튼 추가
+> 2. freeBoardArticle.html(글 상세)에 글 목록으로 가기 버튼 추가
+
 
 
 ## CLASS 설명
@@ -22,7 +31,7 @@
 >
 > 
 
-
+​	
 
 #### FreeBoardController.class
 
@@ -30,9 +39,10 @@
 >
 > 기본 requestmapping: /free_board/*
 >
-> | urlpattern | 기능             | return(String->html) |
-> | ---------- | ---------------- | -------------------- |
-> | /list      | 게시글 전체 조회 | "freeBoard"          |
+> | urlpattern         | 기능             | Model                                 | return(String->html) |
+> | ------------------ | ---------------- | ------------------------------------- | -------------------- |
+> | /list(Get)         | 게시글 전체 조회 | AllWinrateList<AllWinrate>            | "freeBoard"          |
+> | /{bno}/update(Get) | 수정창으로 이동  | "freeBoard" bno로 찾은 FreeBoard 객체 | "updateFreeBoard"    |
 >
 > 
 
@@ -204,3 +214,46 @@
 #### AllWinrateConfig.class
 
 > Spring bean 관리
+
+
+
+
+
+
+
+### VIew
+
+---
+
+| filename              | 역할         | 주요 모델 및 역할                | 주요태그 및 역할 |
+| --------------------- | ------------ | -------------------------------- | ---------------- |
+| freeBoard.html        | 자게 글목록  | allWinrateList(List<AllWinrate>) |                  |
+| freeBoardArticle.html | 자게 글 상세 |                                  |                  |
+| updateFreeBoard       | 자게 글 수정 | freeBoard - 수정하고싶은 글 객체 |                  |
+
+
+
+### ERROR
+
+---
+
+Mapper 테스트 중에 table not found(Cause: org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "TBL_FREE_BOARD" not found; SQL statement:)
+
+junit5로 mybatis mariadb 테스트 중에 반복적으로 발생함.
+
+원인:
+
+
+
+
+
+sql Mapper 사용시 sql문에 ''안들어가는 오류
+
+ex) select * from table where col1=**col1value** << 이런식으로  sql문에 따옴표 없이 들어감
+
+원인: Mapper에서 Annotation에 parameter 넣을 때 #{}을 써야하는데 ${}써서
+
+(${}는 따옴표 처리 직접 해줘야함)
+
+
+

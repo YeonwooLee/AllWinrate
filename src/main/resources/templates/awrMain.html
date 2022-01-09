@@ -36,7 +36,7 @@
             word-break: break-all;
 
         }
-        tr{
+        tr.tempTr{
             border: black;
             outline: thin solid;
         }
@@ -50,7 +50,29 @@
 
 </head>
 <body>
+<div align="right">
+<table>
+    <thead>
+    <tr class="tempTr">
+        <th>로그인</th>
+        <th>회원가입</th>
+    </tr>
+    </thead>
+</table>
+</div>
 <div align="center">
+<table border="1">
+    <thead>
+    <tr class="tempTr">
+        <th>챔피언추천</th>
+        <th>메인으로</th>
+        <th>자유게시판</th>
+    </tr>
+    </thead>
+</table>
+</div>
+<div align="center">
+
     <table width="35%">
         <!--
        <thead>
@@ -67,7 +89,7 @@
        -->
         <tbody>
 
-        <tr th:each="awrL:${allWinrateList}">
+        <tr th:each="awrL:${allWinrateList}" class="tempTr">
             <!--<td th:text="${awrL.whole}"></td> //총전적
             <td th:text="${awrL.win}"></td> //승 수
             <td th:text="${awrL.lose}"></td>//패 수-->

@@ -5,6 +5,9 @@
     <title>Title</title>
 </head>
 <body>
+<div>
+    <a th:href="@{/free_board/write}" th:text="글쓰기"></a>
+</div>
 <table border="1">
     <thead>
         <tr>
@@ -19,13 +22,15 @@
     <tbody>
         <tr th:each="frbd:${freeBoardList}">
             <td th:text="${frbd.bno}"></td>
-            <td th:text="${frbd.title}"></td>
+            <td><a th:text="${frbd.title}" th:href="@{|/free_board/${frbd.bno}|}"></a> </td>
             <td th:text="${frbd.regDate}"></td>
             <td th:text="${frbd.writer}"></td>
             <td th:text="${frbd.viewCnt}"></td>
         </tr>
     </tbody>
 </table>
-
+<div>
+    <a th:href="@{/free_board/write}" th:text="글쓰기"></a>
+</div>
 </body>
 </html>
