@@ -55,6 +55,7 @@ public class FreeBoardServiceImpl implements FreeBoardService {
 
 
     //tblExist("lol_data","lol_red");
+    @Override
     public int isTblExist(String dBName, String tableName) {
         int exist = freeBoardMapper.tblExist(dBName,tableName);
         log.info("{} is {}",tableName, exist);

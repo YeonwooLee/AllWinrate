@@ -39,10 +39,11 @@
 >
 > 기본 requestmapping: /free_board/*
 >
-> | urlpattern         | 기능             | Model                                 | return(String->html) |
-> | ------------------ | ---------------- | ------------------------------------- | -------------------- |
-> | /list(Get)         | 게시글 전체 조회 | AllWinrateList<AllWinrate>            | "freeBoard"          |
-> | /{bno}/update(Get) | 수정창으로 이동  | "freeBoard" bno로 찾은 FreeBoard 객체 | "updateFreeBoard"    |
+> | urlpattern          | 기능                                                         | Model                                      | return                     |
+> | ------------------- | ------------------------------------------------------------ | ------------------------------------------ | -------------------------- |
+> | /list(Get)          | 게시글 전체 조회                                             | AllWinrateList<AllWinrate>                 | "freeBoard"                |
+> | /{bno}/update(Get)  | 수정창으로 이동                                              | "freeBoard" bno로 찾은 FreeBoard 객체      | "updateFreeBoard"          |
+> | /{bno}/update(Post) | updateFreeBoard의 form에서 FreeBoard 필드 받아오고 해당 정보로 글 수정 후 글 상세로 이동 | redirectAttributes.addAttribute("bno",bno) | redirect:/free_board/{bno} |
 >
 > 
 
@@ -141,7 +142,7 @@
 
 
 
-### 매퍼
+### Mapper
 
 ---
 
@@ -157,10 +158,14 @@
 
 #### FreeBoardMapper.interface
 
->| 메소드                                                       | 기능                 | sql                          | 반환형               |
->| ------------------------------------------------------------ | -------------------- | ---------------------------- | -------------------- |
->| freeBoardList()                                              | 모든 게시글 리스트   | select * from tbl_free_board | List<FreeBoard>      |
->| tblExist(@Param("DBName") String DBName, @Param("tableName") String tableName) | db에 table 있나 확인 |                              | int(있으면1 없으면0) |
+>| 메소드                                                       | 기능                                                  | 반환형                                           | 비고                                |
+>| ------------------------------------------------------------ | ----------------------------------------------------- | ------------------------------------------------ | ----------------------------------- |
+>| freeBoardList()                                              | 모든 게시글 리스트 작성                               | List<FreeBoard>                                  |                                     |
+>| tblExist(@Param("DBName") String DBName, @Param("tableName") String tableName) | db(String DBName)에 table(String tableName) 있나 확인 | int(있으면1 없으면0)                             |                                     |
+>| getMaxBno()                                                  | 최신글 번호 조회                                      | int                                              | 글 없는 경우는 고려하지 않았음      |
+>| findByBno(@Param("bno") int bno)                             | 글번호(int bno)로 글 객체 조회                        | FreeBoard                                        |                                     |
+>| save(@Param("title") String title,          @Param("content") String content,          @Param("writer") String writer) | tbl_free_board에 글 저장                              | int(저장된 행 수만큼 리턴한다는데 1만 리턴될듯?) | 글번호, 작성시간, 조회수는 자동생성 |
+>| freeBoardUpdate(@Param("titleSql") String title,                              @Param("contentSql") String content,                              @Param("writerSql") String writer,                              @Param("bnoSql") int bno); | 글번호(int bno)에 해당하는 글 정보 업데이트           | Boolean(성공시 1 실패시 0)                       |                                     |
 >
 >
 

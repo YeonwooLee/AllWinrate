@@ -6,6 +6,9 @@ import jyanoos.lol_bottom.domain.FreeBoard;
 import java.util.List;
 
 public interface FreeBoardService {
+    //테이블 유무 확인 있으면1 없으면0 리턴
+    int isTblExist(String dBName, String tableName);
+
     //자유게시판 글 리스트 리턴
     List<FreeBoard> freeBoardList();
 

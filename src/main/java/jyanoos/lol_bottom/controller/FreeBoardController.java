@@ -62,9 +62,13 @@ public class FreeBoardController {
         return "updateFreeBoard";
     }
 
+    //updateFreeBoard의 form에서 FreeBoard 필드 받아오고 해당 정보로 글 수정 후 글 상세로 이동
     @PostMapping("/{bno}/update")
     public String updateFreeBoard(@ModelAttribute("freeBoard") FreeBoard freeBoard, RedirectAttributes redirectAttributes){
+
+        //성공시 글번호, 실패시 0 리턴
         int bno = freeBoardService.updateFreeBoard(freeBoard.getBno(), freeBoard.getTitle(), freeBoard.getContent(), freeBoard.getWriter());
+
         redirectAttributes.addAttribute("bno",bno);
         return "redirect:/free_board/{bno}";
 
