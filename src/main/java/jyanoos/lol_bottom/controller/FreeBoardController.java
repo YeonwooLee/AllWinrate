@@ -25,7 +25,7 @@ public class FreeBoardController {
     @RequestMapping("/list")
     public String freeBoardList(Model model){
         List<FreeBoard> freeBoardList = freeBoardService.freeBoardList();
-            model.addAttribute("freeBoardList",freeBoardList);
+        model.addAttribute("freeBoardList",freeBoardList);
         return "freeBoard";
     }
 
@@ -79,5 +79,22 @@ public class FreeBoardController {
     public String deleteFreeBoard(@PathVariable("bno") int bno){
         boolean deleteSuccess = freeBoardService.deleteByBno(bno); //삭제 성공시 true 실패시 false
         return "redirect:/free_board/list";
+    }
+
+    //자게 목록 + 페이징
+    @GetMapping("/listPage/{num}/{nowPage}")
+    public String getListPage(@PathVariable int num, @PathVariable int nowPage, Model model){
+
+        List<Object> pageListAndNowPage = freeBoardService.freeBoardListPage(num, nowPage); //0번째는 페이지인덱스리스트,1번째는 현재페이지글목록
+        List<Integer> pageList = (List<Integer>) pageListAndNowPage.get(0);//object형으로 가져와서 형변환필요 -
+        List<FreeBoard> nowPageList = (List<FreeBoard>) pageListAndNowPage.get(1);//object형으로 가져와서 형변환필요
+        int needPagePlusOne = (int) pageListAndNowPage.get(2);
+        int lastIndex = (int) pageListAndNowPage.get(3);
+
+        model.addAttribute("pageList",pageList);
+        model.addAttribute("nowPageList",nowPageList);
+        model.addAttribute("needPagePlusOne", needPagePlusOne);
+        model.addAttribute("lastIndex",lastIndex);
+        return "freeBoardList";
     }
 }

@@ -3,6 +3,8 @@ package jyanoos.lol_bottom.service;
 
 
 import jyanoos.lol_bottom.domain.FreeBoard;
+
+import java.util.HashMap;
 import java.util.List;
 
 public interface FreeBoardService {
@@ -23,4 +25,7 @@ public interface FreeBoardService {
 
     //글번호로 글 삭제
     boolean deleteByBno(int bno);
+
+    //자유게시판 글 리스트 리턴+페이징
+    List<Object> freeBoardListPage(int num, int nowPage);
 }

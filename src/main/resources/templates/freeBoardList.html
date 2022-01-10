@@ -31,7 +31,7 @@
     </thead>
 
     <tbody>
-        <tr th:each="frbd:${freeBoardList}">
+        <tr th:each="frbd:${nowPageList}">
             <td th:text="${frbd.bno}"></td>
             <td><a th:text="${frbd.title}" th:href="@{|/free_board/${frbd.bno}|}"></a> </td>
             <td th:text="${#dates.format(frbd.regDate,'yyyy-MM-dd HH:mm')}"></td>
@@ -42,6 +42,11 @@
 </table>
 <div>
     <a th:href="@{/free_board/write}" th:text="글쓰기"></a>
+</div>
+<div>
+    <a th:if="${pageList.get(0)>=10}" th:text="이전" th:href="@{|/free_board/listPage/20/${pageList.get(0)-10}|}"></a>
+    <a th:each="page:${pageList}" th:text="|${page} |" th:href="@{|/free_board/listPage/20/${page-1}|}"></a>
+    <a th:if="${lastIndex}<${needPagePlusOne}" th:text="다음" th:href="@{|/free_board/listPage/20/${pageList.get(0)+10}|}"></a>
 </div>
 </body>
 </html>

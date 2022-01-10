@@ -30,8 +30,21 @@ public interface FreeBoardMapper {
     FreeBoard findByBno(@Param("bno") int bno);
 
 
+    //게시물 총 갯수 조회
+    @Select("select count(bno) from tbl_free_board")
+    int getFreeBoardNum();
 
 
+    //tbl_free_board에서 startIndexSql부터 numFreeBoardSql개만 가져오기
+    @Select("SELECT\n" +
+            "\tbno,title,writer,regDate,viewCnt\n" +
+            "\tFROM tbl_free_board\n" +
+            "\tORDER BY bno DESC\n" +
+            "\t\tLIMIT #{startIndexSql},#{numFreeBoardSql}")
+    List<FreeBoard> freeBoardListPage(
+            @Param("startIndexSql") int startIndex,
+            @Param("numFreeBoardSql") int numFreeBoard
+    );
 
 
 
