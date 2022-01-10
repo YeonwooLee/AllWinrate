@@ -5,6 +5,17 @@
     <title>Title</title>
 </head>
 <body>
+<div align="center">
+    <table border="1">
+        <thead>
+        <tr class="tempTr">
+            <th>챔피언추천</th>
+            <th><a th:href="@{/awrmain}" th:text="메인으로"></a></th>
+            <th><a th:href="@{/free_board/list}" th:text="자유게시판"></a></th>
+        </tr>
+        </thead>
+    </table>
+</div>
 <form th:action="@{/free_board/write}" method="post">
     <label>제목</label>
     <input type="text" name="title" /><br />
