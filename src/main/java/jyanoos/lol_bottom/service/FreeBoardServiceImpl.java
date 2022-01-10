@@ -48,9 +48,16 @@ public class FreeBoardServiceImpl implements FreeBoardService {
     public int updateFreeBoard(int bno, String title, String content, String writer) {
         //번호가 n번인 글의 제목 저자 내용을 title, content, writer로 수정
         boolean updateBno = freeBoardMapper.freeBoardUpdate(title,content,writer,bno);
-        if(updateBno) return bno;
+        if(updateBno) return bno; //업데이트 성공
         return 0;
         //
+    }
+
+    @Override
+    public boolean deleteByBno(int bno) {
+        boolean deleteSuccess = freeBoardMapper.deleteByBno(bno);
+        return deleteSuccess;
+
     }
 
 

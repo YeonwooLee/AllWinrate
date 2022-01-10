@@ -54,4 +54,10 @@ public interface FreeBoardMapper {
                                  @Param("contentSql") String content,
                                  @Param("writerSql") String writer,
                                  @Param("bnoSql") int bno);
+
+
+    //tbl_free_board 에서 글번호가 bno인 글 삭제, 성공시true
+    @Delete("DELETE FROM tbl_free_board WHERE bno=#{bnoSql}")
+    boolean deleteByBno(@Param("bnoSql")int bno);
+
 }

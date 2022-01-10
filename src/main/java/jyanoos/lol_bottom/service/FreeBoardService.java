@@ -21,4 +21,6 @@ public interface FreeBoardService {
     //글번호로 제목, 내용, 작성자 수정, 성공시 수정된 글 번호, 실패시 0 리턴
     int updateFreeBoard(int bno, String title, String content, String writer);
 
+    //글번호로 글 삭제
+    boolean deleteByBno(int bno);
 }

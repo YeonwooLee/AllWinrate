@@ -74,5 +74,10 @@ public class FreeBoardController {
 
     }
 
-
+    //bno에 해당하는 글 삭제
+    @GetMapping("/{bno}/delete")
+    public String deleteFreeBoard(@PathVariable("bno") int bno){
+        boolean deleteSuccess = freeBoardService.deleteByBno(bno); //삭제 성공시 true 실패시 false
+        return "redirect:/free_board/list";
+    }
 }
