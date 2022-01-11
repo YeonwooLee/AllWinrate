@@ -3,6 +3,8 @@ package jyanoos.lol_bottom.service;
 
 
 import jyanoos.lol_bottom.domain.FreeBoard;
+import jyanoos.lol_bottom.domain.Paging;
+import jyanoos.lol_bottom.domain.Reply;
 
 import java.util.HashMap;
 import java.util.List;
@@ -27,5 +29,14 @@ public interface FreeBoardService {
     boolean deleteByBno(int bno);
 
     //자유게시판 글 리스트 리턴+페이징
-    List<Object> freeBoardListPage(int num, int nowPage);
+    Paging freeBoardListPage(int num, int nowPage);
+
+    //자유게시판 글 검색 리스트 리턴+페이징
+    Paging freeBoardFindListPage(int num, int nowPage, String SearchType, String keyword);
+
+    //글번호로 해당 글에 달린 댓글 조회
+    List<Reply> findReplyByBno(int bno);
+
+    //자유게시판 댓글 저장, 성공시1, 실패시0 리턴
+    int writeFreeBoardReply(Reply reply);
 }

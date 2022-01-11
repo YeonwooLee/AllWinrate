@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script>
+
+    </script>
 </head>
 <body>
 <div th:replace="header::header"></div>
@@ -35,9 +38,9 @@
     <a th:href="@{/free_board/write}" th:text="글쓰기"></a>
 </div>
 <div>
-    <a th:if="${paging.pageList.get(0)>=10}" th:text="이전" th:href="@{|/free_board/listpage/20/${paging.pageList.get(0)-10}|}"></a>
-    <a th:each="page:${paging.pageList}" th:text="|${page} |" th:href="@{|/free_board/listpage/20/${page-1}|}"></a>
-    <a th:if="${paging.lastIndex}<${paging.needPagePlusOne}" th:text="다음" th:href="@{|/free_board/listpage/20/${paging.pageList.get(0)+10}|}"></a>
+    <a th:if="${paging.pageList.get(0)>=10}" th:text="이전" th:href="@{|/free_board/listFindpage/20/${paging.pageList.get(0)-10}|(searchType=${searchType},keyword=${keyword})}"></a>
+    <a th:each="page:${paging.pageList}" th:text="|${page} |" th:href="@{|/free_board/listFindpage/20/${page-1}|(searchType=${searchType},keyword=${keyword})}"></a>
+    <a th:if="${paging.lastIndex}<${paging.needPagePlusOne}" th:text="다음" th:href="@{|/free_board/listFindpage/20/${paging.pageList.get(0)+10}|(searchType=${searchType},keyword=${keyword})}"></a>
 </div>
 <div>
     <form th:action="@{/free_board/listFindpage/20/0}", method="get">

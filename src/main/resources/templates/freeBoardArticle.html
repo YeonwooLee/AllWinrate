@@ -5,17 +5,8 @@
     <title>Title</title>
 </head>
 <body>
-<div align="center">
-    <table border="1">
-        <thead>
-        <tr class="tempTr">
-            <th>챔피언추천</th>
-            <th><a th:href="@{/awrmain}" th:text="메인으로"></a></th>
-            <th><a th:href="@{/free_board/list}" th:text="자유게시판"></a></th>
-        </tr>
-        </thead>
-    </table>
-</div>
+<div th:replace="header::header"></div>
+
 <div>
     <a th:href="@{|/free_board/${freeBoard.bno}/update|}">글 수정</a>
     <a th:href="@{/free_board/list}">글 목록</a>
@@ -37,7 +28,7 @@
         <td th:text="${freeBoard.title}"></td>
         <td th:text="${freeBoard.content}"></td>
         <td th:text="${freeBoard.writer}"></td>
-        <td th:text="${freeBoard.regDate}"></td>
+        <td th:text="${#dates.format(freeBoard.regDate,'yyyy-MM-dd HH:mm')}"></td>
         <td th:text="${freeBoard.viewCnt}"></td>
     </tr>
     </tbody>
@@ -46,6 +37,29 @@
     <a th:href="@{|/free_board/${freeBoard.bno}/update|}">글 수정</a>
     <a th:href="@{|/free_board/${freeBoard.bno}/delete|}">글 삭제</a>
     <a th:href="@{/free_board/list}">글 목록</a>
+</div>
+<div>
+<form th:action="@{/free_board/reply/save}" method="post">
+    <label>작성자</label>
+    <input type="text" name="writer" /><br />
+
+    <label>내용</label>
+    <textarea cols="50" rows="5" name="content"></textarea><br />
+    <input type="hidden" name="bno" th:value="${freeBoard.bno}">
+    <button type="submit">작성</button>
+
+</form>
+</div>
+<div>
+    <ul>
+        <li th:each="reply:${replies}">
+            <div>
+                <p th:text="|${reply.writer}      /${#dates.format(reply.regDate,'yyyy-MM-dd HH:mm')}|"></p>
+                <p th:text="${reply.content}"></p>
+            </div>
+        </li>
+
+    </ul>
 </div>
 </body>
 </html>

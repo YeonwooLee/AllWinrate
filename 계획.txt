@@ -1,3 +1,6 @@
+수정순서! mapper - service.interface - service.class - controller
+
+
 #통합프로젝트
 -componentscan 있는지
 -component 있는지
@@ -11,10 +14,56 @@ VC
 +01/09 게시
   
 VR
-U
+VU
 +01/09
 D
++1/10 
+	mapper에 삭제 sql 추가 =  boolean deleteByBno
+	service에 삭제 기능 추가 = public boolean deleteByBno(int bno)
+	controller에 free_board/{bno}/delete 추가 = public String deleteFreeBoard(@PathVariable("bno") int bno)
+	freeBoardArticle에 글삭제 버튼 추가 = <a th:href="@{|/free_board/${freeBoard.bno}/delete|}">글 삭제</a>
 
+
+페이징
+	mapper: int getFreeBoardNum(), List<FreeBoard> freeBoardListPage
+	service: List<FreeBoard> freeBoardListPage()
+	controller:String getListPage
+
+검색	
+    searchType: searchByTitle, searchByContent, searchByWriter, searchByTitleOrWriter
+	mapper: 
+		int freeBoardCountFindByTitle, List<FreeBoard> freeBoardFindByTitle
+	service: 
+		Paging freeBoardFindListPage
+	controller: 
+		String findArticle
+
+댓글
+R
+	mapper List<Reply> findReplyByBno
+	service List<Reply> findReplyByBno
+	controller String readFreeBoard
+C
+	mapper: int save_frboard_reply
+	service: int writeFreeBoardReply
+	controller: String saveReply
+
+
+U
+	mapper:
+	service:
+	controller:
+D
+	mapper:
+	service:
+	controller:
+
+3개
+0,1,2
+3,4,5
+6,7,8
+
+ㄸ 도마뱀 밥
 #조합별 페이지(allwinrate 에서 조합 누르면 드롭다운 내려오는거)
 1. 단일 조합에 대한 게시판 기능
 (

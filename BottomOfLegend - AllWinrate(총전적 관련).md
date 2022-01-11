@@ -274,3 +274,26 @@ ex) select * from table where col1=**col1value** << 이런식으로  sql문에 �
 
 
 
+> 페이징 처리 해둔 자유게시판에 검색기능 구현함
+>
+> 검색된 글 페이징 != 전체글 페이징인데, 검색된글 페이징이 전체글 페이징으로 적용됨
+>
+> 원인:
+>
+> > ```html
+> > <a th:if="${paging.pageList.get(0)>=10}" th:text="이전" th:href="@{|/free_board/listpage/20/${paging.pageList.get(0)-10}|}"></a>
+> > 
+> > <a th:each="page:${paging.pageList}" th:text="|${page} |" th:href="@{|/free_board/listpage/20/${page-1}|}"></a>
+> > 
+> > <a th:if="${paging.lastIndex}<${paging.needPagePlusOne}" th:text="다음" th:href="@{|/free_board/listpage/20/${paging.pageList.get(0)+10}|}"></a>
+> > ```
+>
+> 해결: 게시판 목록 화면과 똑같은 검색된글 목록 html 파일을 따로만듬
+>
+> > ```html
+> > <a th:if="${paging.pageList.get(0)>=10}" th:text="이전" th:href="@{|/free_board/listFindpage/20/${paging.pageList.get(0)-10}|(searchType=${searchType},keyword=${keyword})}"></a>
+> > <a th:each="page:${paging.pageList}" th:text="|${page} |" th:href="@{|/free_board/listFindpage/20/${page-1}|(searchType=${searchType},keyword=${keyword})}"></a>
+> > <a th:if="${paging.lastIndex}<${paging.needPagePlusOne}" th:text="다음" th:href="@{|/free_board/listFindpage/20/${paging.pageList.get(0)+10}|(searchType=${searchType},keyword=${keyword})}"></a>
+> > ```
+> >
+> > 그리고 검색 요청시 controller에서 view로 기존 검색시 searchType과 keyword 보내줌

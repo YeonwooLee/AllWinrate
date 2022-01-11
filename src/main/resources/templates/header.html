@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:fragment="html-head">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="header" align="center">
+<table border="1">
+    <thead>
+    <tr class="tempTr">
+        <th>챔피언추천</th>
+        <th><a th:href="@{/awrmain}" th:text="메인으로"></a></th>
+        <th><a th:href="@{/free_board/listpage/20/0}" th:text="자유게시판"></a></th>
+    </tr>
+    </thead>
+</table>
+</div>
+</body>
+</html>

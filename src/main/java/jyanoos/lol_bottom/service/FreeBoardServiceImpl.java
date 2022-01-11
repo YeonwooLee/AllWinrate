@@ -1,13 +1,13 @@
 package jyanoos.lol_bottom.service;
 
-import jyanoos.lol_bottom.controller.FreeBoardController;
 import jyanoos.lol_bottom.domain.FreeBoard;
+import jyanoos.lol_bottom.domain.Paging;
+import jyanoos.lol_bottom.domain.Reply;
 import jyanoos.lol_bottom.mapper.FreeBoardMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 @Slf4j
@@ -63,8 +63,8 @@ public class FreeBoardServiceImpl implements FreeBoardService {
     }
 
     @Override
-    public List<Object> freeBoardListPage(int num,int nowPage) {
-        List<Object> result = new ArrayList<Object>(); //object타입으로 받은 후 controller에서 int[]와 List<FreeBoard>로 캐스팅하여 사용
+    public Paging freeBoardListPage(int num,int nowPage) {
+        //List<Object> result = new ArrayList<Object>(); //object타입으로 받은 후 controller에서 int[]와 List<FreeBoard>로 캐스팅하여 사용 -->버전2로 변경
 
         //1. 게시글 전체 갯수 조회
         int freeBoardAllCount = freeBoardMapper.getFreeBoardNum();
@@ -102,15 +102,105 @@ public class FreeBoardServiceImpl implements FreeBoardService {
 
         //4.현재페이지 글목록
         int startIndex = num*nowPage; //페이지당 첫 글 인덱스
-        List<FreeBoard> freeBoardNowPageList = freeBoardMapper.freeBoardListPage(startIndex, num);
+        List<FreeBoard> nowPageList = freeBoardMapper.freeBoardListPage(startIndex, num);
 
 
-        //result.add(pageList); // result의 첫 객체 = 페이지리스트
-        result.add(pageList); //result의 첫번째 객체 = 페이징리스트(10개씩 끊어서 보여줌)
-        result.add(freeBoardNowPageList); // result의 두번째 객체 = 현재 페이지 게시글 리스트
-        result.add(needPage+1); //result의 세번째 객체 총 필요한 페이지 수(페이징에 <이전 다음> 처리용)
-        result.add(lastIndex); //result의 네번쨰 객체 페이징인덱스 마지막(페이징에 <이전 다음> 처리용)
-        return result;
+//        //result.add(pageList); // result의 첫 객체 = 페이지리스트
+//        result.add(pageList); //result의 첫번째 객체 = 페이징리스트(10개씩 끊어서 보여줌)
+//        result.add(freeBoardNowPageList); // result의 두번째 객체 = 현재 페이지 게시글 리스트
+//        result.add(needPage+1); //result의 세번째 객체 총 필요한 페이지 수(페이징에 <이전 다음> 처리용)
+//        result.add(lastIndex); //result의 네번쨰 객체 페이징인덱스 마지막(페이징에 <이전 다음> 처리용)
+        Paging paging = new Paging(pageList,nowPageList,needPage+1,lastIndex); //버전2 List<Object> -> Paging class
+        return paging;
+    }
+
+    @Override
+    public Paging freeBoardFindListPage(int num, int nowPage, String searchType, String keyword) {
+        Paging paging = null;
+
+        if(searchType.equals("searchByTitle")){
+            paging = pagingByCol(num, nowPage,keyword,"title");
+        }else if(searchType.equals("searchByContent")){
+            paging = pagingByCol(num, nowPage,keyword,"content");
+        }else if(searchType.equals("searchByWriter")){
+            paging = pagingByCol(num, nowPage,keyword,"writer");
+        }else if(searchType.equals("searchByTitleOrContent")){
+            paging = pagingByTitleOrContent(num, nowPage,keyword);
+        }
+        return paging;
+    }
+
+    @Override
+    public List<Reply> findReplyByBno(int bno) {
+        List<Reply> replyByBno = freeBoardMapper.findReplyByBno(bno);
+        return replyByBno;
+    }
+
+    @Override
+    public int writeFreeBoardReply(Reply reply) {
+        int success = freeBoardMapper.save_free_board_reply(reply.getBno(), reply.getWriter(), reply.getContent());
+        return success;
+
+    }
+
+    public Paging pagingByCol(int num, int nowPage, String findKeyword, String findCol) {
+        //List<Object> result = new ArrayList<Object>(); //object타입으로 받은 후 controller에서 int[]와 List<FreeBoard>로 캐스팅하여 사용 -->버전2로 변경
+
+        //1. 게시글 전체 갯수 조회
+        int freeBoardAllCount = freeBoardMapper.freeBoardCountFindByCol(findKeyword,findCol);
+
+        //2. 페이지당 num개 출력시 몇 페이지 필요한가 확인 {총글수/페이지당글수의 몫}
+        int needPage = freeBoardAllCount/num;
+
+
+        //3-2. 현재 페이지 페이징리스트, 10개씩 끊어보여줌
+        List<Integer> pageList = new ArrayList<>();
+        int lastIndex = 0;
+        for(int i=0;i<10;i++){
+            int index=(nowPage/10)*10+i+1;
+            if(index<=needPage+1){
+                pageList.add(index);
+            }else{
+                lastIndex = index-1;
+            }
+        }
+        //4.현재페이지 글목록
+        int startIndex = num*nowPage; //페이지당 첫 글 인덱스
+        List<FreeBoard> nowPageList = freeBoardMapper.freeBoardFindByCol(startIndex, num, findKeyword,findCol);
+
+
+        Paging paging = new Paging(pageList,nowPageList,needPage+1,lastIndex); //버전2 List<Object> -> Paging class
+        return paging;
+    }
+
+    public Paging pagingByTitleOrContent(int num, int nowPage, String findKeyword) {
+        //List<Object> result = new ArrayList<Object>(); //object타입으로 받은 후 controller에서 int[]와 List<FreeBoard>로 캐스팅하여 사용 -->버전2로 변경
+
+        //1. 게시글 전체 갯수 조회
+        int freeBoardAllCount = freeBoardMapper.freeBoardCountFindByTitleOrContent(findKeyword);
+
+        //2. 페이지당 num개 출력시 몇 페이지 필요한가 확인 {총글수/페이지당글수의 몫}
+        int needPage = freeBoardAllCount/num;
+
+
+        //3-2. 현재 페이지 페이징리스트, 10개씩 끊어보여줌
+        List<Integer> pageList = new ArrayList<>();
+        int lastIndex = 0;
+        for(int i=0;i<10;i++){
+            int index=(nowPage/10)*10+i+1;
+            if(index<=needPage+1){
+                pageList.add(index);
+            }else{
+                lastIndex = index-1;
+            }
+        }
+        //4.현재페이지 글목록
+        int startIndex = num*nowPage; //페이지당 첫 글 인덱스
+        List<FreeBoard> nowPageList = freeBoardMapper.freeBoardFindByTitleOrContent(startIndex, num, findKeyword);
+
+
+        Paging paging = new Paging(pageList,nowPageList,needPage+1,lastIndex); //버전2 List<Object> -> Paging class
+        return paging;
     }
 
 
