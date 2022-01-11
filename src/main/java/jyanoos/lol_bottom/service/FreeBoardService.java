@@ -39,4 +39,10 @@ public interface FreeBoardService {
 
     //자유게시판 댓글 저장, 성공시1, 실패시0 리턴
     int writeFreeBoardReply(Reply reply);
+
+    //자게 댓글 수정
+    int updateReplyFreeBoard(Reply reply);
+
+    //자게 댓글 삭제
+    boolean deleteReply(int bno, int rno);
 }

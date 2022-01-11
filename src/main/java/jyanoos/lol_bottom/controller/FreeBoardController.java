@@ -134,4 +134,32 @@ public class FreeBoardController {
         redirectAttributes.addAttribute("bno",reply.getBno());
         return "redirect:/free_board/{bno}";
     }
+
+    @GetMapping("/updatereply/{bno}/{rno}")
+    String updateReplyForm(@PathVariable("bno") int bno, @PathVariable("rno") int rno,Model model){
+
+        FreeBoard freeBoard = freeBoardService.findByBno(bno);
+        model.addAttribute("freeBoard",freeBoard);
+
+        //댓글
+        List<Reply> replies= freeBoardService.findReplyByBno(bno);
+        model.addAttribute("replies",replies);
+
+        model.addAttribute("rno",rno);
+        return "freeBoardArticleUpdateReply";
+    }
+
+    @PostMapping("/updatereply/{bno}/{rno}")
+    String updateFreeBoardReply(@ModelAttribute Reply reply, RedirectAttributes redirectAttributes){
+        freeBoardService.updateReplyFreeBoard(reply);
+        redirectAttributes.addAttribute("bno",reply.getBno());
+        return "redirect:/free_board/{bno}";
+    }
+
+    @GetMapping("/deletereply/{bno}/{rno}")
+    String deleteFreeBoardReply(@PathVariable("bno") int bno, @PathVariable("rno") int rno,RedirectAttributes redirectAttributes){
+        freeBoardService.deleteReply(bno,rno);
+        redirectAttributes.addAttribute("bno",bno);
+        return "redirect:/free_board/{bno}";
+    }
 }

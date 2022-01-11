@@ -53,12 +53,24 @@
 <div>
     <ul>
         <li th:each="reply:${replies}">
-            <div>
-                <p th:text="|${reply.writer} /${#dates.format(reply.regDate,'yyyy-MM-dd HH:mm')} |"></p>
-                <p th:text="${reply.content}"></p>
-                <a th:href="@{|/free_board/updatereply/${reply.bno}/${reply.rno}|}" th:text="수정">cv</a>
-                <a th:href="@{|/free_board/deletereply/${reply.bno}/${reply.rno}|}" th:text="삭제">cv</a>
+            <div th:if="${#strings.equals(reply.rno,rno)}">
+                <form th:action="@{|/free_board/updatereply/${reply.bno}/${rno}|}" method="post">
+                    <label>작성자</label>
+                    <input type="text" name="writer" th:value="${reply.writer}"/><br />
 
+                    <label>내용</label>
+                    <textarea cols="50" rows="5" name="content" th:text="${reply.content}"></textarea><br />
+                    <input type="hidden" name="bno" th:value="${freeBoard.bno}">
+                    <input type="hidden" name="rno" th:value="${rno}">
+                    <button type="submit">작성</button>
+
+                </form>
+            </div>
+
+
+            <div th:unless="${#strings.equals(reply.rno,rno)}">
+                <p th:text="|${reply.writer}      /${#dates.format(reply.regDate,'yyyy-MM-dd HH:mm')}|"></p>
+                <p th:text="${reply.content}"></p>
             </div>
         </li>
 

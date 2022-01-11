@@ -143,6 +143,18 @@ public class FreeBoardServiceImpl implements FreeBoardService {
 
     }
 
+    @Override
+    public int updateReplyFreeBoard(Reply reply) {
+        boolean success = freeBoardMapper.freeBoardReplyUpdate(reply.getWriter(), reply.getContent(), reply.getRno(), reply.getBno());
+        return reply.getBno();
+    }
+
+    @Override
+    public boolean deleteReply(int bno, int rno) {
+        boolean success = freeBoardMapper.deleteReply(rno, bno);
+        return success;
+    }
+
     public Paging pagingByCol(int num, int nowPage, String findKeyword, String findCol) {
         //List<Object> result = new ArrayList<Object>(); //object타입으로 받은 후 controller에서 int[]와 List<FreeBoard>로 캐스팅하여 사용 -->버전2로 변경
 
@@ -202,6 +214,7 @@ public class FreeBoardServiceImpl implements FreeBoardService {
         Paging paging = new Paging(pageList,nowPageList,needPage+1,lastIndex); //버전2 List<Object> -> Paging class
         return paging;
     }
+
 
 
     //tblExist("lol_data","lol_red");
