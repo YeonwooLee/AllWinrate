@@ -10,6 +10,8 @@ public interface AllWinrateService {
     //db에서 조합별 총승률 리스트 가져옴
     List<AllWinrate> mkAllWinrateList(int minPansoo, int lenList) throws IOException;
 
-    CombiReplyBoard mkViewCombiBoard(AllWinrate allWinrate);
+    CombiReplyBoard mkViewCombiBoard(String adc, String sup) throws IOException;
+
+    void writeReply(String adc, String sup, String writer, String content);
 
 }

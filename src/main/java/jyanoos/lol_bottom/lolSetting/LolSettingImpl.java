@@ -30,4 +30,23 @@ public class LolSettingImpl implements LolSetting{
                 forEachRemaining(key->koToEngMap.put(key,(String)jsonMap.get(key)));
         return koToEngMap;
     }
+
+
+
+
+    @Override
+    public String convertEngToKo(String engChamp) throws IOException {
+        Map<String,String> engToKoMap = engToKoMap();
+        return engToKoMap.get(engChamp);
+    }
+
+    @Override
+    public Map<String, String> engToKoMap() throws IOException {
+        Map<String,String> koToEngMap = koToEngMap();
+        Map<String, String> engToKoMap = new HashMap<>();
+        for(String key: koToEngMap.keySet()){
+            engToKoMap.put(koToEngMap.get(key),key);
+        }
+        return engToKoMap;
+    }
 }

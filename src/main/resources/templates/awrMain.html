@@ -78,9 +78,9 @@
        </tr>
        </thead>
        -->
-        <tbody>
-
-        <tr th:each="awrL:${allWinrateList}" class="tempTr" style = "cursor:pointer;" th:onclick="|location.href='@{/allWinrate/aaa}'|">
+        <tbody th:each="awrL:${allWinrateList}">
+<!--        <tr class="tempTr" style = "cursor:pointer;" th:onclick="|location.href='@{/awrboard/}'${awrL.engAdc}|">-->
+        <tr class="tempTr" style = "cursor:pointer;" th:onclick="'window.location.href = \'' + @{/awrboard/{adc}/{sup}(adc=${awrL.engAdc},sup=${awrL.engSup})} + '\''">
 
             <!--<td th:text="${awrL.whole}"></td> //총전적
             <td th:text="${awrL.win}"></td> //승 수

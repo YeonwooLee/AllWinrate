@@ -9,5 +9,12 @@ public interface LolSetting {
     static String tier="GOLD";
 
     String convertKoToEng(String korChamp) throws IOException;
+
     Map<String,String> koToEngMap() throws IOException;
+
+
+
+    String convertEngToKo(String engChamp) throws IOException;
+
+    Map<String,String> engToKoMap() throws IOException;
 }

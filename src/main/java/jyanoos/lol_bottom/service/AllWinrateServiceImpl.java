@@ -6,6 +6,7 @@ import jyanoos.lol_bottom.domain.CombiReplyBoard;
 import jyanoos.lol_bottom.lolSetting.LolSetting;
 import jyanoos.lol_bottom.mapper.AllWinrateMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -13,6 +14,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class AllWinrateServiceImpl implements AllWinrateService {
@@ -44,15 +46,26 @@ public class AllWinrateServiceImpl implements AllWinrateService {
     }
 
     @Override
-    public CombiReplyBoard mkViewCombiBoard(AllWinrate allWinrate) {
-        CombiReplyBoard combiReplyBoard = new CombiReplyBoard();
+    public CombiReplyBoard mkViewCombiBoard(String adc, String sup) throws IOException { //영어이름으로 가져옴
+        //한글챔프명 변수
+        String adcKo = lolSetting.convertEngToKo(adc);
+        String supKo = lolSetting.convertEngToKo(sup);
+
+        //allwinrate 생성 및 영어이름 저장
+        AllWinrate allWinrate = allWinrateMapper.getAllwinrate(adcKo,supKo);
+        allWinrate.setEngAdc(adc);
+        allWinrate.setEngSup(sup);
+
+        CombiReplyBoard combiReplyBoard = new CombiReplyBoard();//리턴용 객체
         String manager = "관리자";
         String mkBoardMessage = allWinrate.getAdc()+" & "+allWinrate.getSup()+" 조합 테이블이 생성되었습니다 :)";
 
         //adc_sup 테이블 있나 확인하고
-        int exsistInt = allWinrateMapper.tblExist("lol_data",allWinrate.getEngAdc()+"_"+allWinrate.getEngAdc());
+        int exsistInt = allWinrateMapper.tblExist("lol_data",allWinrate.getEngAdc()+"_"+allWinrate.getEngSup());
+        log.info("테이블있나확인: {}",allWinrate.getEngAdc()+"_"+allWinrate.getEngSup());
         //없으면
         if(exsistInt==0) {
+            log.info("{}&{}테이블 없어서 생성중",adc,sup);
             allWinrateMapper.createAwrTbl(allWinrate.getEngAdc(),allWinrate.getEngSup()); //만들고
             allWinrateMapper.writeAwlReply(allWinrate.getEngAdc(),allWinrate.getEngSup(),manager,mkBoardMessage); // 환영인사 남김
         }
@@ -64,6 +77,12 @@ public class AllWinrateServiceImpl implements AllWinrateService {
         combiReplyBoard.setReplyList(replyList);
 
         return combiReplyBoard;
+    }
+
+    @Override
+    public void writeReply(String adc, String sup, String writer, String content) {
+        int i = allWinrateMapper.writeAwlReply(adc,sup,writer,content);
+        log.info("글저장번호{}",i);
     }
 
 }

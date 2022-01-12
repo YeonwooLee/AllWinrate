@@ -21,12 +21,18 @@ public interface AllWinrateMapper {
             @Param("content") String content
     );
 
+
+
+
+
+
+
     //all_winrate_version(버전은 lolsetting에서 관리) 모든 행 가져옴
     @Select("select * from all_winrate_"+version)
     List<AllWinrate> allWinrateList();
 
     //adc_sup 게시판의 모든 댓글 가져옴
-    @Select("select * from ${adc}_${sup}")
+    @Select("select * from ${adc}_${sup} ORDER BY rno DESC")
     List<CombiReply> combiReplyList(
             @Param("adc") String adc,
             @Param("sup") String sup
@@ -38,6 +44,14 @@ public interface AllWinrateMapper {
             "WHERE table_schema = '${DBName}' AND table_name = '${tableName}') " +
             "AS flag")
     int tblExist(@Param("DBName") String DBName, @Param("tableName") String tableName);
+
+
+    //원딜, 서폿 영문명으로 총전적 구하기
+    @Select("SELECT * FROM all_winrate_"+version+"\n" +
+            "WHERE bot_combi LIKE CONCAT('%',#{adc},'_',#{sup},'%','"+version+"')")
+    AllWinrate getAllwinrate(@Param("adc") String adc,@Param("sup") String sup);
+
+
 
 
 

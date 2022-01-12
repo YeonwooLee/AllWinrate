@@ -24,6 +24,17 @@ class LolSettingImplTest {
         // then
         System.out.println("koToEngMap = " + koToEngMap);
     }
+    @Test
+    @DisplayName("한->영 챔프명 Map 생성")
+    public void engToKoMap() throws IOException {
+        //given
+        Map<String,String> engToKoMap = lolSetting.engToKoMap();
+
+        //when
+
+        // then
+        System.out.println("engToKoMap = " + engToKoMap);
+    }
 
     @Test
     @DisplayName("한국챔프명->영어챔프명")
