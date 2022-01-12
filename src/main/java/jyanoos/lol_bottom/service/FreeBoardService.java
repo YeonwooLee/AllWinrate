@@ -45,4 +45,5 @@ public interface FreeBoardService {
 
     //자게 댓글 삭제
     boolean deleteReply(int bno, int rno);
+
 }

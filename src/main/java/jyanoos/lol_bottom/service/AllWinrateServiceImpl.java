@@ -82,7 +82,22 @@ public class AllWinrateServiceImpl implements AllWinrateService {
     @Override
     public void writeReply(String adc, String sup, String writer, String content) {
         int i = allWinrateMapper.writeAwlReply(adc,sup,writer,content);
-        log.info("글저장번호{}",i);
+        log.info("AllWinrateServiceImpl.writeReply return>>>{}",i);
+    }
+
+    @Override
+    public int updateReply(String adcEng, String supEng, String writer, String content, int rno) {
+        int i = allWinrateMapper.updateAwrTbl(adcEng, supEng, writer, content, rno);
+        log.info("AllWinrateServiceImpl.updateReply return>>>{}",i);
+        return i;
+
+    }
+
+    @Override
+    public int deleteReply(String adcEng, String supEng, int rno) {
+        int i = allWinrateMapper.deleteAwrTbl(adcEng, supEng, rno);
+        log.info("AllWinrateServiceImpl.deleteReply return>>>{}",i);
+        return i;
     }
 
 }

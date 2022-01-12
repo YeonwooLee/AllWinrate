@@ -65,4 +65,28 @@ public interface AllWinrateMapper {
             "\tPRIMARY KEY(rno)\n" +
             "\t)")
     int createAwrTbl(@Param("adc") String adc, @Param("sup") String sup);
+
+    //조합댓글판 수정 필요정보: 영문원딜서폿명, 보낼정보:수정내용, 수정저자
+    @Update("UPDATE ${adcEng}_${supEng} SET\n" +
+            "writer=#{writer},\n" +
+            "content=#{content}\n" +
+            "WHERE rno=#{rno}")
+    int updateAwrTbl(
+            @Param("adcEng") String adcEng,
+            @Param("supEng") String supEng,
+            @Param("writer") String writer,
+            @Param("content") String content,
+            @Param("rno") int rno
+    );
+
+
+
+
+
+
+    @Delete("DELETE FROM ${adcEng}_${supEng}\n" +
+            "WHERE rno=#{rno}")
+    int deleteAwrTbl(@Param("adcEng") String adcEng,
+                     @Param("supEng") String supEng,
+                     @Param("rno") int rno);
 }

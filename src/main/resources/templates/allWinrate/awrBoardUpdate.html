@@ -81,26 +81,29 @@
 
 
 
-<div>
-    <form th:action="@{/awrboard/reply/save}" method="post">
-        <label>작성자</label>
-        <input type="text" name="writer" /><br />
 
-        <label>내용</label>
-        <textarea cols="50" rows="5" name="content"></textarea><br />
-        <input type="hidden" name="adc" th:value="${combiReplyBoard.allWinrate.engAdc}">
-        <input type="hidden" name="sup" th:value="${combiReplyBoard.allWinrate.engSup}">
-        <button type="submit">작성</button>
-    </form>
-</div>
 <div>
     <ul>
         <li th:each="reply:${combiReplyBoard.replyList}">
-            <div>
+            <div th:if="${#strings.equals(reply.rno,rno)}">
+                <form th:action="@{|/awrboard/${combiReplyBoard.allWinrate.engAdc}/${combiReplyBoard.allWinrate.engSup}/${rno}/update|}" method="post">
+                    <label>작성자</label>
+                    <input type="text" name="writer" th:value="${reply.writer}"/><br />
+
+                    <label>내용</label>
+                    <textarea cols="50" rows="5" name="content" th:text="${reply.content}"></textarea><br />
+                    <input type="hidden" name="adcEng" th:value="${combiReplyBoard.allWinrate.engAdc}">
+                    <input type="hidden" name="supEng" th:value="${combiReplyBoard.allWinrate.engSup}">
+                    <input type="hidden" name="rno" th:value="${rno}">
+                    <button type="submit">작성</button>
+                </form>
+            </div>
+            <div th:unless="${#strings.equals(reply.rno,rno)}">
                 <p th:text="|${reply.writer} /${#dates.format(reply.regDate,'yyyy-MM-dd HH:mm')} |"></p>
                 <p th:text="${reply.content}"></p>
                 <a th:href="@{|/awrboard/${combiReplyBoard.allWinrate.engAdc}/${combiReplyBoard.allWinrate.engSup}/${reply.rno}/update|}" th:text="수정">cv</a>
                 <a th:href="@{|/awrboard/${combiReplyBoard.allWinrate.engAdc}/${combiReplyBoard.allWinrate.engSup}/${reply.rno}/delete|}" th:text="삭제">cv</a>
+
 
             </div>
         </li>

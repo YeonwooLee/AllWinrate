@@ -50,30 +50,43 @@ C
 
 
 U
-	mapper:
-	service:
-	controller:
+	mapper: boolean freeBoardReplyUpdate
+	service:V
+	controller:V
 D
-	mapper:
-	service:
-	controller:
+	mapper:boolean deleteReply
+	service: V
+	controller:V
 
 3개
 0,1,2
 3,4,5
 6,7,8
 
-ㄸ 도마뱀 밥
+<awrmain에서 챔피언 조합 누르면 해당 챔피언 게시판으로 가도록>
+
 #조합별 페이지(allwinrate 에서 조합 누르면 드롭다운 내려오는거)
 1. 단일 조합에 대한 게시판 기능
 (
            	V조합에 대한 게시판 유무 확인,
 	생성 , 
 	게시글 crud
+R
+	mapper: v
+	service: v
+	controller:
+awrmain.html에서 tr 누르면 controller에 
+1.원딜_서폿 게시판 있냐
+2. 
 )
 2. 1을 기존 프로젝트에 탑재
 2. 추천비추 기능
 3. view에 탑재
+
+
+
+
+
 https://kuzuro.blogspot.com/search/label/%EC%8A%A4%ED%94%84%EB%A7%81%20%EA%B2%8C%EC%8B%9C%ED%8C%90%20%EB%A7%8C%EB%93%A4%EA%B8%B0
 16개 글
 

@@ -162,4 +162,5 @@ public class FreeBoardController {
         redirectAttributes.addAttribute("bno",bno);
         return "redirect:/free_board/{bno}";
     }
+
 }
