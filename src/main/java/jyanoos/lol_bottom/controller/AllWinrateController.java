@@ -27,4 +27,9 @@ public class AllWinrateController {
 
         return "awrMain";
     }
+
+    @RequestMapping("/allWinrate/aaa")
+    public String aaa(){
+        return "/allWinrate/eee";
+    }
 }

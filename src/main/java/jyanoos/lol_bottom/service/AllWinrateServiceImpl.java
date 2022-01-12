@@ -1,6 +1,8 @@
 package jyanoos.lol_bottom.service;
 
 import jyanoos.lol_bottom.domain.AllWinrate;
+import jyanoos.lol_bottom.domain.CombiReply;
+import jyanoos.lol_bottom.domain.CombiReplyBoard;
 import jyanoos.lol_bottom.lolSetting.LolSetting;
 import jyanoos.lol_bottom.mapper.AllWinrateMapper;
 import lombok.RequiredArgsConstructor;
@@ -39,6 +41,29 @@ public class AllWinrateServiceImpl implements AllWinrateService {
         //상위n개만 리턴
         allWinrateList = allWinrateList.subList(0,lenList);
         return allWinrateList;
+    }
+
+    @Override
+    public CombiReplyBoard mkViewCombiBoard(AllWinrate allWinrate) {
+        CombiReplyBoard combiReplyBoard = new CombiReplyBoard();
+        String manager = "관리자";
+        String mkBoardMessage = allWinrate.getAdc()+" & "+allWinrate.getSup()+" 조합 테이블이 생성되었습니다 :)";
+
+        //adc_sup 테이블 있나 확인하고
+        int exsistInt = allWinrateMapper.tblExist("lol_data",allWinrate.getEngAdc()+"_"+allWinrate.getEngAdc());
+        //없으면
+        if(exsistInt==0) {
+            allWinrateMapper.createAwrTbl(allWinrate.getEngAdc(),allWinrate.getEngSup()); //만들고
+            allWinrateMapper.writeAwlReply(allWinrate.getEngAdc(),allWinrate.getEngSup(),manager,mkBoardMessage); // 환영인사 남김
+        }
+
+        //해당 조합 게시판 댓글들
+        List<CombiReply> replyList = allWinrateMapper.combiReplyList(allWinrate.getEngAdc(), allWinrate.getEngSup());
+
+        combiReplyBoard.setAllWinrate(allWinrate);
+        combiReplyBoard.setReplyList(replyList);
+
+        return combiReplyBoard;
     }
 
 }
