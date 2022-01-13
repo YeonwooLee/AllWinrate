@@ -74,7 +74,21 @@ D
 R
 	mapper: v
 	service: v
-	controller:
+	controller:v
+
+C
+	mapper: v
+	service: v
+	controller:v
+U
+	mapper: v
+	service: v
+	controller:v
+D
+	mapper: v
+	service: v
+	controller:v
+
 awrmain.html에서 tr 누르면 controller에 
 1.원딜_서폿 게시판 있냐
 2. 
