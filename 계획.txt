@@ -104,29 +104,58 @@ awrmain.html에서 tr 누르면 controller에
 https://kuzuro.blogspot.com/search/label/%EC%8A%A4%ED%94%84%EB%A7%81%20%EA%B2%8C%EC%8B%9C%ED%8C%90%20%EB%A7%8C%EB%93%A4%EA%B8%B0
 16개 글
 
-#챔피언추천
+#챔피언추천(minpansoo, wellCompareTo, wellView)
 1.원딜추천
--아무것도 모름
--mSup 앎        		서폿vs
--mSup, eAdc 앎 		원딜vs서폿
--mSup, eSup 앎 		서폿vs서폿
--mSup, eAdc, eSup 앎 	원딜서폿vs서폿
--eAdc 앎 		원딜vs
--eSup 앎 		
--eAdc, eSup 앎 			
+	1-아무것도 모름
+	2-mSup 앎        		서폿vs
+	3-mSup, eAdc 앎 		원딜vs서폿
+	4-mSup, eSup 앎 		서폿vs서폿
+	5-mSup, eAdc, eSup 앎 	원딜서폿vs서폿
+	6-eAdc 앎 		원딜vs
+	7-eSup 앎 		
+	8-eAdc, eSup 앎 			
 
 2.서폿추천
--아무것도 모름
--mAdc 앎		
--mAdc, eAdc 앎 		원딜vs원딜
--mAdc, eSup 앎		
--mAdc, eAdc, eSup 앎	
--eAdc 앎			
--eSup 앎			
--eAdc, eSup 앎		원딜서폿vs
+	-아무것도 모름	wellCompareTo
+	-mAdc 앎		
+	-mAdc, eAdc 앎 		원딜vs원딜
+	-mAdc, eSup 앎		
+	-mAdc, eAdc, eSup 앎	원딜서폿vs원딜
+	-eAdc 앎			
+	-eSup 앎			
+	-eAdc, eSup 앎		원딜서폿vs
 
 3.조합추천
--아무것도 모름
--eAdc 앎
--eSup 앎
--eAdc, eSup 앎
+	-아무것도 모름	minpansoo, wellCompareTo
+	-eAdc 앎
+	-eAdc, eSup 앎
+	-eSup 앎
+(minpansoo, wellCompareTo, wellView) 작업
+minpansoo = 최솟값
+wellCompareTo = compareTo 메소드 0반영
+wellView = 상단메뉴바, 챔피언초상화, 기본적인이쁨
+
+	1.domain에서 compareTo 변경
+	1.domain에서 포지션속성마다 포지션Eng 속성을 새로만듦
+	2.service에서 해당 domain쓰는 method찾아서 set포지션Eng 적용
+	3.해당 view로 가서 이쁜뷰에 쓸 속성은 영어로 변경
+
+댓글판페이징
+게시판댓글 페이징
+
+
+	1.domain에서 compareTo 변경, 인자도 클래스명 따라 변경
+	1.domain에서 포지션속성마다 포지션Eng 속성을 새로만듦ㅍ
+	2.service에서 해당 domain쓰는 method찾아서 set포지션Eng 적용ㅍ
+	3.해당 view로 가서 이쁜뷰에 쓸 속성은 영어로 변경
+
+>>>
+뒤늦게 영어 필드 추가하면서 느낀점
+설계좀 잘 해둘껄
+알고리즘 공부 해야겠다
+효율적인 방법 어느정도 찾아봤으면 노가다 빨리 시작하기 - 은근 금방한다
+
+
+recommendAdcKnowEadc.html 참고하여 
+승률 원서 vs 원서 승률 <<<이런 기본 베이직 테이블 생성, 
+모든 recommendView에 적용

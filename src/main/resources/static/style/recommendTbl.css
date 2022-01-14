@@ -1,0 +1,44 @@
+table.recommendMainTbl{
+    width: 50%;
+}
+td.adcImg{
+    width: 40%;
+    word-break: break-all;
+}
+td.supImg{
+    width: 40%;
+    word-break: break-all;
+}
+td.adc{
+    width: 5%;
+    font-size: 15px;
+    font-weight: bold;
+    vertical-align: top;
+    text-align: right;
+    word-break: break-all;
+
+}
+td.winrate{
+    font-size: 32px;
+    font-weight: bold;
+    text-align: center;
+
+}
+td.sup{
+    width: 5%;
+    font-size: 15px;
+    font-weight: bold;
+    vertical-align: bottom;
+    text-align: left;
+    word-break: break-all;
+
+}
+tr.tempTr{
+    border: black;
+    outline: thin solid;
+}
+
+
+img{
+    width: 100%;
+}

@@ -262,3 +262,4 @@ ex) select * from table where col1=**col1value** << 이런식으로  sql문에 �
 
 
 
+![image-20220115011335345](C:\Users\yeonw\inflearn\myproject\lol_bottom\image-20220115011335345.png)

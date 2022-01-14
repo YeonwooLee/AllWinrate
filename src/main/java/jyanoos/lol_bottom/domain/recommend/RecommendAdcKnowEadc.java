@@ -8,6 +8,8 @@ import lombok.ToString;
 public class RecommendAdcKnowEadc implements Comparable<RecommendAdcKnowEadc>{
     String mAdc; //임의의 원딜
     String eAdc; //입력받은 원딜
+    String mAdcE; //임의의 원딜
+    String eAdcE; //입력받은 원딜
     int whole;
     int win;
     float winrate;//

@@ -10,6 +10,10 @@ public class RecommendCombiKnowEadc implements Comparable<RecommendCombiKnowEadc
     String mSup; //임의의 서폿
     String mCombi; //임의의 조합
     String eAdc; //입력받은 상대원딜
+    String mAdcE; //임의의 원딜
+    String mSupE; //임의의 서폿
+    String mCombiE; //임의의 조합
+    String eAdcE; //입력받은 상대원딜
     int whole;
     int win;
     float winrate;//임의의원딜_입력받은서폿 조합의 승률

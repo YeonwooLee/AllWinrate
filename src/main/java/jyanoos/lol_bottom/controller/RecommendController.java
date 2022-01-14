@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -25,7 +26,7 @@ public class RecommendController {
     }
 
     @RequestMapping("recommend/cal")
-    public String recommendCal(@ModelAttribute RecommendRequest recommendRequest, Model model){
+    public String recommendCal(@ModelAttribute RecommendRequest recommendRequest, Model model) throws IOException {
         log.info("챔피언추천요청 {}",recommendRequest);
 
 

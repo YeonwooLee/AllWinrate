@@ -1,0 +1,16 @@
+
+	1.domain에서 compareTo 변경, 인자도 클래스명 따라 변경
+	1.domain에서 포지션속성마다 포지션Eng 속성을 새로만듦ㅍ
+	2.service에서 해당 domain쓰는 method찾아서 set포지션Eng 적용ㅍ
+	3.해당 view로 가서 이쁜뷰에 쓸 속성은 영어로 변경
+
+
+뒤늦게 영어 필드 추가하면서 느낀점
+설계좀 잘 해둘껄
+알고리즘 공부 해야겠다
+효율적인 방법 어느정도 찾아봤으면 노가다 빨리 시작하기 - 은근 금방한다
+
+
+recommendAdcKnowEadc.html 참고하여 
+승률 원서 vs 원서 승률 <<<이런 기본 베이직 테이블 생성, 
+모든 recommendView에 적용

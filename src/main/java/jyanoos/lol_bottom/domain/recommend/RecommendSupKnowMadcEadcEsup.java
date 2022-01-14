@@ -10,6 +10,13 @@ public class RecommendSupKnowMadcEadcEsup implements Comparable<RecommendSupKnow
     String mAdc; //입력받은 아군원딜
     String eAdc; //입력받은 상대원딜
     String eSup;//입력받은 상대서폿
+
+    String mSupE; //임의의 추천받을 서폿
+    String mAdcE; //입력받은 아군원딜
+    String eAdcE; //입력받은 상대원딜
+    String eSupE;//입력받은 상대서폿
+
+
     int whole;
     int win;
     float winrate;//임의의원딜_입력받은서폿 조합의 승률

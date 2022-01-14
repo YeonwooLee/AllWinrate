@@ -5,6 +5,9 @@
     <title>Title</title>
 </head>
 <body>
+<div th:replace="header::header"></div>
+<br><br><br>
+
     <table>
         <thead>
         <tr>
@@ -26,10 +29,10 @@
             <td th:text="${recommendCombiKnowEadcEsup.whole}"></td>
             <td th:text="${recommendCombiKnowEadcEsup.win}"></td>
             <td th:text="${recommendCombiKnowEadcEsup.winrate}"></td>
-            <td th:text="${recommendCombiKnowEadcEsup.MAdc}"></td>
-            <td th:text="${recommendCombiKnowEadcEsup.MSup}"></td>
-            <td th:text="${recommendCombiKnowEadcEsup.EAdc}"></td>
-            <td th:text="${recommendCombiKnowEadcEsup.ESup}"></td>
+            <td th:text="${recommendCombiKnowEadcEsup.MAdcE}"></td>
+            <td th:text="${recommendCombiKnowEadcEsup.MSupE}"></td>
+            <td th:text="${recommendCombiKnowEadcEsup.EAdcE}"></td>
+            <td th:text="${recommendCombiKnowEadcEsup.ESupE}"></td>
 
         </tr>
         </tbody>

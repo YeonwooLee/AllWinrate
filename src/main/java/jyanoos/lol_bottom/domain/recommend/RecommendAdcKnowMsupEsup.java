@@ -9,6 +9,9 @@ public class RecommendAdcKnowMsupEsup implements Comparable<RecommendAdcKnowMsup
     String mAdc; //임의의 원딜
     String mSup; //입력받은 아군서폿
     String eSup; //입력받은 적서폿
+    String mAdcE; //임의의 원딜
+    String mSupE; //입력받은 아군서폿
+    String eSupE; //입력받은 적서폿
 
     int whole;
     int win;

@@ -2,59 +2,60 @@ package jyanoos.lol_bottom.service;
 
 import jyanoos.lol_bottom.domain.recommend.*;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface RecommendService {
     //추천: 원딜, 아는것: msup
-    List<RecommendAdcKnowMsup> recommendAdcKnowMsup(RecommendRequest recommendRequest);
+    List<RecommendAdcKnowMsup> recommendAdcKnowMsup(RecommendRequest recommendRequest) throws IOException;
 
     //추천: 원딜, 아는것: msup,eadc
-    List<RecommendAdcKnowMsupEadc> recommendAdcKnowMsupEadc(RecommendRequest recommendRequest);
+    List<RecommendAdcKnowMsupEadc> recommendAdcKnowMsupEadc(RecommendRequest recommendRequest) throws IOException;
 
     //추천: 원딜, 아는것:
-    List<RecommendAdcKnow> recommendAdcKnow(RecommendRequest recommendRequest);
+    List<RecommendAdcKnow> recommendAdcKnow(RecommendRequest recommendRequest) throws IOException;
 
     //추천:원딜, 아는것: msup,esup
-    List<RecommendAdcKnowMsupEsup> recommendAdcKnowMsupEsup(RecommendRequest recommendRequest);
+    List<RecommendAdcKnowMsupEsup> recommendAdcKnowMsupEsup(RecommendRequest recommendRequest) throws IOException;
 
     //추천:원딜, 아는것: msup,eAdc,eSup
-    List<RecommendAdcKnowMsupEadcEsup> recommendAdcKnowMsupEadcEsup(RecommendRequest recommendRequest);
+    List<RecommendAdcKnowMsupEadcEsup> recommendAdcKnowMsupEadcEsup(RecommendRequest recommendRequest) throws IOException;
 
     //추천:원딜, 아는것: eadc
-    List<RecommendAdcKnowEadc> recommendAdcKnowEadc(RecommendRequest recommendRequest);
+    List<RecommendAdcKnowEadc> recommendAdcKnowEadc(RecommendRequest recommendRequest) throws IOException;
 
     //추천:원딜, 아는것: esup
-    List<RecommendAdcKnowEsup> recommendAdcKnowEsup(RecommendRequest recommendRequest);
+    List<RecommendAdcKnowEsup> recommendAdcKnowEsup(RecommendRequest recommendRequest) throws IOException;
 
     //추천:원딜, 아는것: eadc,esup
-    List<RecommendAdcKnowEadcEsup> recommendAdcKnowEadcEsup(RecommendRequest recommendRequest);
+    List<RecommendAdcKnowEadcEsup> recommendAdcKnowEadcEsup(RecommendRequest recommendRequest) throws IOException;
 
 
 
     //추천:서폿, 아는것:
-    List<RecommendSupKnow> recommendSupKnow(RecommendRequest recommendRequest);
+    List<RecommendSupKnow> recommendSupKnow(RecommendRequest recommendRequest) throws IOException;
     //추천:서폿, 아는것:mAdc
-    List<RecommendSupKnowMadc> recommendSupKnowMadc(RecommendRequest recommendRequest);
+    List<RecommendSupKnowMadc> recommendSupKnowMadc(RecommendRequest recommendRequest) throws IOException;
     //추천:서폿, 아는것:mAdc eAdc
-    List<RecommendSupKnowMadcEadc> recommendSupKnowMadcEadc(RecommendRequest recommendRequest);
+    List<RecommendSupKnowMadcEadc> recommendSupKnowMadcEadc(RecommendRequest recommendRequest) throws IOException;
     //추천:서폿, 아는것:mAdc eSup
-    List<RecommendSupKnowMadcEsup> recommendSupKnowMadcEsup(RecommendRequest recommendRequest);
+    List<RecommendSupKnowMadcEsup> recommendSupKnowMadcEsup(RecommendRequest recommendRequest) throws IOException;
     //추천:서폿, 아는것:mAdc eAdc eSup
-    List<RecommendSupKnowMadcEadcEsup> recommendSupKnowMadcEadcEsup(RecommendRequest recommendRequest);
+    List<RecommendSupKnowMadcEadcEsup> recommendSupKnowMadcEadcEsup(RecommendRequest recommendRequest) throws IOException;
     //추천:서폿, 아는것:eAdc
-    List<RecommendSupKnowEadc> recommendSupKnowEadc(RecommendRequest recommendRequest);
+    List<RecommendSupKnowEadc> recommendSupKnowEadc(RecommendRequest recommendRequest) throws IOException;
     //추천:서폿, 아는것:eSup
-    List<RecommendSupKnowEsup> recommendSupKnowEsup(RecommendRequest recommendRequest);
+    List<RecommendSupKnowEsup> recommendSupKnowEsup(RecommendRequest recommendRequest) throws IOException;
     //추천:서폿, 아는것:eAdc, eSup
-    List<RecommendSupKnowEadcEsup> recommendSupKnowEadcEsup(RecommendRequest recommendRequest);
+    List<RecommendSupKnowEadcEsup> recommendSupKnowEadcEsup(RecommendRequest recommendRequest) throws IOException;
 
 
     //추천:조합, 아는것 없음 minPansoo적용
-    List<RecommendCombiKnow> recommendCombiKnow(RecommendRequest recommendRequest,int minPansoo);
+    List<RecommendCombiKnow> recommendCombiKnow(RecommendRequest recommendRequest,int minPansoo) throws IOException;
     //추천:조합, 아는것: eAdc
-    List<RecommendCombiKnowEadc> recommendCombiKnowEadc(RecommendRequest recommendRequest);
+    List<RecommendCombiKnowEadc> recommendCombiKnowEadc(RecommendRequest recommendRequest) throws IOException;
     //추천:조합, 아는것: eAdc, eSup
-    List<RecommendCombiKnowEadcEsup> recommendCombiKnowEadcEsup(RecommendRequest recommendRequest);
+    List<RecommendCombiKnowEadcEsup> recommendCombiKnowEadcEsup(RecommendRequest recommendRequest) throws IOException;
     //추천:조합, 아는것: eSup
-    List<RecommendCombiKnowEsup> recommendCombiKnowEsup(RecommendRequest recommendRequest);
+    List<RecommendCombiKnowEsup> recommendCombiKnowEsup(RecommendRequest recommendRequest) throws IOException;
 }

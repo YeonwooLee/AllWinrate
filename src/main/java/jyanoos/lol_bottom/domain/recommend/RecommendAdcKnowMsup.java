@@ -9,6 +9,8 @@ import lombok.ToString;
 public class RecommendAdcKnowMsup implements Comparable<RecommendAdcKnowMsup>{
     String mAdc; //임의의 원딜
     String mSup; //입력받은 서폿
+    String mAdcE; //임의의 원딜
+    String mSupE; //입력받은 서폿
     int whole;
     int win;
     float winrate;//임의의원딜_입력받은서폿 조합의 승률
@@ -35,4 +37,5 @@ public class RecommendAdcKnowMsup implements Comparable<RecommendAdcKnowMsup>{
             return 1;
         }
     }
+
 }

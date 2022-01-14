@@ -9,6 +9,9 @@ public class RecommendAdcKnowEadcEsup implements Comparable<RecommendAdcKnowEadc
     String mAdc; //임의의 원딜
     String eSup; //입력받은 적서폿
     String eAdc; //입력받은 적원딜
+    String mAdcE; //임의의 원딜
+    String eSupE; //입력받은 적서폿
+    String eAdcE; //입력받은 적원딜
 
     int whole;
     int win;

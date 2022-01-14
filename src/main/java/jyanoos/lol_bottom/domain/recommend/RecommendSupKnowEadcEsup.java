@@ -7,9 +7,13 @@ import lombok.ToString;
 @Getter @Setter @ToString
 public class RecommendSupKnowEadcEsup implements Comparable<RecommendSupKnowEadcEsup>{
     String mSup; //임의의 추천받을 서폿
-
     String eAdc; //입력받은 원딜
     String eSup; //입력받은 서폿
+
+    String mSupE; //임의의 추천받을 서폿
+    String eAdcE; //입력받은 원딜
+    String eSupE; //입력받은 서폿
+
     int whole;
     int win;
     float winrate;//임의의원딜_입력받은서폿 조합의 승률

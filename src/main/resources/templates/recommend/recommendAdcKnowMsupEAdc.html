@@ -5,6 +5,9 @@
     <title>Title</title>
 </head>
 <body>
+<div th:replace="header::header"></div>
+<br><br><br>
+
 <table>
     <thead>
     <tr>
@@ -18,9 +21,9 @@
     </thead>
     <tbody>
     <tr th:each="recommendAdcKnowMsupEAdc:${recommendAdcKnowMsupEAdcList}">
-        <td th:text="${recommendAdcKnowMsupEAdc.MAdc}"></td>
-        <td th:text="${recommendAdcKnowMsupEAdc.MSup}"></td>
-        <td th:text="${recommendAdcKnowMsupEAdc.EAdc}"></td>
+        <td th:text="${recommendAdcKnowMsupEAdc.MAdcE}"></td>
+        <td th:text="${recommendAdcKnowMsupEAdc.MSupE}"></td>
+        <td th:text="${recommendAdcKnowMsupEAdc.EAdcE}"></td>
         <td th:text="${recommendAdcKnowMsupEAdc.whole}"></td>
         <td th:text="${recommendAdcKnowMsupEAdc.win}"></td>
         <td th:text="${recommendAdcKnowMsupEAdc.winrate}"></td>

@@ -3,9 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link th:href="@{/style/recommendTbl.css}" rel="stylesheet" />
 </head>
 <body>
-    <table>
+<div th:replace="header::header"></div>
+<br><br><br>
+
+    <table class="recommendMainTbl">
         <thead>
         <tr>
             <th>아군원딜</th>
@@ -17,12 +21,22 @@
         </thead>
         <tbody>
         <tr th:each="recommendAdcKnowEadc:${recommendAdcKnowEadcList}">
-            <td th:text="${recommendAdcKnowEadc.MAdc}"></td>
-            <td th:text="${recommendAdcKnowEadc.EAdc}"></td>
+            <td th:text="${recommendAdcKnowEadc.MAdcE}"></td>
+            <td th:text="${recommendAdcKnowEadc.EAdcE}"></td>
             <td th:text="${recommendAdcKnowEadc.whole}"></td>
             <td th:text="${recommendAdcKnowEadc.win}"></td>
             <td th:text="${recommendAdcKnowEadc.winrate}"></td>
+        </tr>
+        </tbody>
 
+        <tbody th:each="awrL:${recommendAdcKnowEadcList}">
+        <!--        <tr class="tempTr" style = "cursor:pointer;" th:onclick="|location.href='@{/awrboard/}'${awrL.engAdc}|">-->
+        <tr>
+            <td class="winrate" th:text="${awrL.winrate}+'%'">승률</td>
+            <td class="adcImg"><img th:src="@{/centered/}+${awrL.MAdcE}+@{_0.jpg}" th:height="120px"></td>
+            <td class="winrate" th:text="VS">vs</td>
+            <td class="supImg"><img th:src="@{/centered/}+${awrL.EAdcE}+@{_0.jpg}" th:height="120px"></td>
+            <td class="winrate" th:text="${100-awrL.winrate}+'%'">승률</td>
         </tr>
         </tbody>
     </table>

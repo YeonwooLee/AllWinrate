@@ -8,6 +8,8 @@ import lombok.ToString;
 public class RecommendSupKnowEsup implements Comparable<RecommendSupKnowEsup>{
     String mSup; //임의의 추천받을 서폿
     String eSup; //입력받은 상대서폿
+    String mSupE; //임의의 추천받을 서폿
+    String eSupE; //입력받은 상대서폿
 
     int whole;
     int win;
