@@ -377,6 +377,126 @@ public class RecommendServiceImpl implements RecommendService{
 
     }
 
+    @Override
+    public List<RecommendAdcKnowEsup> recommendAdcKnowEsup(RecommendRequest recommendRequest) {
+        //정보 저장할 임시map
+        ConcurrentHashMap<String, List<Integer>> temp = new ConcurrentHashMap<>();
+
+        //최종 리턴용 리스트
+        List<RecommendAdcKnowEsup> resultList = new ArrayList<>();
+
+        //아는 정보 기입
+        String eSup = recommendRequest.getESup();
+
+        //아는 정보로 게임 가져옴
+        List<Game> gameList =  recommendMapper.supVs(eSup);
+
+        for(Game game:gameList){
+
+            String bAdc = game.getBadc();
+            String bSup = game.getBsup();
+            String rAdc = game.getRadc();
+            String rSup = game.getRsup();
+            String mAdc;
+            String myTeam = !bSup.equals(eSup) ? "blue":"red"; //내팀구분
+            mAdc = myTeam.equals("blue") ? bAdc:rAdc;//내원딜확인
+
+            String winTeam = game.getBwin()==1 ? "blue":"red"; // 승팀판정
+            boolean meWin = winTeam.equals(myTeam)?true:false;
+
+            if(temp.containsKey(mAdc)){//madc가 맵에 있으면
+                List<Integer> integers = temp.get(mAdc);
+                integers.set(0, integers.get(0)+1); //등장+1
+                if(meWin){
+                    integers.set(1, integers.get(1)+1); //이겼으면 승수도 +1
+                }
+                temp.replace(mAdc,integers); //map replace
+            }else{//맵에 없으면
+                List<Integer> integers = new ArrayList<>();
+                integers.add(1);
+                if(meWin){
+                    integers.add(1);//이겼으면 [1,1]
+                }else {
+                    integers.add(0); //졌으면[1,0]
+                }
+                temp.put(mAdc,integers);
+            }
+        }
+        for (String key: temp.keySet()){
+            int whole = temp.get(key).get(0);
+            int win = temp.get(key).get(1);
+            float winrate = (float) (Math.round((float)win/whole*10000)/100.0);
+            RecommendAdcKnowEsup recommendAdcKnowEsup = new RecommendAdcKnowEsup(whole,win,winrate);
+            recommendAdcKnowEsup.setMAdc(key);
+            recommendAdcKnowEsup.setESup(eSup);
+            resultList.add(recommendAdcKnowEsup);
+        }
+        Collections.sort(resultList);
+        return resultList;
+
+    }
+
+    @Override
+    public List<RecommendAdcKnowEadcEsup> recommendAdcKnowEadcEsup(RecommendRequest recommendRequest) {
+        //정보 저장할 임시map
+        ConcurrentHashMap<String, List<Integer>> temp = new ConcurrentHashMap<>();
+
+        //최종 리턴용 리스트
+        List<RecommendAdcKnowEadcEsup> resultList = new ArrayList<>();
+
+        //아는 정보 기입
+        String eSup = recommendRequest.getESup();
+        String eAdc = recommendRequest.getEAdc();
+
+        //아는 정보로 게임 가져옴
+        List<Game> gameList =  recommendMapper.adcSupVs(eAdc,eSup);
+
+        for(Game game:gameList){
+
+            String bAdc = game.getBadc();
+            String bSup = game.getBsup();
+            String rAdc = game.getRadc();
+            String rSup = game.getRsup();
+            String mAdc;
+            String myTeam = !bSup.equals(eSup) ? "blue":"red"; //내팀구분
+            mAdc = myTeam.equals("blue") ? bAdc:rAdc;//내원딜확인
+
+            String winTeam = game.getBwin()==1 ? "blue":"red"; // 승팀판정
+            boolean meWin = winTeam.equals(myTeam)?true:false;
+
+            if(temp.containsKey(mAdc)){//madc가 맵에 있으면
+                List<Integer> integers = temp.get(mAdc);
+                integers.set(0, integers.get(0)+1); //등장+1
+                if(meWin){
+                    integers.set(1, integers.get(1)+1); //이겼으면 승수도 +1
+                }
+                temp.replace(mAdc,integers); //map replace
+            }else{//맵에 없으면
+                List<Integer> integers = new ArrayList<>();
+                integers.add(1);
+                if(meWin){
+                    integers.add(1);//이겼으면 [1,1]
+                }else {
+                    integers.add(0); //졌으면[1,0]
+                }
+                temp.put(mAdc,integers);
+            }
+        }
+        for (String key: temp.keySet()){
+            int whole = temp.get(key).get(0);
+            int win = temp.get(key).get(1);
+            float winrate = (float) (Math.round((float)win/whole*10000)/100.0);
+            RecommendAdcKnowEadcEsup recommendAdcKnowEadcEsup = new RecommendAdcKnowEadcEsup(whole,win,winrate);
+            recommendAdcKnowEadcEsup.setMAdc(key);
+            recommendAdcKnowEadcEsup.setESup(eSup);
+            recommendAdcKnowEadcEsup.setEAdc(eAdc);
+            resultList.add(recommendAdcKnowEadcEsup);
+        }
+        Collections.sort(resultList);
+        return resultList;
+
+    }
+
     private void setKnowNothing(ConcurrentHashMap<String, List<Integer>> temp, String bAdc, String rAdc) {
         if(temp.containsKey(rAdc)){
             List<Integer> integers = temp.get(rAdc);

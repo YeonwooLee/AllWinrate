@@ -64,11 +64,21 @@ public class RecommendController {
             List<RecommendAdcKnowEadc> recommendAdcKnowEadcList = recommendService.recommendAdcKnowEadc(recommendRequest);
             model.addAttribute("recommendAdcKnowEadcList",recommendAdcKnowEadcList);
             return "/recommend/recommendAdcKnowEadc";
+        }//추천: 원딜, 아는것: eSup
+        else if(recommendCase.equals("recommendAdcKnowEsup")){
+            List<RecommendAdcKnowEsup> recommendAdcKnowEsupList = recommendService.recommendAdcKnowEsup(recommendRequest);
+            model.addAttribute("recommendAdcKnowEsupList",recommendAdcKnowEsupList);
+            return "/recommend/recommendAdcKnowEsup";
+        }//추천: 원딜, 아는것: eAdc, eSup
+        else if(recommendCase.equals("recommendAdcKnowEadcEsup")){
+            List<RecommendAdcKnowEadcEsup> recommendAdcKnowEadcEsupList = recommendService.recommendAdcKnowEadcEsup(recommendRequest);
+            model.addAttribute("recommendAdcKnowEadcEsupList",recommendAdcKnowEadcEsupList);
+            return "/recommend/recommendAdcKnowEadcEsup";
         }
 
 
 
-        return"/awrMain";
+        return"/awrMain"; //임시로해둠 추후 삭제
     }
 
     private String getRecommendCase(RecommendRequest recommendRequest) {
@@ -92,6 +102,12 @@ public class RecommendController {
             }//아는 정보=eadc
             else if(recommendRequest.getMAdc()==""&& recommendRequest.getEAdc()!=""&& recommendRequest.getESup()==""&& recommendRequest.getMSup()==""){
                 return "recommendAdcKnowEadc";
+            }//아는 정보=eSup
+            else if(recommendRequest.getMAdc()==""&& recommendRequest.getEAdc()==""&& recommendRequest.getESup()!=""&& recommendRequest.getMSup()==""){
+                return "recommendAdcKnowEsup";
+            }//아는 정보=eSup,eAdc
+            else if(recommendRequest.getMAdc()==""&& recommendRequest.getEAdc()!=""&& recommendRequest.getESup()!=""&& recommendRequest.getMSup()==""){
+                return "recommendAdcKnowEadcEsup";
             }
         }
         return null; //여기 걸리면 안됨

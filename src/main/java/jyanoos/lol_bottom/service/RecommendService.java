@@ -22,4 +22,10 @@ public interface RecommendService {
 
     //추천:원딜, 아는것: eadc
     List<RecommendAdcKnowEadc> recommendAdcKnowEadc(RecommendRequest recommendRequest);
+
+    //추천:원딜, 아는것: esup
+    List<RecommendAdcKnowEsup> recommendAdcKnowEsup(RecommendRequest recommendRequest);
+
+    //추천:원딜, 아는것: eadc,esup
+    List<RecommendAdcKnowEadcEsup> recommendAdcKnowEadcEsup(RecommendRequest recommendRequest);
 }
