@@ -54,8 +54,6 @@ public interface AllWinrateMapper {
 
 
 
-
-
     //adc_sup라는 이름의 테이블 생성함
     @Update("CREATE TABLE ${adc}_${sup}(\n" +
             "\trno INT NOT NULL AUTO_INCREMENT,\n" +

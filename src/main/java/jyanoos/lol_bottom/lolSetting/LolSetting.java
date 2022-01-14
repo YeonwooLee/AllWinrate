@@ -6,6 +6,7 @@ import java.util.Map;
 
 public interface LolSetting {
     static String version = "12_1";
+    static String versionDot="12.1";
     static String tier="GOLD";
 
     String convertKoToEng(String korChamp) throws IOException;

@@ -1,10 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
+    <form th:action="@{/recommend/cal}" th:method="post">
+        <div align="center">
+            <label>추전 종류 선택</label>
+            <br>
+            <label><input type="radio" name="recommendKind" value="adc">원딜</label>
+            <label><input type="radio" name="recommendKind" value="sup">서폿</label>
+            <label><input type="radio" name="recommendKind" value="combi">조합</label>
+            <br><br>
 
+
+            <label>우리팀 원딜</label>
+            <input type="text" name="mAdc">
+
+            <label>우리팀 서폿</label>
+            <input type="text" name="mSup"> <br><br>
+
+            <label>상대팀 원딜</label>
+            <input type="text" name="eAdc">
+
+            <label>상대팀 서폿</label>
+            <input type="text" name="eSup"> <br><br>
+        </div>
+        <div align="center">
+            <input type="submit" value="챔피언추천받기"/>
+        </div>
+    </form>
 </body>
 </html>

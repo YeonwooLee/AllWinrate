@@ -107,23 +107,23 @@ https://kuzuro.blogspot.com/search/label/%EC%8A%A4%ED%94%84%EB%A7%81%20%EA%B2%8C
 #챔피언추천
 1.원딜추천
 -아무것도 모름
--mSup 앎
--mSup, eAdc 앎
--mSup, eSup 앎
--mSup, eAdc, eSup 앎
--eAdc 앎
--eSup 앎
--eAdc, eSup 앎
+-mSup 앎        		서폿vs
+-mSup, eAdc 앎 		원딜vs서폿
+-mSup, eSup 앎 		서폿vs서폿
+-mSup, eAdc, eSup 앎 	원딜서폿vs서폿
+-eAdc 앎 		원딜vs
+-eSup 앎 		
+-eAdc, eSup 앎 			
 
 2.서폿추천
 -아무것도 모름
--mAdc 앎
--mAdc, eAdc 앎
--mAdc, eSup 앎
--mAdc, eAdc, eSup 앎
--eAdc 앎
--eSup 앎
--eAdc, eSup 앎
+-mAdc 앎		
+-mAdc, eAdc 앎 		원딜vs원딜
+-mAdc, eSup 앎		
+-mAdc, eAdc, eSup 앎	
+-eAdc 앎			
+-eSup 앎			
+-eAdc, eSup 앎		원딜서폿vs
 
 3.조합추천
 -아무것도 모름

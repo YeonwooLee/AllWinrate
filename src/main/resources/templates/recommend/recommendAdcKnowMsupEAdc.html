@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <th>아군원딜</th>
+        <th>아군폿</th>
+        <th>상대원딜</th>
+        <th><<3명조합총등장</th>
+        <th>아군승수</th>
+        <th>아군승률</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="recommendAdcKnowMsupEAdc:${recommendAdcKnowMsupEAdcList}">
+        <td th:text="${recommendAdcKnowMsupEAdc.MAdc}"></td>
+        <td th:text="${recommendAdcKnowMsupEAdc.MSup}"></td>
+        <td th:text="${recommendAdcKnowMsupEAdc.EAdc}"></td>
+        <td th:text="${recommendAdcKnowMsupEAdc.whole}"></td>
+        <td th:text="${recommendAdcKnowMsupEAdc.win}"></td>
+        <td th:text="${recommendAdcKnowMsupEAdc.winrate}"></td>
+
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
