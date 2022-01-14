@@ -52,7 +52,7 @@
 </div>
 <div>
     <ul>
-        <li th:each="reply:${replies}">
+        <li th:each="reply:${freeBoardReplyPaging.replies}">
             <div>
                 <p th:text="|${reply.writer} /${#dates.format(reply.regDate,'yyyy-MM-dd HH:mm')} |"></p>
                 <p th:text="${reply.content}"></p>
@@ -63,6 +63,9 @@
         </li>
 
     </ul>
+    <a th:if="${freeBoardReplyPaging.pages.get(0)>=10}" th:text="이전" th:href="@{|/free_board/${freeBoard.bno}/${freeBoardReplyPaging.pages.get(0)-10}|}"></a>
+    <a th:each="page:${freeBoardReplyPaging.pages}" th:text="${page+1}  " th:href="@{|/free_board/${freeBoard.bno}/${page}|}"></a>
+    <a th:if="${freeBoardReplyPaging.endPaging+1}<${freeBoardReplyPaging.lastPageNum}" th:text="다음" th:href="@{|/free_board/${freeBoard.bno}/${freeBoardReplyPaging.pages.get(0)+10}|}"
 </div>
 </body>
 </html>

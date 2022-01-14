@@ -3,6 +3,7 @@ package jyanoos.lol_bottom.service;
 
 
 import jyanoos.lol_bottom.domain.FreeBoard;
+import jyanoos.lol_bottom.domain.FreeBoardReplyPaging;
 import jyanoos.lol_bottom.domain.Paging;
 import jyanoos.lol_bottom.domain.Reply;
 
@@ -46,4 +47,6 @@ public interface FreeBoardService {
     //자게 댓글 삭제
     boolean deleteReply(int bno, int rno);
 
+    //페이징된 댓글
+    FreeBoardReplyPaging freeBoardReplyPaging(int bno, int nowPage);
 }

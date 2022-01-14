@@ -2,6 +2,7 @@ package jyanoos.lol_bottom.controller;
 
 
 import jyanoos.lol_bottom.domain.FreeBoard;
+import jyanoos.lol_bottom.domain.FreeBoardReplyPaging;
 import jyanoos.lol_bottom.domain.Paging;
 import jyanoos.lol_bottom.domain.Reply;
 import jyanoos.lol_bottom.service.FreeBoardService;
@@ -45,13 +46,13 @@ public class FreeBoardController {
     public String writeFreeBoard(@ModelAttribute("freeBoard")FreeBoard freeBoard, RedirectAttributes redirectAttributes){
         int bno = freeBoardService.writeFreeBoard(freeBoard); //저장성공시 글번호, 실패시 0 리턴
         redirectAttributes.addAttribute("bno",bno);
-        return "redirect:/free_board/{bno}";
+        return "redirect:/free_board/{bno}/0";
     }
 
 
     //게시글 상세 조회, 댓글조회
     @GetMapping("/{bno}")
-    public String readFreeBoard(@PathVariable("bno") int bno, Model model){
+    public String readFreeBoard(@PathVariable("bno") int bno, Model model,RedirectAttributes redirectAttributes){
         //게시글 상세
         FreeBoard freeBoard = freeBoardService.findByBno(bno);
         model.addAttribute("freeBoard",freeBoard);
@@ -59,6 +60,22 @@ public class FreeBoardController {
         //댓글
         List<Reply> replies= freeBoardService.findReplyByBno(bno);
         model.addAttribute("replies",replies);
+        redirectAttributes.addAttribute("bno",bno);
+        return "redirect:/free_board/{bno}/0";
+
+    }
+
+    //게시글 상세 조회, 댓글페이징
+    @GetMapping("/{bno}/{nowPage}")
+    public String readFreeBoard(@PathVariable("bno") int bno, @PathVariable("nowPage") int nowPage, Model model){
+        //게시글 상세
+        FreeBoard freeBoard = freeBoardService.findByBno(bno);
+        model.addAttribute("freeBoard",freeBoard);
+
+        //댓글
+        FreeBoardReplyPaging freeBoardReplyPaging = freeBoardService.freeBoardReplyPaging(bno,nowPage);
+//        List<Reply> replies= freeBoardService.findReplyByBno(bno);
+        model.addAttribute("freeBoardReplyPaging",freeBoardReplyPaging);
 
         return "freeBoardArticle";
 
@@ -81,7 +98,7 @@ public class FreeBoardController {
         int bno = freeBoardService.updateFreeBoard(freeBoard.getBno(), freeBoard.getTitle(), freeBoard.getContent(), freeBoard.getWriter());
 
         redirectAttributes.addAttribute("bno",bno);
-        return "redirect:/free_board/{bno}";
+        return "redirect:/free_board/{bno}/0";
 
     }
 
@@ -132,7 +149,7 @@ public class FreeBoardController {
         int success = freeBoardService.writeFreeBoardReply(reply);
         log.info("댓글입력됨. 번호 = {} ",success);
         redirectAttributes.addAttribute("bno",reply.getBno());
-        return "redirect:/free_board/{bno}";
+        return "redirect:/free_board/{bno}/0";
     }
 
     @GetMapping("/updatereply/{bno}/{rno}")
@@ -153,14 +170,14 @@ public class FreeBoardController {
     String updateFreeBoardReply(@ModelAttribute Reply reply, RedirectAttributes redirectAttributes){
         freeBoardService.updateReplyFreeBoard(reply);
         redirectAttributes.addAttribute("bno",reply.getBno());
-        return "redirect:/free_board/{bno}";
+        return "redirect:/free_board/{bno}/0";
     }
 
     @GetMapping("/deletereply/{bno}/{rno}")
     String deleteFreeBoardReply(@PathVariable("bno") int bno, @PathVariable("rno") int rno,RedirectAttributes redirectAttributes){
         freeBoardService.deleteReply(bno,rno);
         redirectAttributes.addAttribute("bno",bno);
-        return "redirect:/free_board/{bno}";
+        return "redirect:/free_board/{bno}/0";
     }
 
 }

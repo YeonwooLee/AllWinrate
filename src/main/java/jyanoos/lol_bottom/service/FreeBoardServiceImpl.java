@@ -1,6 +1,7 @@
 package jyanoos.lol_bottom.service;
 
 import jyanoos.lol_bottom.domain.FreeBoard;
+import jyanoos.lol_bottom.domain.FreeBoardReplyPaging;
 import jyanoos.lol_bottom.domain.Paging;
 import jyanoos.lol_bottom.domain.Reply;
 import jyanoos.lol_bottom.mapper.FreeBoardMapper;
@@ -155,6 +156,38 @@ public class FreeBoardServiceImpl implements FreeBoardService {
         return success;
     }
 
+    @Override
+    public FreeBoardReplyPaging freeBoardReplyPaging(int bno, int nowPage) {
+        //변수: 페이지당 몇개 댓글 보여줄지(15)
+        int replyPerPage = 15;
+
+        //1. bno의 전체 댓글 수 조회
+        int replyNum = freeBoardMapper.countReply(bno);
+
+        //1. 총 몇페이지 필요한지 계산
+        int needPage = replyNum/replyPerPage+1;
+
+        //2. 현재 페이지 글 목록 작성
+        List<Reply> replies = freeBoardMapper.replyList(bno,replyPerPage * nowPage,replyPerPage);
+
+        //3. 현재페이지 하단 넘버링 작성
+        int startPage = (nowPage/10)*10;
+        List<Integer> pages = new ArrayList<>();
+        for(int i=0;i<10;i++){
+            if(startPage+i>=needPage) break;
+            pages.add(startPage+i);
+        }
+        int endPaging = pages.get(pages.size()-1);
+
+        FreeBoardReplyPaging freeBoardReplyPaging = new FreeBoardReplyPaging();
+        freeBoardReplyPaging.setPages(pages);
+        freeBoardReplyPaging.setReplies(replies);
+        freeBoardReplyPaging.setLastPageNum(needPage); //실제 필요한 페이지 수(=전체페이징의마지막인덱스+1)
+        freeBoardReplyPaging.setEndPaging(endPaging);//바닥페이징 끝(0부터시작)
+        log.info("freeBoardReply{}", freeBoardReplyPaging);
+        return freeBoardReplyPaging;
+    }
+
     public Paging pagingByCol(int num, int nowPage, String findKeyword, String findCol) {
         //List<Object> result = new ArrayList<Object>(); //object타입으로 받은 후 controller에서 int[]와 List<FreeBoard>로 캐스팅하여 사용 -->버전2로 변경
 
@@ -165,7 +198,7 @@ public class FreeBoardServiceImpl implements FreeBoardService {
         int needPage = freeBoardAllCount/num;
 
 
-        //3-2. 현재 페이지 페이징리스트, 10개씩 끊어보여줌
+        //3-2. 현재 페이지 페이징 번호 리스트, 10개씩 끊어보여줌
         List<Integer> pageList = new ArrayList<>();
         int lastIndex = 0;
         for(int i=0;i<10;i++){

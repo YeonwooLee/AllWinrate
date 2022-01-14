@@ -145,4 +145,23 @@ public interface FreeBoardMapper {
     @Delete("delete from tbl_free_board_reply\n" +
             "WHERE rno=#{rno} AND bno=#{bno}")
     boolean deleteReply(@Param("rno") int rno, @Param("bno") int bno);
+
+
+//자게 댓글 페이징 시작
+    //글번호가 bno인 글의 댓글이 몇개인지 확인
+    @Select("SELECT COUNT(rno) FROM tbl_free_board_reply WHERE bno=#{bno}")
+    int countReply(@Param("bno") int bno);
+
+    //글번호 bno인 글의 댓글을 startIndex부터 getNum개 가져옴(시간 오름차순 - 최근 글이 맨 뒤로감)
+    @Select("SELECT\n" +
+            "\trno,bno,writer,content,regDate\n" +
+            "\tFROM tbl_free_board_reply WHERE bno=#{bno}\n" +
+            "\tORDER BY rno ASC\n" +
+            "\t\tLIMIT ${startIndex},${getNum}")
+    List<Reply> replyList(
+            @Param("bno") int bno,
+            @Param("startIndex") int startIndex,
+            @Param("getNum") int getNum
+    );
+
 }
