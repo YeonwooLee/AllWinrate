@@ -37,82 +37,82 @@ public class RecommendController {
         //케이스에 맞는 메소드 호출
         //추천: 원딜, 아는것: msup
         if(recommendCase.equals("recommendAdcKnowMsup")){
-            List<RecommendAdcKnowMsup> recommendAdcKnowMsupList = recommendService.recommendAdcKnowMsup(recommendRequest);
+            List<RecommendAdcKnowMsup> recommendAdcKnowMsupList = recommendService.recommendAdcKnowMsup(recommendRequest,200);
             model.addAttribute("recommendAdcKnowMsupList",recommendAdcKnowMsupList);
             return "/recommend/recommendAdcKnowMsup";
         }//추천: 원딜, 아는것: msup,eadc
         else if(recommendCase.equals("recommendAdcKnowMsupEadc")){
-            List<RecommendAdcKnowMsupEadc> recommendAdcKnowMsupEAdcList = recommendService.recommendAdcKnowMsupEadc(recommendRequest);
+            List<RecommendAdcKnowMsupEadc> recommendAdcKnowMsupEAdcList = recommendService.recommendAdcKnowMsupEadc(recommendRequest,10);
             model.addAttribute("recommendAdcKnowMsupEAdcList",recommendAdcKnowMsupEAdcList);
             return "/recommend/recommendAdcKnowMsupEAdc";
-        }//추천: 원딜, 아는것:
+        }//추천: 원딜, 아는것: 없음
         else if(recommendCase.equals("recommendAdcKnow")){
-            List<RecommendAdcKnow> recommendAdcKnowList = recommendService.recommendAdcKnow(recommendRequest);
+            List<RecommendAdcKnow> recommendAdcKnowList = recommendService.recommendAdcKnow(recommendRequest,200);
             model.addAttribute("recommendAdcKnowList",recommendAdcKnowList);
             return "/recommend/recommendAdcKnow";
         }//추천: 원딜, 아는것: msup, esup
         else if(recommendCase.equals("recommendAdcKnowMsupEsup")){
-            List<RecommendAdcKnowMsupEsup> recommendAdcKnowMsupEsupList = recommendService.recommendAdcKnowMsupEsup(recommendRequest);
+            List<RecommendAdcKnowMsupEsup> recommendAdcKnowMsupEsupList = recommendService.recommendAdcKnowMsupEsup(recommendRequest,10);
             model.addAttribute("recommendAdcKnowMsupEsupList",recommendAdcKnowMsupEsupList);
             return "/recommend/recommendAdcKnowMsupEsup";
         }//추천: 원딜, 아는것: mSup, eAdc, eSup
         else if(recommendCase.equals("recommendAdcKnowMsupEadcEsup")){
-            List<RecommendAdcKnowMsupEadcEsup> recommendAdcKnowMsupEadcEsupList = recommendService.recommendAdcKnowMsupEadcEsup(recommendRequest);
+            List<RecommendAdcKnowMsupEadcEsup> recommendAdcKnowMsupEadcEsupList = recommendService.recommendAdcKnowMsupEadcEsup(recommendRequest,5);
             model.addAttribute("recommendAdcKnowMsupEadcEsupList",recommendAdcKnowMsupEadcEsupList);
             return "/recommend/recommendAdcKnowMsupEadcEsup";
         }//추천: 원딜, 아는것: eAdc
         else if(recommendCase.equals("recommendAdcKnowEadc")){
-            List<RecommendAdcKnowEadc> recommendAdcKnowEadcList = recommendService.recommendAdcKnowEadc(recommendRequest);
+            List<RecommendAdcKnowEadc> recommendAdcKnowEadcList = recommendService.recommendAdcKnowEadc(recommendRequest,100);
             model.addAttribute("recommendAdcKnowEadcList",recommendAdcKnowEadcList);
             return "/recommend/recommendAdcKnowEadc";
         }//추천: 원딜, 아는것: eSup
         else if(recommendCase.equals("recommendAdcKnowEsup")){
-            List<RecommendAdcKnowEsup> recommendAdcKnowEsupList = recommendService.recommendAdcKnowEsup(recommendRequest);
+            List<RecommendAdcKnowEsup> recommendAdcKnowEsupList = recommendService.recommendAdcKnowEsup(recommendRequest,100);
             model.addAttribute("recommendAdcKnowEsupList",recommendAdcKnowEsupList);
             return "/recommend/recommendAdcKnowEsup";
         }//추천: 원딜, 아는것: eAdc, eSup
         else if(recommendCase.equals("recommendAdcKnowEadcEsup")){
-            List<RecommendAdcKnowEadcEsup> recommendAdcKnowEadcEsupList = recommendService.recommendAdcKnowEadcEsup(recommendRequest);
+            List<RecommendAdcKnowEadcEsup> recommendAdcKnowEadcEsupList = recommendService.recommendAdcKnowEadcEsup(recommendRequest,10);
             model.addAttribute("recommendAdcKnowEadcEsupList",recommendAdcKnowEadcEsupList);
             return "/recommend/recommendAdcKnowEadcEsup";
         }//추천: 서폿, 아는것:
         else if(recommendCase.equals("recommendSupKnow")){
-            List<RecommendSupKnow> recommendSupKnowList = recommendService.recommendSupKnow(recommendRequest);
+            List<RecommendSupKnow> recommendSupKnowList = recommendService.recommendSupKnow(recommendRequest,200);
             model.addAttribute("recommendSupKnowList",recommendSupKnowList);
             return "/recommend/recommendSupKnow";
         }//추천: 서폿, 아는것: mAdc
         else if(recommendCase.equals("recommendSupKnowMadc")){
-            List<RecommendSupKnowMadc> recommendSupKnowMadcList = recommendService.recommendSupKnowMadc(recommendRequest);
+            List<RecommendSupKnowMadc> recommendSupKnowMadcList = recommendService.recommendSupKnowMadc(recommendRequest,200);
             model.addAttribute("recommendSupKnowMadcList",recommendSupKnowMadcList);
             return "/recommend/recommendSupKnowMadc";
         }//추천: 서폿, 아는것: mAdc eAdc
         else if(recommendCase.equals("recommendSupKnowMadcEadc")){
-            List<RecommendSupKnowMadcEadc> recommendSupKnowMadcEadcList = recommendService.recommendSupKnowMadcEadc(recommendRequest);
+            List<RecommendSupKnowMadcEadc> recommendSupKnowMadcEadcList = recommendService.recommendSupKnowMadcEadc(recommendRequest,10);
             model.addAttribute("recommendSupKnowMadcEadcList",recommendSupKnowMadcEadcList);
             return "/recommend/recommendSupKnowMadcEadc";
         }//추천: 서폿, 아는것: mAdc eSup
         else if(recommendCase.equals("recommendSupKnowMadcEsup")){
-            List<RecommendSupKnowMadcEsup> recommendSupKnowMadcEsupList = recommendService.recommendSupKnowMadcEsup(recommendRequest);
+            List<RecommendSupKnowMadcEsup> recommendSupKnowMadcEsupList = recommendService.recommendSupKnowMadcEsup(recommendRequest,5);
             model.addAttribute("recommendSupKnowMadcEsupList",recommendSupKnowMadcEsupList);
             return "/recommend/recommendSupKnowMadcEsup";
         }//추천: 서폿, 아는것: mAdc eAdc eSup
         else if(recommendCase.equals("recommendSupKnowMadcEadcEsup")){
-            List<RecommendSupKnowMadcEadcEsup> recommendSupKnowMadcEadcEsupList = recommendService.recommendSupKnowMadcEadcEsup(recommendRequest);
+            List<RecommendSupKnowMadcEadcEsup> recommendSupKnowMadcEadcEsupList = recommendService.recommendSupKnowMadcEadcEsup(recommendRequest,5);
             model.addAttribute("recommendSupKnowMadcEadcEsupList",recommendSupKnowMadcEadcEsupList);
             return "/recommend/recommendSupKnowMadcEadcEsup";
         }//추천: 서폿, 아는것: eAdc
         else if(recommendCase.equals("recommendSupKnowEadc")){
-            List<RecommendSupKnowEadc> recommendSupKnowEadcList = recommendService.recommendSupKnowEadc(recommendRequest);
+            List<RecommendSupKnowEadc> recommendSupKnowEadcList = recommendService.recommendSupKnowEadc(recommendRequest,80);
             model.addAttribute("recommendSupKnowEadcList",recommendSupKnowEadcList);
             return "/recommend/recommendSupKnowEadc";
         }//추천: 서폿, 아는것: eSup
         else if(recommendCase.equals("recommendSupKnowEsup")){
-            List<RecommendSupKnowEsup> recommendSupKnowEsupList = recommendService.recommendSupKnowEsup(recommendRequest);
+            List<RecommendSupKnowEsup> recommendSupKnowEsupList = recommendService.recommendSupKnowEsup(recommendRequest,50);
             model.addAttribute("recommendSupKnowEsupList",recommendSupKnowEsupList);
             return "/recommend/recommendSupKnowEsup";
         }//추천: 서폿, 아는것: eadc eSup
         else if(recommendCase.equals("recommendSupKnowEadcEsup")){
-            List<RecommendSupKnowEadcEsup> recommendSupKnowEadcEsupList = recommendService.recommendSupKnowEadcEsup(recommendRequest);
+            List<RecommendSupKnowEadcEsup> recommendSupKnowEadcEsupList = recommendService.recommendSupKnowEadcEsup(recommendRequest,10);
             model.addAttribute("recommendSupKnowEadcEsupList",recommendSupKnowEadcEsupList);
             return "/recommend/recommendSupKnowEadcEsup";
         }//추천: 조합, 아는것 없음
@@ -122,17 +122,17 @@ public class RecommendController {
             return "/recommend/recommendCombiKnow";
         }//추천: 조합, 아는것: eAdc
         else if(recommendCase.equals("recommendCombiKnowEadc")){
-            List<RecommendCombiKnowEadc> recommendCombiKnowEadcList = recommendService.recommendCombiKnowEadc(recommendRequest);
+            List<RecommendCombiKnowEadc> recommendCombiKnowEadcList = recommendService.recommendCombiKnowEadc(recommendRequest,50);
             model.addAttribute("recommendCombiKnowEadcList",recommendCombiKnowEadcList);
             return "/recommend/recommendCombiKnowEadc";
         }//추천: 조합, 아는것: eAdc eSup
         else if(recommendCase.equals("recommendCombiKnowEadcEsup")){
-            List<RecommendCombiKnowEadcEsup> recommendCombiKnowEadcEsupList = recommendService.recommendCombiKnowEadcEsup(recommendRequest);
+            List<RecommendCombiKnowEadcEsup> recommendCombiKnowEadcEsupList = recommendService.recommendCombiKnowEadcEsup(recommendRequest,5);
             model.addAttribute("recommendCombiKnowEadcEsupList",recommendCombiKnowEadcEsupList);
             return "/recommend/recommendCombiKnowEadcEsup";
         }//추천: 조합, 아는것: eSup
         else if(recommendCase.equals("recommendCombiKnowEsup")){
-            List<RecommendCombiKnowEsup> recommendCombiKnowEsupList = recommendService.recommendCombiKnowEsup(recommendRequest);
+            List<RecommendCombiKnowEsup> recommendCombiKnowEsupList = recommendService.recommendCombiKnowEsup(recommendRequest,30);
             model.addAttribute("recommendCombiKnowEsupList",recommendCombiKnowEsupList);
             return "/recommend/recommendCombiKnowEsup";
         }

@@ -10,23 +10,31 @@
 <br><br><br>
 
     <table class="recommendMainTbl">
-        <thead>
-        <tr>
-            <th>아군원딜</th>
-            <th><<1개챔조합총등장</th>
-            <th>아군승수</th>
-            <th>아군승률</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="recommendAdcKnow:${recommendAdcKnowList}">
-            <td th:text="${recommendAdcKnow.MAdcE}"></td>
-            <td th:text="${recommendAdcKnow.whole}"></td>
-            <td th:text="${recommendAdcKnow.win}"></td>
-            <td th:text="${recommendAdcKnow.winrate}"></td>
+<!--        <thead>-->
+<!--        <tr>-->
+<!--            <th>아군원딜</th>-->
+<!--            <th><<1개챔조합총등장</th>-->
+<!--            <th>아군승수</th>-->
+<!--            <th>아군승률</th>-->
+<!--        </tr>-->
+<!--        </thead>-->
+<!--        <tbody>-->
+<!--        <tr th:each="recommendAdcKnow:${recommendAdcKnowList}">-->
+<!--            <td th:text="${recommendAdcKnow.MAdcE}"></td>-->
+<!--            <td th:text="${recommendAdcKnow.whole}"></td>-->
+<!--            <td th:text="${recommendAdcKnow.win}"></td>-->
+<!--            <td th:text="${recommendAdcKnow.winrate}"></td>-->
 
-        </tr>
-        </tbody>
+<!--        </tr>-->
+<!--        </tbody>-->
+
+
+
+
+
+
+
+
         <tbody th:each="awrL:${recommendAdcKnowList}">
         <tr>
             <td class="winrate" th:text="${awrL.winrate}+'%'">승률</td>

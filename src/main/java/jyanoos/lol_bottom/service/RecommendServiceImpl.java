@@ -27,7 +27,7 @@ public class RecommendServiceImpl implements RecommendService{
 
     @Override
     //원딜추천 - 아군서폿만 앎
-    public List<RecommendAdcKnowMsup> recommendAdcKnowMsup(RecommendRequest recommendRequest) throws IOException {
+    public List<RecommendAdcKnowMsup> recommendAdcKnowMsup(RecommendRequest recommendRequest, int minPansoo) throws IOException {
 
         //아군 서폿이 포함된 게임 리스트 생성(mapper에서 버전 관리됨)
         String mSup = recommendRequest.getMSup();
@@ -69,7 +69,12 @@ public class RecommendServiceImpl implements RecommendService{
             String mAdc = combi.split("_")[0];
             recommendAdcKnowMsup.setMAdc(mAdc);
             recommendAdcKnowMsup.setMAdcE(lolSetting.convertKoToEng(mAdc));
-            resultList.add(recommendAdcKnowMsup);
+
+            //resultList.add(recommendAdcKnowMsup);
+            if(whole>=minPansoo) {
+                resultList.add(recommendAdcKnowMsup);//dd
+            }
+
         }
 
         Collections.sort(resultList);
@@ -77,7 +82,7 @@ public class RecommendServiceImpl implements RecommendService{
     }
 
     @Override
-    public List<RecommendAdcKnowMsupEadc> recommendAdcKnowMsupEadc(RecommendRequest recommendRequest) throws IOException {
+    public List<RecommendAdcKnowMsupEadc> recommendAdcKnowMsupEadc(RecommendRequest recommendRequest, int minPansoo) throws IOException {
         log.info("recommendAdcKnowMsupEadc 시작");
         String mSup = recommendRequest.getMSup();
         String eAdc = recommendRequest.getEAdc();
@@ -159,7 +164,10 @@ public class RecommendServiceImpl implements RecommendService{
 
             recommendAdcKnowMsupEadc.setMSup(mSup);
             recommendAdcKnowMsupEadc.setMSupE(lolSetting.convertKoToEng(mSup));
-            resultList.add(recommendAdcKnowMsupEadc);
+            //resultList.add(recommendAdcKnowMsupEadc);
+            if(whole>=minPansoo) {
+                resultList.add(recommendAdcKnowMsupEadc);//dd
+            }
         }
         Collections.sort(resultList);
         log.info("resultList:{}",resultList.size());
@@ -167,7 +175,7 @@ public class RecommendServiceImpl implements RecommendService{
     }
 
     @Override
-    public List<RecommendAdcKnow> recommendAdcKnow(RecommendRequest recommendRequest) throws IOException {
+    public List<RecommendAdcKnow> recommendAdcKnow(RecommendRequest recommendRequest, int minPansoo) throws IOException {
         log.info("recommendAdcKnow 시작");
         List<Game> gameList = recommendMapper.vs(); //아는정보없음
         //log.info("gamelist{}",gameList);
@@ -201,7 +209,10 @@ public class RecommendServiceImpl implements RecommendService{
             recommendAdcKnow.setMAdc(mAdc);
             recommendAdcKnow.setMAdcE(lolSetting.convertKoToEng(mAdc));
 
-            resultList.add(recommendAdcKnow);
+//            resultList.add(recommendAdcKnow);
+            if(whole>=minPansoo) {
+                resultList.add(recommendAdcKnow);//dd
+            }
         }
         Collections.sort(resultList);
         log.info("resultList:{}",resultList.size());
@@ -209,7 +220,7 @@ public class RecommendServiceImpl implements RecommendService{
     }
 
     @Override
-    public List<RecommendAdcKnowMsupEsup> recommendAdcKnowMsupEsup(RecommendRequest recommendRequest) throws IOException {
+    public List<RecommendAdcKnowMsupEsup> recommendAdcKnowMsupEsup(RecommendRequest recommendRequest, int minPansoo) throws IOException {
         //정보 저장할 임시map
         ConcurrentHashMap<String, List<Integer>> temp = new ConcurrentHashMap<>();
 
@@ -266,14 +277,17 @@ public class RecommendServiceImpl implements RecommendService{
             recommendAdcKnowMsupEsup.setMSupE(lolSetting.convertKoToEng(mSup));
             recommendAdcKnowMsupEsup.setESup(eSup);
             recommendAdcKnowMsupEsup.setESupE(lolSetting.convertKoToEng(eSup));
-            resultList.add(recommendAdcKnowMsupEsup);
+//            resultList.add(recommendAdcKnowMsupEsup);
+            if(whole>=minPansoo) {
+                resultList.add(recommendAdcKnowMsupEsup);//dd
+            }
         }
         Collections.sort(resultList);
         return resultList;
     }
 
     @Override
-    public List<RecommendAdcKnowMsupEadcEsup> recommendAdcKnowMsupEadcEsup(RecommendRequest recommendRequest) throws IOException {
+    public List<RecommendAdcKnowMsupEadcEsup> recommendAdcKnowMsupEadcEsup(RecommendRequest recommendRequest, int minPansoo) throws IOException {
         //정보 저장할 임시map
         ConcurrentHashMap<String, List<Integer>> temp = new ConcurrentHashMap<>();
 
@@ -332,7 +346,10 @@ public class RecommendServiceImpl implements RecommendService{
             recommendAdcKnowMsupEadcEsup.setESupE(lolSetting.convertKoToEng(eSup));
             recommendAdcKnowMsupEadcEsup.setEAdc(eAdc);
             recommendAdcKnowMsupEadcEsup.setEAdcE(lolSetting.convertKoToEng(eAdc));
-            resultList.add(recommendAdcKnowMsupEadcEsup);
+//            resultList.add(recommendAdcKnowMsupEadcEsup);
+            if(whole>=minPansoo) {
+                resultList.add(recommendAdcKnowMsupEadcEsup);//dd
+            }
         }
         Collections.sort(resultList);
         return resultList;
@@ -340,7 +357,7 @@ public class RecommendServiceImpl implements RecommendService{
     }
 
     @Override
-    public List<RecommendAdcKnowEadc> recommendAdcKnowEadc(RecommendRequest recommendRequest) throws IOException {
+    public List<RecommendAdcKnowEadc> recommendAdcKnowEadc(RecommendRequest recommendRequest, int minPansoo) throws IOException {
         //정보 저장할 임시map
         ConcurrentHashMap<String, List<Integer>> temp = new ConcurrentHashMap<>();
 
@@ -393,7 +410,10 @@ public class RecommendServiceImpl implements RecommendService{
             recommendAdcKnowEadc.setMAdcE(lolSetting.convertKoToEng(key));
             recommendAdcKnowEadc.setEAdc(eAdc);
             recommendAdcKnowEadc.setEAdcE(lolSetting.convertKoToEng(eAdc));
-            resultList.add(recommendAdcKnowEadc);
+//            resultList.add(recommendAdcKnowEadc);
+            if(whole>=minPansoo) {
+                resultList.add(recommendAdcKnowEadc);//dd
+            }
         }
         Collections.sort(resultList);
         return resultList;
@@ -401,7 +421,7 @@ public class RecommendServiceImpl implements RecommendService{
     }
 
     @Override
-    public List<RecommendAdcKnowEsup> recommendAdcKnowEsup(RecommendRequest recommendRequest) throws IOException {
+    public List<RecommendAdcKnowEsup> recommendAdcKnowEsup(RecommendRequest recommendRequest, int minPansoo) throws IOException {
         //정보 저장할 임시map
         ConcurrentHashMap<String, List<Integer>> temp = new ConcurrentHashMap<>();
 
@@ -454,7 +474,10 @@ public class RecommendServiceImpl implements RecommendService{
             recommendAdcKnowEsup.setMAdcE(lolSetting.convertKoToEng(key));
             recommendAdcKnowEsup.setESup(eSup);
             recommendAdcKnowEsup.setESupE(lolSetting.convertKoToEng(eSup));
-            resultList.add(recommendAdcKnowEsup);
+//            resultList.add(recommendAdcKnowEsup);
+            if(whole>=minPansoo) {
+                resultList.add(recommendAdcKnowEsup);//dd
+            }
         }
         Collections.sort(resultList);
         return resultList;
@@ -462,7 +485,7 @@ public class RecommendServiceImpl implements RecommendService{
     }
 
     @Override
-    public List<RecommendAdcKnowEadcEsup> recommendAdcKnowEadcEsup(RecommendRequest recommendRequest) throws IOException {
+    public List<RecommendAdcKnowEadcEsup> recommendAdcKnowEadcEsup(RecommendRequest recommendRequest, int minPansoo) throws IOException {
         //정보 저장할 임시map
         ConcurrentHashMap<String, List<Integer>> temp = new ConcurrentHashMap<>();
 
@@ -518,7 +541,10 @@ public class RecommendServiceImpl implements RecommendService{
             recommendAdcKnowEadcEsup.setESupE(lolSetting.convertKoToEng(eSup));
             recommendAdcKnowEadcEsup.setEAdc(eAdc);
             recommendAdcKnowEadcEsup.setEAdcE(lolSetting.convertKoToEng(eAdc));
-            resultList.add(recommendAdcKnowEadcEsup);
+//            resultList.add(recommendAdcKnowEadcEsup);
+            if(whole>=minPansoo) {
+                resultList.add(recommendAdcKnowEadcEsup);//dd
+            }
         }
         Collections.sort(resultList);
         return resultList;
@@ -526,7 +552,7 @@ public class RecommendServiceImpl implements RecommendService{
     }
 
     @Override
-    public List<RecommendSupKnow> recommendSupKnow(RecommendRequest recommendRequest) throws IOException {
+    public List<RecommendSupKnow> recommendSupKnow(RecommendRequest recommendRequest, int minPansoo) throws IOException {
         log.info("RecommendSupKnow 시작");
         List<Game> gameList = recommendMapper.vs(); //아는정보없음
         //log.info("gamelist{}",gameList);
@@ -559,7 +585,10 @@ public class RecommendServiceImpl implements RecommendService{
             RecommendSupKnow recommendSupKnow = new RecommendSupKnow(whole,win,winrate);//dd
             recommendSupKnow.setMSup(mSup);//dd
             recommendSupKnow.setMSupE(lolSetting.convertKoToEng(mSup));//dd
-            resultList.add(recommendSupKnow);//dd
+//            resultList.add(recommendSupKnow);//dd
+            if(whole>=minPansoo) {
+                resultList.add(recommendSupKnow);//dd
+            }
         }
         Collections.sort(resultList);
         log.info("resultList:{}",resultList.size());
@@ -567,7 +596,7 @@ public class RecommendServiceImpl implements RecommendService{
     }
 
     @Override
-    public List<RecommendSupKnowMadc> recommendSupKnowMadc(RecommendRequest recommendRequest) throws IOException {
+    public List<RecommendSupKnowMadc> recommendSupKnowMadc(RecommendRequest recommendRequest, int minPansoo) throws IOException {
         //정보 저장할 임시map
         ConcurrentHashMap<String, List<Integer>> temp = new ConcurrentHashMap<>();
 
@@ -622,7 +651,10 @@ public class RecommendServiceImpl implements RecommendService{
             recommendSupKnowMadc.setMAdc(mAdc);
             recommendSupKnowMadc.setMAdcE(lolSetting.convertKoToEng(mAdc));
 
-            resultList.add(recommendSupKnowMadc);
+//            resultList.add(recommendSupKnowMadc);
+            if(whole>=minPansoo) {
+                resultList.add(recommendSupKnowMadc);//dd
+            }
         }
 //        for(RecommendSupKnowMadc re:resultList){
 //            log.info("{}",re);
@@ -635,7 +667,7 @@ public class RecommendServiceImpl implements RecommendService{
     }
 
     @Override
-    public List<RecommendSupKnowMadcEadc> recommendSupKnowMadcEadc(RecommendRequest recommendRequest) throws IOException {
+    public List<RecommendSupKnowMadcEadc> recommendSupKnowMadcEadc(RecommendRequest recommendRequest, int minPansoo) throws IOException {
         //정보 저장할 임시map
         ConcurrentHashMap<String, List<Integer>> temp = new ConcurrentHashMap<>();
 
@@ -693,7 +725,10 @@ public class RecommendServiceImpl implements RecommendService{
             recommendSupKnowMadcEadc.setEAdc(eAdc);
             recommendSupKnowMadcEadc.setEAdcE(lolSetting.convertKoToEng(eAdc));
 
-            resultList.add(recommendSupKnowMadcEadc);
+//            resultList.add(recommendSupKnowMadcEadc);
+            if(whole>=minPansoo) {
+                resultList.add(recommendSupKnowMadcEadc);//dd
+            }
         }
 //        for(RecommendSupKnowMadc re:resultList){
 //            log.info("{}",re);
@@ -706,7 +741,7 @@ public class RecommendServiceImpl implements RecommendService{
     }
 
     @Override
-    public List<RecommendSupKnowMadcEsup> recommendSupKnowMadcEsup(RecommendRequest recommendRequest) throws IOException {
+    public List<RecommendSupKnowMadcEsup> recommendSupKnowMadcEsup(RecommendRequest recommendRequest, int minPansoo) throws IOException {
         //정보 저장할 임시map
         ConcurrentHashMap<String, List<Integer>> temp = new ConcurrentHashMap<>();
 
@@ -765,7 +800,10 @@ public class RecommendServiceImpl implements RecommendService{
             recommendSupKnowMadcEsup.setESupE(lolSetting.convertKoToEng(eSup));
 
 
-            resultList.add(recommendSupKnowMadcEsup);
+//            resultList.add(recommendSupKnowMadcEsup);
+            if(whole>=minPansoo) {
+                resultList.add(recommendSupKnowMadcEsup);//dd
+            }
         }
 //        for(RecommendSupKnowMadcEsup re:resultList){
 //            log.info("{}",re);
@@ -778,7 +816,7 @@ public class RecommendServiceImpl implements RecommendService{
     }
 
     @Override
-    public List<RecommendSupKnowMadcEadcEsup> recommendSupKnowMadcEadcEsup(RecommendRequest recommendRequest) throws IOException {
+    public List<RecommendSupKnowMadcEadcEsup> recommendSupKnowMadcEadcEsup(RecommendRequest recommendRequest, int minPansoo) throws IOException {
         //정보 저장할 임시map
         ConcurrentHashMap<String, List<Integer>> temp = new ConcurrentHashMap<>();
 
@@ -841,7 +879,10 @@ public class RecommendServiceImpl implements RecommendService{
             recommendSupKnowMadcEadcEsup.setESupE(lolSetting.convertKoToEng(eSup));
 
 
-            resultList.add(recommendSupKnowMadcEadcEsup);
+//            resultList.add(recommendSupKnowMadcEadcEsup);
+            if(whole>=minPansoo) {
+                resultList.add(recommendSupKnowMadcEadcEsup);//dd
+            }
         }
 //        for(RecommendSupKnowMadcEsup re:resultList){
 //            log.info("{}",re);
@@ -854,7 +895,7 @@ public class RecommendServiceImpl implements RecommendService{
     }
 
     @Override
-    public List<RecommendSupKnowEadc> recommendSupKnowEadc(RecommendRequest recommendRequest) throws IOException {
+    public List<RecommendSupKnowEadc> recommendSupKnowEadc(RecommendRequest recommendRequest, int minPansoo) throws IOException {
         //정보 저장할 임시map
         ConcurrentHashMap<String, List<Integer>> temp = new ConcurrentHashMap<>();
 
@@ -913,7 +954,10 @@ public class RecommendServiceImpl implements RecommendService{
 
 
 
-            resultList.add(recommendSupKnowEadc);
+//            resultList.add(recommendSupKnowEadc);
+            if(whole>=minPansoo) {
+                resultList.add(recommendSupKnowEadc);//dd
+            }
         }
 //        for(RecommendSupKnowMadcEsup re:resultList){
 //            log.info("{}",re);
@@ -926,7 +970,7 @@ public class RecommendServiceImpl implements RecommendService{
     }
 
     @Override
-    public List<RecommendSupKnowEsup> recommendSupKnowEsup(RecommendRequest recommendRequest) throws IOException {
+    public List<RecommendSupKnowEsup> recommendSupKnowEsup(RecommendRequest recommendRequest, int minPansoo) throws IOException {
         //정보 저장할 임시map
         ConcurrentHashMap<String, List<Integer>> temp = new ConcurrentHashMap<>();
 
@@ -985,7 +1029,10 @@ public class RecommendServiceImpl implements RecommendService{
 
 
 
-            resultList.add(recommendSupKnowEsup);
+//            resultList.add(recommendSupKnowEsup);
+            if(whole>=minPansoo) {
+                resultList.add(recommendSupKnowEsup);//dd
+            }
         }
 //        for(RecommendSupKnowMadcEsup re:resultList){
 //            log.info("{}",re);
@@ -998,7 +1045,7 @@ public class RecommendServiceImpl implements RecommendService{
     }
 
     @Override
-    public List<RecommendSupKnowEadcEsup> recommendSupKnowEadcEsup(RecommendRequest recommendRequest) throws IOException {
+    public List<RecommendSupKnowEadcEsup> recommendSupKnowEadcEsup(RecommendRequest recommendRequest, int minPansoo) throws IOException {
         //정보 저장할 임시map
         ConcurrentHashMap<String, List<Integer>> temp = new ConcurrentHashMap<>();
 
@@ -1058,7 +1105,10 @@ public class RecommendServiceImpl implements RecommendService{
             recommendSupKnowEadcEsup.setEAdc(eAdc);
             recommendSupKnowEadcEsup.setEAdcE(lolSetting.convertKoToEng(eAdc));
 
-            resultList.add(recommendSupKnowEadcEsup);
+//            resultList.add(recommendSupKnowEadcEsup);
+            if(whole>=minPansoo) {
+                resultList.add(recommendSupKnowEadcEsup);//dd
+            }
         }
 //        for(RecommendSupKnowMadcEsup re:resultList){
 //            log.info("{}",re);
@@ -1141,6 +1191,7 @@ public class RecommendServiceImpl implements RecommendService{
 
             if(whole>=minPansoo) {
                 resultList.add(recommendCombiKnow);//dd
+
             }
         }
         Collections.sort(resultList);
@@ -1149,7 +1200,7 @@ public class RecommendServiceImpl implements RecommendService{
     }
 
     @Override
-    public List<RecommendCombiKnowEadc> recommendCombiKnowEadc(RecommendRequest recommendRequest) throws IOException {
+    public List<RecommendCombiKnowEadc> recommendCombiKnowEadc(RecommendRequest recommendRequest, int minPansoo) throws IOException {
         //정보 저장할 임시map
         ConcurrentHashMap<String, List<Integer>> temp = new ConcurrentHashMap<>();
 
@@ -1220,7 +1271,10 @@ public class RecommendServiceImpl implements RecommendService{
             recommendCombiKnowEadc.setMSup(mSup);
             recommendCombiKnowEadc.setMSupE(lolSetting.convertKoToEng(mSup));
 
-            resultList.add(recommendCombiKnowEadc);
+//            resultList.add(recommendCombiKnowEadc);
+            if(whole>=minPansoo) {
+                resultList.add(recommendCombiKnowEadc);//dd
+            }
         }
 //        for(RecommendSupKnowMadcEsup re:resultList){
 //            log.info("{}",re);
@@ -1233,7 +1287,7 @@ public class RecommendServiceImpl implements RecommendService{
     }
 
     @Override
-    public List<RecommendCombiKnowEadcEsup> recommendCombiKnowEadcEsup(RecommendRequest recommendRequest) throws IOException {
+    public List<RecommendCombiKnowEadcEsup> recommendCombiKnowEadcEsup(RecommendRequest recommendRequest, int minPansoo) throws IOException {
         //정보 저장할 임시map
         ConcurrentHashMap<String, List<Integer>> temp = new ConcurrentHashMap<>();
 
@@ -1310,7 +1364,10 @@ public class RecommendServiceImpl implements RecommendService{
             recommendCombiKnowEadcEsup.setECombi(eCombi);
             //recommendCombiKnowEadcEsup.setECombiE(lolSetting.convertKoToEng(eCombi));
 
-            resultList.add(recommendCombiKnowEadcEsup);
+//            resultList.add(recommendCombiKnowEadcEsup);
+            if(whole>=minPansoo) {
+                resultList.add(recommendCombiKnowEadcEsup);//dd
+            }
         }
 //        for(RecommendSupKnowMadcEsup re:resultList){
 //            log.info("{}",re);
@@ -1323,7 +1380,7 @@ public class RecommendServiceImpl implements RecommendService{
     }
 
     @Override
-    public List<RecommendCombiKnowEsup> recommendCombiKnowEsup(RecommendRequest recommendRequest) throws IOException {
+    public List<RecommendCombiKnowEsup> recommendCombiKnowEsup(RecommendRequest recommendRequest, int minPansoo) throws IOException {
         //정보 저장할 임시map
         ConcurrentHashMap<String, List<Integer>> temp = new ConcurrentHashMap<>();
 
@@ -1394,7 +1451,10 @@ public class RecommendServiceImpl implements RecommendService{
             recommendCombiKnowEsup.setMSup(mSup);
             recommendCombiKnowEsup.setMSupE(lolSetting.convertKoToEng(mSup));
 
-            resultList.add(recommendCombiKnowEsup);
+//            resultList.add(recommendCombiKnowEsup);
+            if(whole>=minPansoo) {
+                resultList.add(recommendCombiKnowEsup);//dd
+            }
         }
 //        for(RecommendSupKnowMadcEsup re:resultList){
 //            log.info("{}",re);

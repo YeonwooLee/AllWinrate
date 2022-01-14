@@ -3,31 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link th:href="@{/style/recommendTblfour.css}" rel="stylesheet" />
 </head>
 <body>
 <div th:replace="header::header"></div>
 <br><br><br>
 
-<table>
-    <thead>
-    <tr>
-        <th>아군원딜</th>
-        <th>아군폿</th>
-        <th>상대서폿</th>
-        <th><<3명조합총등장</th>
-        <th>아군승수</th>
-        <th>아군승률</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="recommendAdcKnowMsupEsup:${recommendAdcKnowMsupEsupList}">
-        <td th:text="${recommendAdcKnowMsupEsup.MAdcE}"></td>
-        <td th:text="${recommendAdcKnowMsupEsup.MSupE}"></td>
-        <td th:text="${recommendAdcKnowMsupEsup.ESupE}"></td>
-        <td th:text="${recommendAdcKnowMsupEsup.whole}"></td>
-        <td th:text="${recommendAdcKnowMsupEsup.win}"></td>
-        <td th:text="${recommendAdcKnowMsupEsup.winrate}"></td>
+<table class="recommendMainTbl">
+<!--    <thead>-->
+<!--    <tr>-->
+<!--        <th>아군원딜</th>-->
+<!--        <th>아군폿</th>-->
+<!--        <th>상대서폿</th>-->
+<!--        <th><<3명조합총등장</th>-->
+<!--        <th>아군승수</th>-->
+<!--        <th>아군승률</th>-->
+<!--    </tr>-->
+<!--    </thead>-->
+<!--    <tbody>-->
+<!--    <tr th:each="recommendAdcKnowMsupEsup:${recommendAdcKnowMsupEsupList}">-->
+<!--        <td th:text="${recommendAdcKnowMsupEsup.MAdcE}"></td>-->
+<!--        <td th:text="${recommendAdcKnowMsupEsup.MSupE}"></td>-->
+<!--        <td th:text="${recommendAdcKnowMsupEsup.ESupE}"></td>-->
+<!--        <td th:text="${recommendAdcKnowMsupEsup.whole}"></td>-->
+<!--        <td th:text="${recommendAdcKnowMsupEsup.win}"></td>-->
+<!--        <td th:text="${recommendAdcKnowMsupEsup.winrate}"></td>-->
 
+<!--    </tr>-->
+<!--    </tbody>-->
+
+
+
+    <tbody th:each="awrL:${recommendAdcKnowMsupEsupList}">
+    <tr>
+        <td class="winrate" th:text="${awrL.winrate}+'%'">승률</td>
+
+
+        <td class="adcImg"><img th:src="@{/centered/}+${awrL.MAdcE}+@{_0.jpg}" th:height="120px"></td><!--내원딜사진-->
+<!--        <td class="adcImg"><img th:src="@{/centered/}+@{a0whitespace.jpg}" th:height="120px"></td>&lt;!&ndash;하얀공백&ndash;&gt;-->
+        <td class="supImg"><img th:src="@{/centered/}+${awrL.MSupE}+@{_0.jpg}" th:height="120px"></td><!--내서폿사진-->
+
+
+
+        <td class="winrate" th:text="VS">vs</td>
+
+
+
+
+
+<!--        <td class="adcImg"><img th:src="@{/centered/}+${awrL.EAdcE}+@{_0.jpg}" th:height="120px"></td>&lt;!&ndash;상대원딜사진&ndash;&gt;-->
+        <td class="adcImg"><img th:src="@{/centered/}+@{a0whitespace.jpg}" th:height="120px"></td><!--하얀공백-->
+        <td class="supImg"><img th:src="@{/centered/}+${awrL.ESupE}+@{_0.jpg}" th:height="120px"></td><!--상대서폿사진-->
+
+
+
+        <td class="winrate" th:text="${100-awrL.winrate}+'%'">승률</td>
     </tr>
     </tbody>
 </table>
