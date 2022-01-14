@@ -74,12 +74,75 @@ public class RecommendController {
             List<RecommendAdcKnowEadcEsup> recommendAdcKnowEadcEsupList = recommendService.recommendAdcKnowEadcEsup(recommendRequest);
             model.addAttribute("recommendAdcKnowEadcEsupList",recommendAdcKnowEadcEsupList);
             return "/recommend/recommendAdcKnowEadcEsup";
+        }//추천: 서폿, 아는것:
+        else if(recommendCase.equals("recommendSupKnow")){
+            List<RecommendSupKnow> recommendSupKnowList = recommendService.recommendSupKnow(recommendRequest);
+            model.addAttribute("recommendSupKnowList",recommendSupKnowList);
+            return "/recommend/recommendSupKnow";
+        }//추천: 서폿, 아는것: mAdc
+        else if(recommendCase.equals("recommendSupKnowMadc")){
+            List<RecommendSupKnowMadc> recommendSupKnowMadcList = recommendService.recommendSupKnowMadc(recommendRequest);
+            model.addAttribute("recommendSupKnowMadcList",recommendSupKnowMadcList);
+            return "/recommend/recommendSupKnowMadc";
+        }//추천: 서폿, 아는것: mAdc eAdc
+        else if(recommendCase.equals("recommendSupKnowMadcEadc")){
+            List<RecommendSupKnowMadcEadc> recommendSupKnowMadcEadcList = recommendService.recommendSupKnowMadcEadc(recommendRequest);
+            model.addAttribute("recommendSupKnowMadcEadcList",recommendSupKnowMadcEadcList);
+            return "/recommend/recommendSupKnowMadcEadc";
+        }//추천: 서폿, 아는것: mAdc eSup
+        else if(recommendCase.equals("recommendSupKnowMadcEsup")){
+            List<RecommendSupKnowMadcEsup> recommendSupKnowMadcEsupList = recommendService.recommendSupKnowMadcEsup(recommendRequest);
+            model.addAttribute("recommendSupKnowMadcEsupList",recommendSupKnowMadcEsupList);
+            return "/recommend/recommendSupKnowMadcEsup";
+        }//추천: 서폿, 아는것: mAdc eAdc eSup
+        else if(recommendCase.equals("recommendSupKnowMadcEadcEsup")){
+            List<RecommendSupKnowMadcEadcEsup> recommendSupKnowMadcEadcEsupList = recommendService.recommendSupKnowMadcEadcEsup(recommendRequest);
+            model.addAttribute("recommendSupKnowMadcEadcEsupList",recommendSupKnowMadcEadcEsupList);
+            return "/recommend/recommendSupKnowMadcEadcEsup";
+        }//추천: 서폿, 아는것: eAdc
+        else if(recommendCase.equals("recommendSupKnowEadc")){
+            List<RecommendSupKnowEadc> recommendSupKnowEadcList = recommendService.recommendSupKnowEadc(recommendRequest);
+            model.addAttribute("recommendSupKnowEadcList",recommendSupKnowEadcList);
+            return "/recommend/recommendSupKnowEadc";
+        }//추천: 서폿, 아는것: eSup
+        else if(recommendCase.equals("recommendSupKnowEsup")){
+            List<RecommendSupKnowEsup> recommendSupKnowEsupList = recommendService.recommendSupKnowEsup(recommendRequest);
+            model.addAttribute("recommendSupKnowEsupList",recommendSupKnowEsupList);
+            return "/recommend/recommendSupKnowEsup";
+        }//추천: 서폿, 아는것: eadc eSup
+        else if(recommendCase.equals("recommendSupKnowEadcEsup")){
+            List<RecommendSupKnowEadcEsup> recommendSupKnowEadcEsupList = recommendService.recommendSupKnowEadcEsup(recommendRequest);
+            model.addAttribute("recommendSupKnowEadcEsupList",recommendSupKnowEadcEsupList);
+            return "/recommend/recommendSupKnowEadcEsup";
+        }//추천: 조합, 아는것 없음
+        else if(recommendCase.equals("recommendCombiKnow")){
+            List<RecommendCombiKnow> recommendCombiKnowList = recommendService.recommendCombiKnow(recommendRequest,200);
+            model.addAttribute("recommendCombiKnowList",recommendCombiKnowList);
+            return "/recommend/recommendCombiKnow";
+        }//추천: 조합, 아는것: eAdc
+        else if(recommendCase.equals("recommendCombiKnowEadc")){
+            List<RecommendCombiKnowEadc> recommendCombiKnowEadcList = recommendService.recommendCombiKnowEadc(recommendRequest);
+            model.addAttribute("recommendCombiKnowEadcList",recommendCombiKnowEadcList);
+            return "/recommend/recommendCombiKnowEadc";
+        }//추천: 조합, 아는것: eAdc eSup
+        else if(recommendCase.equals("recommendCombiKnowEadcEsup")){
+            List<RecommendCombiKnowEadcEsup> recommendCombiKnowEadcEsupList = recommendService.recommendCombiKnowEadcEsup(recommendRequest);
+            model.addAttribute("recommendCombiKnowEadcEsupList",recommendCombiKnowEadcEsupList);
+            return "/recommend/recommendCombiKnowEadcEsup";
+        }//추천: 조합, 아는것: eSup
+        else if(recommendCase.equals("recommendCombiKnowEsup")){
+            List<RecommendCombiKnowEsup> recommendCombiKnowEsupList = recommendService.recommendCombiKnowEsup(recommendRequest);
+            model.addAttribute("recommendCombiKnowEsupList",recommendCombiKnowEsupList);
+            return "/recommend/recommendCombiKnowEsup";
         }
 
 
 
         return"/awrMain"; //임시로해둠 추후 삭제
     }
+
+
+
 
     private String getRecommendCase(RecommendRequest recommendRequest) {
         //추천타입 = 원딜
@@ -108,6 +171,48 @@ public class RecommendController {
             }//아는 정보=eSup,eAdc
             else if(recommendRequest.getMAdc()==""&& recommendRequest.getEAdc()!=""&& recommendRequest.getESup()!=""&& recommendRequest.getMSup()==""){
                 return "recommendAdcKnowEadcEsup";
+            }
+        }//추천타입 = 서폿
+        else if(recommendRequest.getRecommendKind().equals("sup")) {
+            //아는 정보 없음
+            if(recommendRequest.getMAdc()==""&& recommendRequest.getEAdc()==""&& recommendRequest.getESup()==""&& recommendRequest.getMSup()==""){
+                return "recommendSupKnow";
+            }//아는 정보: mAdc
+            else if(recommendRequest.getMAdc()!=""&& recommendRequest.getEAdc()==""&& recommendRequest.getESup()==""&& recommendRequest.getMSup()==""){
+                return "recommendSupKnowMadc";
+            }//아는 정보: mAdc, eadc
+            else if(recommendRequest.getMAdc()!=""&& recommendRequest.getEAdc()!=""&& recommendRequest.getESup()==""&& recommendRequest.getMSup()==""){
+                return "recommendSupKnowMadcEadc";
+            }//아는 정보: mAdc, eSup
+            else if(recommendRequest.getMAdc()!=""&& recommendRequest.getEAdc()==""&& recommendRequest.getESup()!=""&& recommendRequest.getMSup()==""){
+                return "recommendSupKnowMadcEsup";
+            }//아는 정보: mAdc, eAdc, eSup
+            else if(recommendRequest.getMAdc()!=""&& recommendRequest.getEAdc()!=""&& recommendRequest.getESup()!=""&& recommendRequest.getMSup()==""){
+                return "recommendSupKnowMadcEadcEsup";
+            }//아는 정보: eAdc
+            else if(recommendRequest.getMAdc()==""&& recommendRequest.getEAdc()!=""&& recommendRequest.getESup()==""&& recommendRequest.getMSup()==""){
+                return "recommendSupKnowEadc";
+            }//아는 정보: eSup
+            else if(recommendRequest.getMAdc()==""&& recommendRequest.getEAdc()==""&& recommendRequest.getESup()!=""&& recommendRequest.getMSup()==""){
+                return "recommendSupKnowEsup";
+            }//아는 정보: eAdc eSup
+            else if(recommendRequest.getMAdc()==""&& recommendRequest.getEAdc()!=""&& recommendRequest.getESup()!=""&& recommendRequest.getMSup()==""){
+                return "recommendSupKnowEadcEsup";
+            }
+        }//추천타입 = 조합
+        else if(recommendRequest.getRecommendKind().equals("combi")){
+            //아는 정보 없음
+            if(recommendRequest.getMAdc()==""&& recommendRequest.getEAdc()==""&& recommendRequest.getESup()==""&& recommendRequest.getMSup()==""){
+                return "recommendCombiKnow";
+            }//아는 정보: eAdc
+            if(recommendRequest.getMAdc()==""&& recommendRequest.getEAdc()!=""&& recommendRequest.getESup()==""&& recommendRequest.getMSup()==""){
+                return "recommendCombiKnowEadc";
+            }//아는 정보: eAdc eSup
+            if(recommendRequest.getMAdc()==""&& recommendRequest.getEAdc()!=""&& recommendRequest.getESup()!=""&& recommendRequest.getMSup()==""){
+                return "recommendCombiKnowEadcEsup";
+            }//아는 정보: eSup
+            if(recommendRequest.getMAdc()==""&& recommendRequest.getEAdc()==""&& recommendRequest.getESup()!=""&& recommendRequest.getMSup()==""){
+                return "recommendCombiKnowEsup";
             }
         }
         return null; //여기 걸리면 안됨

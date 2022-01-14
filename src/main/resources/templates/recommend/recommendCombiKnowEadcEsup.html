@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <table>
+        <thead>
+        <tr>
+            <th>아군조합</th>
+            <th>상대조합</th>
+            <th>총등장</th>
+            <th>아군승수</th>
+            <th>아군승률</th>
+            <th>아군원딜</th>
+            <th>아군서폿</th>
+            <th>상대원딜</th>
+            <th>상대서폿</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="recommendCombiKnowEadcEsup:${recommendCombiKnowEadcEsupList}">
+            <td th:text="${recommendCombiKnowEadcEsup.MCombi}"></td>
+            <td th:text="${recommendCombiKnowEadcEsup.ECombi}"></td>
+            <td th:text="${recommendCombiKnowEadcEsup.whole}"></td>
+            <td th:text="${recommendCombiKnowEadcEsup.win}"></td>
+            <td th:text="${recommendCombiKnowEadcEsup.winrate}"></td>
+            <td th:text="${recommendCombiKnowEadcEsup.MAdc}"></td>
+            <td th:text="${recommendCombiKnowEadcEsup.MSup}"></td>
+            <td th:text="${recommendCombiKnowEadcEsup.EAdc}"></td>
+            <td th:text="${recommendCombiKnowEadcEsup.ESup}"></td>
+
+        </tr>
+        </tbody>
+    </table>
+</body>
+</html>

@@ -497,6 +497,850 @@ public class RecommendServiceImpl implements RecommendService{
 
     }
 
+    @Override
+    public List<RecommendSupKnow> recommendSupKnow(RecommendRequest recommendRequest) {
+        log.info("RecommendSupKnow 시작");
+        List<Game> gameList = recommendMapper.vs(); //아는정보없음
+        //log.info("gamelist{}",gameList);
+        //<조합명:[총전적,승수]> 쌍의 map --> 조합별 전적 기록해서 차후에 RecommendAdcKnow 객체 생성에 사용
+        ConcurrentHashMap<String,List<Integer>> temp = new ConcurrentHashMap<>();
+        //위 map 내용을 객체화하여 여기에 저장
+        List<RecommendSupKnow> resultList = new ArrayList<>();
+
+        //우리팀, 상대팀 포지션별 유닛 배정 및 전적 반영
+        for(Game game:gameList){
+            String bSup = game.getBsup();
+            String rSup = game.getRsup();
+            String winTeam;
+            if (game.getBwin()==1){
+                winTeam="blue";
+            }else{
+                winTeam="red";
+            }
+            if(winTeam.equals("blue")){
+                setKnowNothing(temp, rSup, bSup);
+            }else{
+                setKnowNothing(temp, bSup, rSup);
+            }
+        }
+        for(String key:temp.keySet()){
+            int whole = temp.get(key).get(0);
+            int win = temp.get(key).get(1);
+            float winrate = (float) (Math.round((float)win/whole*10000)/100.0);
+            String mSup = key;//dd
+            RecommendSupKnow recommendSupKnow = new RecommendSupKnow(whole,win,winrate);//dd
+            recommendSupKnow.setMSup(mSup);//dd
+            resultList.add(recommendSupKnow);//dd
+        }
+        Collections.sort(resultList);
+        log.info("resultList:{}",resultList.size());
+        return resultList;
+    }
+
+    @Override
+    public List<RecommendSupKnowMadc> recommendSupKnowMadc(RecommendRequest recommendRequest) {
+        //정보 저장할 임시map
+        ConcurrentHashMap<String, List<Integer>> temp = new ConcurrentHashMap<>();
+
+        //최종 리턴용 리스트
+        List<RecommendSupKnowMadc> resultList = new ArrayList<>();
+
+        //아는 정보 기입
+        String mAdc = recommendRequest.getMAdc();
+
+        //아는 정보로 게임 가져옴
+        List<Game> gameList =  recommendMapper.adcVs(mAdc);
+
+        for(Game game:gameList){
+
+            String bAdc = game.getBadc();
+            String bSup = game.getBsup();
+            String rAdc = game.getRadc();
+            String rSup = game.getRsup();
+            String mSup;
+            String myTeam = bAdc.equals(mAdc) ? "blue":"red"; //내팀구분
+            mSup = myTeam.equals("blue") ? bSup:rSup;//내서폿확인
+
+            String winTeam = game.getBwin()==1 ? "blue":"red"; // 승팀판정
+            boolean meWin = winTeam.equals(myTeam)?true:false;
+
+            if(temp.containsKey(mSup)){//msup가 맵에 있으면
+                List<Integer> integers = temp.get(mSup);
+                integers.set(0, integers.get(0)+1); //등장+1
+                if(meWin){
+                    integers.set(1, integers.get(1)+1); //이겼으면 승수도 +1
+                }
+                temp.replace(mSup,integers); //map replace
+            }else{//맵에 없으면
+                List<Integer> integers = new ArrayList<>();
+                integers.add(1);
+                if(meWin){
+                    integers.add(1);//이겼으면 [1,1]
+                }else {
+                    integers.add(0); //졌으면[1,0]
+                }
+                temp.put(mSup,integers);
+            }
+        }
+        //최종리턴용리스트 구성부분
+        for (String key: temp.keySet()){//key는 추천받을 포지션임
+            int whole = temp.get(key).get(0);
+            int win = temp.get(key).get(1);
+            float winrate = (float) (Math.round((float)win/whole*10000)/100.0);
+            RecommendSupKnowMadc recommendSupKnowMadc = new RecommendSupKnowMadc(whole,win,winrate);
+            recommendSupKnowMadc.setMSup(key);
+            recommendSupKnowMadc.setMAdc(mAdc);
+
+            resultList.add(recommendSupKnowMadc);
+        }
+//        for(RecommendSupKnowMadc re:resultList){
+//            log.info("{}",re);
+//
+//        }
+        Collections.sort(resultList);
+//        log.info("여기까진옴2");
+        return resultList;
+
+    }
+
+    @Override
+    public List<RecommendSupKnowMadcEadc> recommendSupKnowMadcEadc(RecommendRequest recommendRequest) {
+        //정보 저장할 임시map
+        ConcurrentHashMap<String, List<Integer>> temp = new ConcurrentHashMap<>();
+
+        //최종 리턴용 리스트
+        List<RecommendSupKnowMadcEadc> resultList = new ArrayList<>();
+
+        //아는 정보 기입
+        String mAdc = recommendRequest.getMAdc();
+        String eAdc = recommendRequest.getEAdc();
+
+        //아는 정보로 게임 가져옴
+        List<Game> gameList =  recommendMapper.adcVsAdc(mAdc,eAdc);
+
+        for(Game game:gameList){
+
+            String bAdc = game.getBadc();
+            String bSup = game.getBsup();
+            String rAdc = game.getRadc();
+            String rSup = game.getRsup();
+            String mSup;
+            String myTeam = bAdc.equals(mAdc) ? "blue":"red"; //내팀구분
+            mSup = myTeam.equals("blue") ? bSup:rSup;//내서폿확인
+
+            String winTeam = game.getBwin()==1 ? "blue":"red"; // 승팀판정
+            boolean meWin = winTeam.equals(myTeam)?true:false;
+
+            if(temp.containsKey(mSup)){//msup가 맵에 있으면
+                List<Integer> integers = temp.get(mSup);
+                integers.set(0, integers.get(0)+1); //등장+1
+                if(meWin){
+                    integers.set(1, integers.get(1)+1); //이겼으면 승수도 +1
+                }
+                temp.replace(mSup,integers); //map replace
+            }else{//맵에 없으면
+                List<Integer> integers = new ArrayList<>();
+                integers.add(1);
+                if(meWin){
+                    integers.add(1);//이겼으면 [1,1]
+                }else {
+                    integers.add(0); //졌으면[1,0]
+                }
+                temp.put(mSup,integers);
+            }
+        }
+        //최종리턴용리스트 구성부분
+        for (String key: temp.keySet()){//key는 추천받을 포지션임
+            int whole = temp.get(key).get(0);
+            int win = temp.get(key).get(1);
+            float winrate = (float) (Math.round((float)win/whole*10000)/100.0);
+            RecommendSupKnowMadcEadc recommendSupKnowMadcEadc = new RecommendSupKnowMadcEadc(whole,win,winrate);
+            recommendSupKnowMadcEadc.setMSup(key);
+            recommendSupKnowMadcEadc.setMAdc(mAdc);
+            recommendSupKnowMadcEadc.setEAdc(eAdc);
+
+            resultList.add(recommendSupKnowMadcEadc);
+        }
+//        for(RecommendSupKnowMadc re:resultList){
+//            log.info("{}",re);
+//
+//        }
+        Collections.sort(resultList);
+//        log.info("여기까진옴2");
+        return resultList;
+
+    }
+
+    @Override
+    public List<RecommendSupKnowMadcEsup> recommendSupKnowMadcEsup(RecommendRequest recommendRequest) {
+        //정보 저장할 임시map
+        ConcurrentHashMap<String, List<Integer>> temp = new ConcurrentHashMap<>();
+
+        //최종 리턴용 리스트
+        List<RecommendSupKnowMadcEsup> resultList = new ArrayList<>();
+
+        //아는 정보 기입
+        String mAdc = recommendRequest.getMAdc();
+        String eSup = recommendRequest.getESup();
+
+        //아는 정보로 게임 가져옴
+        List<Game> gameList =  recommendMapper.adcVsSup(mAdc,eSup);
+
+        for(Game game:gameList){
+
+            String bAdc = game.getBadc();
+            String bSup = game.getBsup();
+            String rAdc = game.getRadc();
+            String rSup = game.getRsup();
+            String mSup;
+            String myTeam = bAdc.equals(mAdc) ? "blue":"red"; //내팀구분
+            mSup = myTeam.equals("blue") ? bSup:rSup;//내서폿확인
+
+            String winTeam = game.getBwin()==1 ? "blue":"red"; // 승팀판정
+            boolean meWin = winTeam.equals(myTeam)?true:false;
+
+            if(temp.containsKey(mSup)){//msup가 맵에 있으면
+                List<Integer> integers = temp.get(mSup);
+                integers.set(0, integers.get(0)+1); //등장+1
+                if(meWin){
+                    integers.set(1, integers.get(1)+1); //이겼으면 승수도 +1
+                }
+                temp.replace(mSup,integers); //map replace
+            }else{//맵에 없으면
+                List<Integer> integers = new ArrayList<>();
+                integers.add(1);
+                if(meWin){
+                    integers.add(1);//이겼으면 [1,1]
+                }else {
+                    integers.add(0); //졌으면[1,0]
+                }
+                temp.put(mSup,integers);
+            }
+        }
+        //최종리턴용리스트 구성부분
+        for (String key: temp.keySet()){//key는 추천받을 포지션임
+            int whole = temp.get(key).get(0);
+            int win = temp.get(key).get(1);
+            float winrate = (float) (Math.round((float)win/whole*10000)/100.0);
+            RecommendSupKnowMadcEsup recommendSupKnowMadcEsup = new RecommendSupKnowMadcEsup(whole,win,winrate);
+            recommendSupKnowMadcEsup.setMSup(key);
+            recommendSupKnowMadcEsup.setMAdc(mAdc);
+            recommendSupKnowMadcEsup.setESup(eSup);
+
+
+            resultList.add(recommendSupKnowMadcEsup);
+        }
+//        for(RecommendSupKnowMadcEsup re:resultList){
+//            log.info("{}",re);
+//
+//        }
+        Collections.sort(resultList);
+//        log.info("여기까진옴2");
+        return resultList;
+
+    }
+
+    @Override
+    public List<RecommendSupKnowMadcEadcEsup> recommendSupKnowMadcEadcEsup(RecommendRequest recommendRequest) {
+        //정보 저장할 임시map
+        ConcurrentHashMap<String, List<Integer>> temp = new ConcurrentHashMap<>();
+
+        //최종 리턴용 리스트
+        List<RecommendSupKnowMadcEadcEsup> resultList = new ArrayList<>();
+
+        //아는 정보 기입
+        String mAdc = recommendRequest.getMAdc();
+        String eAdc = recommendRequest.getEAdc();
+        String eSup = recommendRequest.getESup();
+
+
+        //아는 정보로 게임 가져옴
+        List<Game> gameList =  recommendMapper.adcSupVsAdc(eAdc,eSup,mAdc);
+
+        for(Game game:gameList){
+
+            String bAdc = game.getBadc();
+            String bSup = game.getBsup();
+            String rAdc = game.getRadc();
+            String rSup = game.getRsup();
+            String mSup;
+            String myTeam = bAdc.equals(mAdc) ? "blue":"red"; //내팀구분
+            mSup = myTeam.equals("blue") ? bSup:rSup;//내서폿확인
+
+            String winTeam = game.getBwin()==1 ? "blue":"red"; // 승팀판정
+            boolean meWin = winTeam.equals(myTeam)?true:false;
+
+            if(temp.containsKey(mSup)){//msup가 맵에 있으면
+                List<Integer> integers = temp.get(mSup);
+                integers.set(0, integers.get(0)+1); //등장+1
+                if(meWin){
+                    integers.set(1, integers.get(1)+1); //이겼으면 승수도 +1
+                }
+                temp.replace(mSup,integers); //map replace
+            }else{//맵에 없으면
+                List<Integer> integers = new ArrayList<>();
+                integers.add(1);
+                if(meWin){
+                    integers.add(1);//이겼으면 [1,1]
+                }else {
+                    integers.add(0); //졌으면[1,0]
+                }
+                temp.put(mSup,integers);
+            }
+        }
+        //최종리턴용리스트 구성부분
+        for (String key: temp.keySet()){//key는 추천받을 포지션임
+            int whole = temp.get(key).get(0);
+            int win = temp.get(key).get(1);
+            float winrate = (float) (Math.round((float)win/whole*10000)/100.0);
+            RecommendSupKnowMadcEadcEsup recommendSupKnowMadcEadcEsup = new RecommendSupKnowMadcEadcEsup(whole,win,winrate);
+            recommendSupKnowMadcEadcEsup.setMSup(key);
+            recommendSupKnowMadcEadcEsup.setMAdc(mAdc);
+            recommendSupKnowMadcEadcEsup.setEAdc(eAdc);
+            recommendSupKnowMadcEadcEsup.setESup(eSup);
+
+
+            resultList.add(recommendSupKnowMadcEadcEsup);
+        }
+//        for(RecommendSupKnowMadcEsup re:resultList){
+//            log.info("{}",re);
+//
+//        }
+        Collections.sort(resultList);
+//        log.info("여기까진옴2");
+        return resultList;
+
+    }
+
+    @Override
+    public List<RecommendSupKnowEadc> recommendSupKnowEadc(RecommendRequest recommendRequest) {
+        //정보 저장할 임시map
+        ConcurrentHashMap<String, List<Integer>> temp = new ConcurrentHashMap<>();
+
+        //최종 리턴용 리스트
+        List<RecommendSupKnowEadc> resultList = new ArrayList<>();
+
+        //아는 정보 기입
+        String eAdc = recommendRequest.getEAdc();
+
+
+
+        //아는 정보로 게임 가져옴
+        List<Game> gameList =  recommendMapper.adcVs(eAdc);
+
+        for(Game game:gameList){
+
+            String bAdc = game.getBadc();
+            String bSup = game.getBsup();
+            String rAdc = game.getRadc();
+            String rSup = game.getRsup();
+            String mSup;
+            String myTeam = !bAdc.equals(eAdc) ? "blue":"red"; //내팀구분
+            mSup = myTeam.equals("blue") ? bSup:rSup;//내서폿확인
+
+            String winTeam = game.getBwin()==1 ? "blue":"red"; // 승팀판정
+            boolean meWin = winTeam.equals(myTeam)?true:false;
+
+            if(temp.containsKey(mSup)){//msup가 맵에 있으면
+                List<Integer> integers = temp.get(mSup);
+                integers.set(0, integers.get(0)+1); //등장+1
+                if(meWin){
+                    integers.set(1, integers.get(1)+1); //이겼으면 승수도 +1
+                }
+                temp.replace(mSup,integers); //map replace
+            }else{//맵에 없으면
+                List<Integer> integers = new ArrayList<>();
+                integers.add(1);
+                if(meWin){
+                    integers.add(1);//이겼으면 [1,1]
+                }else {
+                    integers.add(0); //졌으면[1,0]
+                }
+                temp.put(mSup,integers);
+            }
+        }
+        //최종리턴용리스트 구성부분
+        for (String key: temp.keySet()){//key는 추천받을 포지션임
+            int whole = temp.get(key).get(0);
+            int win = temp.get(key).get(1);
+            float winrate = (float) (Math.round((float)win/whole*10000)/100.0);
+            RecommendSupKnowEadc recommendSupKnowEadc = new RecommendSupKnowEadc(whole,win,winrate);
+            recommendSupKnowEadc.setMSup(key);
+            recommendSupKnowEadc.setEAdc(eAdc);
+
+
+
+            resultList.add(recommendSupKnowEadc);
+        }
+//        for(RecommendSupKnowMadcEsup re:resultList){
+//            log.info("{}",re);
+//
+//        }
+        Collections.sort(resultList);
+//        log.info("여기까진옴2");
+        return resultList;
+
+    }
+
+    @Override
+    public List<RecommendSupKnowEsup> recommendSupKnowEsup(RecommendRequest recommendRequest) {
+        //정보 저장할 임시map
+        ConcurrentHashMap<String, List<Integer>> temp = new ConcurrentHashMap<>();
+
+        //최종 리턴용 리스트
+        List<RecommendSupKnowEsup> resultList = new ArrayList<>();
+
+        //아는 정보 기입
+        String eSup = recommendRequest.getESup();
+
+
+
+        //아는 정보로 게임 가져옴
+        List<Game> gameList =  recommendMapper.supVs(eSup);
+
+        for(Game game:gameList){
+
+            String bAdc = game.getBadc();
+            String bSup = game.getBsup();
+            String rAdc = game.getRadc();
+            String rSup = game.getRsup();
+            String mSup;
+            String myTeam = !bSup.equals(eSup) ? "blue":"red"; //내팀구분
+            mSup = myTeam.equals("blue") ? bSup:rSup;//내서폿확인
+
+            String winTeam = game.getBwin()==1 ? "blue":"red"; // 승팀판정
+            boolean meWin = winTeam.equals(myTeam)?true:false;
+
+            if(temp.containsKey(mSup)){//msup가 맵에 있으면
+                List<Integer> integers = temp.get(mSup);
+                integers.set(0, integers.get(0)+1); //등장+1
+                if(meWin){
+                    integers.set(1, integers.get(1)+1); //이겼으면 승수도 +1
+                }
+                temp.replace(mSup,integers); //map replace
+            }else{//맵에 없으면
+                List<Integer> integers = new ArrayList<>();
+                integers.add(1);
+                if(meWin){
+                    integers.add(1);//이겼으면 [1,1]
+                }else {
+                    integers.add(0); //졌으면[1,0]
+                }
+                temp.put(mSup,integers);
+            }
+        }
+        //최종리턴용리스트 구성부분
+        for (String key: temp.keySet()){//key는 추천받을 포지션임
+            int whole = temp.get(key).get(0);
+            int win = temp.get(key).get(1);
+            float winrate = (float) (Math.round((float)win/whole*10000)/100.0);
+            RecommendSupKnowEsup recommendSupKnowEsup = new RecommendSupKnowEsup(whole,win,winrate);
+            recommendSupKnowEsup.setMSup(key);
+            recommendSupKnowEsup.setESup(eSup);
+
+
+
+            resultList.add(recommendSupKnowEsup);
+        }
+//        for(RecommendSupKnowMadcEsup re:resultList){
+//            log.info("{}",re);
+//
+//        }
+        Collections.sort(resultList);
+//        log.info("여기까진옴2");
+        return resultList;
+
+    }
+
+    @Override
+    public List<RecommendSupKnowEadcEsup> recommendSupKnowEadcEsup(RecommendRequest recommendRequest) {
+        //정보 저장할 임시map
+        ConcurrentHashMap<String, List<Integer>> temp = new ConcurrentHashMap<>();
+
+        //최종 리턴용 리스트
+        List<RecommendSupKnowEadcEsup> resultList = new ArrayList<>();
+
+        //아는 정보 기입
+        String eAdc = recommendRequest.getEAdc();
+        String eSup = recommendRequest.getESup();
+
+
+
+        //아는 정보로 게임 가져옴
+        List<Game> gameList =  recommendMapper.adcSupVs(eAdc,eSup);
+
+        for(Game game:gameList){
+
+            String bAdc = game.getBadc();
+            String bSup = game.getBsup();
+            String rAdc = game.getRadc();
+            String rSup = game.getRsup();
+            String mSup;
+            String myTeam = !bSup.equals(eSup) ? "blue":"red"; //내팀구분
+            mSup = myTeam.equals("blue") ? bSup:rSup;//내서폿확인
+
+            String winTeam = game.getBwin()==1 ? "blue":"red"; // 승팀판정
+            boolean meWin = winTeam.equals(myTeam)?true:false;
+
+            if(temp.containsKey(mSup)){//msup가 맵에 있으면
+                List<Integer> integers = temp.get(mSup);
+                integers.set(0, integers.get(0)+1); //등장+1
+                if(meWin){
+                    integers.set(1, integers.get(1)+1); //이겼으면 승수도 +1
+                }
+                temp.replace(mSup,integers); //map replace
+            }else{//맵에 없으면
+                List<Integer> integers = new ArrayList<>();
+                integers.add(1);
+                if(meWin){
+                    integers.add(1);//이겼으면 [1,1]
+                }else {
+                    integers.add(0); //졌으면[1,0]
+                }
+                temp.put(mSup,integers);
+            }
+        }
+        //최종리턴용리스트 구성부분
+        for (String key: temp.keySet()){//key는 추천받을 포지션임
+            int whole = temp.get(key).get(0);
+            int win = temp.get(key).get(1);
+            float winrate = (float) (Math.round((float)win/whole*10000)/100.0);
+            RecommendSupKnowEadcEsup recommendSupKnowEadcEsup = new RecommendSupKnowEadcEsup(whole,win,winrate);
+            recommendSupKnowEadcEsup.setMSup(key);
+            recommendSupKnowEadcEsup.setESup(eSup);
+            recommendSupKnowEadcEsup.setEAdc(eAdc);
+
+            resultList.add(recommendSupKnowEadcEsup);
+        }
+//        for(RecommendSupKnowMadcEsup re:resultList){
+//            log.info("{}",re);
+//
+//        }
+        Collections.sort(resultList);
+//        log.info("여기까진옴2");
+        return resultList;
+
+    }
+
+    @Override
+    public List<RecommendCombiKnow> recommendCombiKnow(RecommendRequest recommendRequest, int minPansoo) {
+        log.info("RecommendCombiKnow 시작");
+        List<Game> gameList = recommendMapper.vs(); //아는정보없음
+        //log.info("gamelist{}",gameList);
+        //<조합명:[총전적,승수]> 쌍의 map --> 조합별 전적 기록해서 차후에 RecommendAdcKnow 객체 생성에 사용
+        ConcurrentHashMap<String,List<Integer>> temp = new ConcurrentHashMap<>();
+        //위 map 내용을 객체화하여 여기에 저장
+        List<RecommendCombiKnow> resultList = new ArrayList<>();
+
+        //우리팀, 상대팀 포지션별 유닛 배정 및 전적 반영
+        for(Game game:gameList){
+            String wAdc, wSup, lAdc,lSup,wCombi,lCombi;
+            String winTeam = game.getBwin()==1?"blue":"red";
+
+            wAdc = winTeam.equals("blue")?game.getBadc():game.getRadc();
+            wSup = winTeam.equals("blue")?game.getBsup():game.getRsup();
+
+            lAdc = winTeam.equals("blue")?game.getRadc():game.getBadc();
+            lSup = winTeam.equals("blue")?game.getRsup():game.getBsup();
+
+            wCombi=wAdc+"_"+wSup;
+            lCombi=lAdc+"_"+lSup;
+
+            //승팀반영
+            if(temp.containsKey(wCombi)){
+                List<Integer> integers = temp.get(wCombi);
+                integers.set(0,integers.get(0)+1);
+                integers.set(1,integers.get(1)+1);
+                temp.replace(wCombi,integers);
+            }else{
+                List<Integer> integers = new ArrayList<>();
+                integers.add(1);
+                integers.add(1);
+                temp.put(wCombi,integers);
+            }
+
+            //패팀반영
+            if(temp.containsKey(lCombi)){
+                List<Integer> integers = temp.get(lCombi);
+                integers.set(0,integers.get(0)+1);
+                temp.replace(lCombi,integers);
+            }else{
+                List<Integer> integers = new ArrayList<>();
+                integers.add(1);
+                integers.add(0);
+                temp.put(lCombi,integers);
+            }
+
+
+
+        }
+        for(String key:temp.keySet()){
+            int whole = temp.get(key).get(0);
+            int win = temp.get(key).get(1);
+            float winrate = (float) (Math.round((float)win/whole*10000)/100.0);
+            String mCombi = key;//dd
+            String mAdc,mSup;
+            mAdc = mCombi.split("_")[0];
+            mSup = mCombi.split("_")[1];
+
+            RecommendCombiKnow recommendCombiKnow = new RecommendCombiKnow(whole,win,winrate);//dd
+            recommendCombiKnow.setMCombi(mCombi);//dd
+            recommendCombiKnow.setMAdc(mAdc);//dd
+            recommendCombiKnow.setMSup(mSup);//dd
+
+            if(whole>=minPansoo) {
+                resultList.add(recommendCombiKnow);//dd
+            }
+        }
+        Collections.sort(resultList);
+        log.info("resultList:{}",resultList.size());
+        return resultList;
+    }
+
+    @Override
+    public List<RecommendCombiKnowEadc> recommendCombiKnowEadc(RecommendRequest recommendRequest) {
+        //정보 저장할 임시map
+        ConcurrentHashMap<String, List<Integer>> temp = new ConcurrentHashMap<>();
+
+        //최종 리턴용 리스트
+        List<RecommendCombiKnowEadc> resultList = new ArrayList<>();
+
+        //아는 정보 기입
+        String eAdc = recommendRequest.getEAdc();
+
+
+
+        //아는 정보로 게임 가져옴
+        List<Game> gameList =  recommendMapper.adcVs(eAdc);
+
+        for(Game game:gameList){
+
+            String bAdc = game.getBadc();
+            String bSup = game.getBsup();
+            String rAdc = game.getRadc();
+            String rSup = game.getRsup();
+            String mSup;
+            String mAdc;
+            String mCombi;
+
+            String myTeam = !bAdc.equals(eAdc) ? "blue":"red"; //내팀구분
+            mSup = myTeam.equals("blue") ? bSup:rSup;//내서폿확인
+            mAdc = myTeam.equals("blue") ? bAdc:rAdc;//내서폿확인
+            mCombi = mAdc+"_"+mSup;
+
+            String winTeam = game.getBwin()==1 ? "blue":"red"; // 승팀판정
+            boolean meWin = winTeam.equals(myTeam)?true:false;
+
+            if(temp.containsKey(mCombi)){//msup가 맵에 있으면
+                List<Integer> integers = temp.get(mCombi);
+                integers.set(0, integers.get(0)+1); //등장+1
+                if(meWin){
+                    integers.set(1, integers.get(1)+1); //이겼으면 승수도 +1
+                }
+                temp.replace(mCombi,integers); //map replace
+            }else{//맵에 없으면
+                List<Integer> integers = new ArrayList<>();
+                integers.add(1);
+                if(meWin){
+                    integers.add(1);//이겼으면 [1,1]
+                }else {
+                    integers.add(0); //졌으면[1,0]
+                }
+                temp.put(mCombi,integers);
+            }
+        }
+        //최종리턴용리스트 구성부분
+        for (String key: temp.keySet()){//key는 추천받을 포지션임
+            int whole = temp.get(key).get(0);
+            int win = temp.get(key).get(1);
+            float winrate = (float) (Math.round((float)win/whole*10000)/100.0);
+            RecommendCombiKnowEadc recommendCombiKnowEadc = new RecommendCombiKnowEadc(whole,win,winrate);
+            recommendCombiKnowEadc.setMCombi(key);//<<추천받을포지션
+            String mAdc, mSup;
+            mAdc=key.split("_")[0];
+            mSup=key.split("_")[1];
+            
+            //추천시고정자료, 가령 상대원딜 알 때 아군 서폿 추천이면 상대원딜은 고정이니까 여기 추가
+            recommendCombiKnowEadc.setEAdc(eAdc);
+            recommendCombiKnowEadc.setMAdc(mAdc);
+            recommendCombiKnowEadc.setMSup(mSup);
+
+            resultList.add(recommendCombiKnowEadc);
+        }
+//        for(RecommendSupKnowMadcEsup re:resultList){
+//            log.info("{}",re);
+//
+//        }
+        Collections.sort(resultList);
+//        log.info("여기까진옴2");
+        return resultList;
+
+    }
+
+    @Override
+    public List<RecommendCombiKnowEadcEsup> recommendCombiKnowEadcEsup(RecommendRequest recommendRequest) {
+        //정보 저장할 임시map
+        ConcurrentHashMap<String, List<Integer>> temp = new ConcurrentHashMap<>();
+
+        //최종 리턴용 리스트
+        List<RecommendCombiKnowEadcEsup> resultList = new ArrayList<>();
+
+        //아는 정보 기입
+        String eAdc = recommendRequest.getEAdc();
+        String eSup = recommendRequest.getESup();
+
+
+
+        //아는 정보로 게임 가져옴
+        List<Game> gameList =  recommendMapper.adcSupVs(eAdc,eSup);
+
+        for(Game game:gameList){
+
+            String bAdc = game.getBadc();
+            String bSup = game.getBsup();
+            String rAdc = game.getRadc();
+            String rSup = game.getRsup();
+            String mSup;
+            String mAdc;
+            String mCombi;
+
+            String myTeam = !bAdc.equals(eAdc) ? "blue":"red"; //내팀구분
+            mSup = myTeam.equals("blue") ? bSup:rSup;//내서폿확인
+            mAdc = myTeam.equals("blue") ? bAdc:rAdc;//내서폿확인
+            mCombi = mAdc+"_"+mSup;
+
+            String winTeam = game.getBwin()==1 ? "blue":"red"; // 승팀판정
+            boolean meWin = winTeam.equals(myTeam)?true:false;
+
+            if(temp.containsKey(mCombi)){//msup가 맵에 있으면
+                List<Integer> integers = temp.get(mCombi);
+                integers.set(0, integers.get(0)+1); //등장+1
+                if(meWin){
+                    integers.set(1, integers.get(1)+1); //이겼으면 승수도 +1
+                }
+                temp.replace(mCombi,integers); //map replace
+            }else{//맵에 없으면
+                List<Integer> integers = new ArrayList<>();
+                integers.add(1);
+                if(meWin){
+                    integers.add(1);//이겼으면 [1,1]
+                }else {
+                    integers.add(0); //졌으면[1,0]
+                }
+                temp.put(mCombi,integers);
+            }
+        }
+        //최종리턴용리스트 구성부분
+        for (String key: temp.keySet()){//key는 추천받을 포지션임
+            int whole = temp.get(key).get(0);
+            int win = temp.get(key).get(1);
+            float winrate = (float) (Math.round((float)win/whole*10000)/100.0);
+            RecommendCombiKnowEadcEsup recommendCombiKnowEadcEsup = new RecommendCombiKnowEadcEsup(whole,win,winrate);
+            recommendCombiKnowEadcEsup.setMCombi(key);//<<추천받을포지션
+            String mAdc, mSup;
+            mAdc=key.split("_")[0];
+            mSup=key.split("_")[1];
+            String eCombi = eAdc+"_"+eSup;
+
+            //추천시고정자료, 가령 상대원딜 알 때 아군 서폿 추천이면 상대원딜은 고정이니까 여기 추가
+            recommendCombiKnowEadcEsup.setEAdc(eAdc);
+            recommendCombiKnowEadcEsup.setMAdc(mAdc);
+            recommendCombiKnowEadcEsup.setMSup(mSup);
+            recommendCombiKnowEadcEsup.setESup(eSup);
+            recommendCombiKnowEadcEsup.setECombi(eCombi);
+
+            resultList.add(recommendCombiKnowEadcEsup);
+        }
+//        for(RecommendSupKnowMadcEsup re:resultList){
+//            log.info("{}",re);
+//
+//        }
+        Collections.sort(resultList);
+//        log.info("여기까진옴2");
+        return resultList;
+
+    }
+
+    @Override
+    public List<RecommendCombiKnowEsup> recommendCombiKnowEsup(RecommendRequest recommendRequest) {
+        //정보 저장할 임시map
+        ConcurrentHashMap<String, List<Integer>> temp = new ConcurrentHashMap<>();
+
+        //최종 리턴용 리스트
+        List<RecommendCombiKnowEsup> resultList = new ArrayList<>();
+
+        //아는 정보 기입
+        String eSup = recommendRequest.getESup();
+
+
+
+        //아는 정보로 게임 가져옴
+        List<Game> gameList =  recommendMapper.supVs(eSup);
+
+        for(Game game:gameList){
+
+            String bAdc = game.getBadc();
+            String bSup = game.getBsup();
+            String rAdc = game.getRadc();
+            String rSup = game.getRsup();
+            String mSup;
+            String mAdc;
+            String mCombi;
+
+            String myTeam = !bSup.equals(eSup) ? "blue":"red"; //내팀구분
+            mSup = myTeam.equals("blue") ? bSup:rSup;//내서폿확인
+            mAdc = myTeam.equals("blue") ? bAdc:rAdc;//내서폿확인
+            mCombi = mAdc+"_"+mSup;
+
+            String winTeam = game.getBwin()==1 ? "blue":"red"; // 승팀판정
+            boolean meWin = winTeam.equals(myTeam)?true:false;
+
+            if(temp.containsKey(mCombi)){//msup가 맵에 있으면
+                List<Integer> integers = temp.get(mCombi);
+                integers.set(0, integers.get(0)+1); //등장+1
+                if(meWin){
+                    integers.set(1, integers.get(1)+1); //이겼으면 승수도 +1
+                }
+                temp.replace(mCombi,integers); //map replace
+            }else{//맵에 없으면
+                List<Integer> integers = new ArrayList<>();
+                integers.add(1);
+                if(meWin){
+                    integers.add(1);//이겼으면 [1,1]
+                }else {
+                    integers.add(0); //졌으면[1,0]
+                }
+                temp.put(mCombi,integers);
+            }
+        }
+        //최종리턴용리스트 구성부분
+        for (String key: temp.keySet()){//key는 추천받을 포지션임
+            int whole = temp.get(key).get(0);
+            int win = temp.get(key).get(1);
+            float winrate = (float) (Math.round((float)win/whole*10000)/100.0);
+            RecommendCombiKnowEsup recommendCombiKnowEsup = new RecommendCombiKnowEsup(whole,win,winrate);
+            recommendCombiKnowEsup.setMCombi(key);//<<추천받을포지션
+            String mAdc, mSup;
+            mAdc=key.split("_")[0];
+            mSup=key.split("_")[1];
+
+            //추천시고정자료, 가령 상대원딜 알 때 아군 서폿 추천이면 상대원딜은 고정이니까 여기 추가
+            recommendCombiKnowEsup.setESup(eSup);
+            recommendCombiKnowEsup.setMAdc(mAdc);
+            recommendCombiKnowEsup.setMSup(mSup);
+
+            resultList.add(recommendCombiKnowEsup);
+        }
+//        for(RecommendSupKnowMadcEsup re:resultList){
+//            log.info("{}",re);
+//
+//        }
+        Collections.sort(resultList);
+//        log.info("여기까진옴2");
+        return resultList;
+
+    }
+
     private void setKnowNothing(ConcurrentHashMap<String, List<Integer>> temp, String bAdc, String rAdc) {
         if(temp.containsKey(rAdc)){
             List<Integer> integers = temp.get(rAdc);

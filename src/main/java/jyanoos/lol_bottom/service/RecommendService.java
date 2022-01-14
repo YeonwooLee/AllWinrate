@@ -28,4 +28,33 @@ public interface RecommendService {
 
     //추천:원딜, 아는것: eadc,esup
     List<RecommendAdcKnowEadcEsup> recommendAdcKnowEadcEsup(RecommendRequest recommendRequest);
+
+
+
+    //추천:서폿, 아는것:
+    List<RecommendSupKnow> recommendSupKnow(RecommendRequest recommendRequest);
+    //추천:서폿, 아는것:mAdc
+    List<RecommendSupKnowMadc> recommendSupKnowMadc(RecommendRequest recommendRequest);
+    //추천:서폿, 아는것:mAdc eAdc
+    List<RecommendSupKnowMadcEadc> recommendSupKnowMadcEadc(RecommendRequest recommendRequest);
+    //추천:서폿, 아는것:mAdc eSup
+    List<RecommendSupKnowMadcEsup> recommendSupKnowMadcEsup(RecommendRequest recommendRequest);
+    //추천:서폿, 아는것:mAdc eAdc eSup
+    List<RecommendSupKnowMadcEadcEsup> recommendSupKnowMadcEadcEsup(RecommendRequest recommendRequest);
+    //추천:서폿, 아는것:eAdc
+    List<RecommendSupKnowEadc> recommendSupKnowEadc(RecommendRequest recommendRequest);
+    //추천:서폿, 아는것:eSup
+    List<RecommendSupKnowEsup> recommendSupKnowEsup(RecommendRequest recommendRequest);
+    //추천:서폿, 아는것:eAdc, eSup
+    List<RecommendSupKnowEadcEsup> recommendSupKnowEadcEsup(RecommendRequest recommendRequest);
+
+
+    //추천:조합, 아는것 없음 minPansoo적용
+    List<RecommendCombiKnow> recommendCombiKnow(RecommendRequest recommendRequest,int minPansoo);
+    //추천:조합, 아는것: eAdc
+    List<RecommendCombiKnowEadc> recommendCombiKnowEadc(RecommendRequest recommendRequest);
+    //추천:조합, 아는것: eAdc, eSup
+    List<RecommendCombiKnowEadcEsup> recommendCombiKnowEadcEsup(RecommendRequest recommendRequest);
+    //추천:조합, 아는것: eSup
+    List<RecommendCombiKnowEsup> recommendCombiKnowEsup(RecommendRequest recommendRequest);
 }

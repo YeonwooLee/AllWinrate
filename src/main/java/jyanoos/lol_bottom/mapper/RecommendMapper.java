@@ -58,6 +58,17 @@ public interface RecommendMapper {
                            @Param("supA") String supA,
                            @Param("supB") String supB);
 
+    //원딜서폿 vs 원딜
+    @Select("SELECT lol_blue.adc AS badc, lol_blue.sup AS bsup, lol_blue.win AS bwin, lol_red.win AS rwin, lol_red.adc AS radc, lol_red.sup AS rsup\n" +
+            "FROM \n" +
+            "\tlol_blue INNER JOIN lol_red ON lol_blue.gameid=lol_red.gameid\n" +
+            "\t\tINNER JOIN lol_time_v ON lol_blue.gameid=lol_time_v.gameid\n" +
+            "\t\t\tWHERE lol_time_v.version="+version+" \n" +
+            "\t\t\tAND ((lol_blue.adc=#{adcA} AND lol_blue.sup=#{supA} AND lol_red.adc=#{adcB})or(lol_red.adc=#{adcA} AND lol_red.sup=#{supA} and lol_blue.adc=#{adcB}))")
+    List<Game> adcSupVsAdc(@Param("adcA") String adcA,
+                           @Param("supA") String supA,
+                           @Param("adcB") String supB);
+
 
     //원딜 vs
     @Select("SELECT lol_blue.adc AS badc, lol_blue.sup AS bsup, lol_blue.win AS bwin, lol_red.win AS rwin, lol_red.adc AS radc, lol_red.sup AS rsup\n" +
