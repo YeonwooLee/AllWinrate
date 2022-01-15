@@ -48,7 +48,7 @@ public class AllWinrateServiceImpl implements AllWinrateService {
     }
 
     @Override
-    public CombiReplyBoard mkViewCombiBoard(String adc, String sup) throws IOException { //영어이름으로 가져옴
+    public CombiReplyBoard mkViewCombiBoard(String adc, String sup, int lastReplyIndex) throws IOException { //영어이름으로 가져옴
         //한글챔프명 변수
         String adcKo = lolSetting.convertEngToKo(adc);
         String supKo = lolSetting.convertEngToKo(sup);
@@ -104,7 +104,8 @@ public class AllWinrateServiceImpl implements AllWinrateService {
             }
         }
         replyList=replyAndSecReply; //기존 리턴값이었던 replyList를 MVC 찾아다니면서 바꿀 수 없으니 그냥 대체하겠음!
-
+        if(lastReplyIndex>replyList.size()) lastReplyIndex=replyList.size();
+        replyList=replyList.subList(0,lastReplyIndex);
 
 
         combiReplyBoard.setAllWinrate(allWinrate);

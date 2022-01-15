@@ -94,6 +94,16 @@ public interface AllWinrateMapper {
 
 
     //adc_sup_secReply라는 테이블 생성함 대댓 저장용
+//    @Update("CREATE TABLE ${adc}_${sup}_secReply(\n" +
+//            "\tsecRno INT NOT NULL AUTO_INCREMENT,\n" +
+//            "\trno INT NOT NULL,\n" +
+//            "\twriter VARCHAR(30) NOT NULL,\n" +
+//            "\tcontent TEXT NOT NULL,\n" +
+//            "\tregDate TIMESTAMP NOT NULL DEFAULT NOW(),\n" +
+//            "\tPRIMARY KEY(secRno,rno),\n" +
+//            "\tFOREIGN KEY(rno)\n" +
+//            "\tREFERENCES ${adc}_${sup}(rno) ON DELETE CASCADE\n")
+//    int createAwrSecTbl(@Param("adc") String adc, @Param("sup") String sup);
     @Update("CREATE TABLE ${adc}_${sup}_secReply(\n" +
             "\tsecRno INT NOT NULL AUTO_INCREMENT,\n" +
             "\trno INT NOT NULL,\n" +
@@ -102,10 +112,9 @@ public interface AllWinrateMapper {
             "\tregDate TIMESTAMP NOT NULL DEFAULT NOW(),\n" +
             "\tPRIMARY KEY(secRno,rno),\n" +
             "\tFOREIGN KEY(rno)\n" +
-            "\tREFERENCES ${adc}_${sup}(rno)\n" +
+            "\tREFERENCES ${adc}_${sup} (rno) ON DELETE CASCADE\n" +
             "\t)")
     int createAwrSecTbl(@Param("adc") String adc, @Param("sup") String sup);
-
 
     //조합댓글판 수정 필요정보: 영문원딜서폿명, 보낼정보:수정내용, 수정저자
     @Update("UPDATE ${adcEng}_${supEng} SET\n" +

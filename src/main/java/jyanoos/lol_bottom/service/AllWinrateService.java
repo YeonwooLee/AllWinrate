@@ -11,7 +11,7 @@ public interface AllWinrateService {
     List<AllWinrate> mkAllWinrateList(int minPansoo, int lenList) throws IOException;
 
     //조합댓글판 생성용 자료 allWinrate(해당조합), List<Reply> 해당조합에 대한 댓글들
-    CombiReplyBoard mkViewCombiBoard(String adc, String sup) throws IOException;
+    CombiReplyBoard mkViewCombiBoard(String adc, String sup, int lastReplyIndex) throws IOException;
 
     //댓글 작성
     void writeReply(String adc, String sup, String writer, String content);

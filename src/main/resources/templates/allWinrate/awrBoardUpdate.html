@@ -3,6 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script type="text/javascript">
+        /*<![CDATA[*/
+        function addSecReplyWrite(num){
+            $("div.secReplyWrite"+num).html(
+                "<form action='[[ @{/awr_secReply/write   } ]]' method='post'>" +
+                "<input type='text' placeholder='작성자' name='writer'><br>" +
+                "<textarea cols='50' rows='5' placeholder='내용' name='content'></textarea>" +
+                "<input type='hidden' name='adcE' value='[[ ${combiReplyBoard.allWinrate.engAdc}]]'>" +
+                "<input type='hidden' name='supE' value='[[ ${combiReplyBoard.allWinrate.engSup}]]'>" +
+                "<input type='hidden' name='rno' value='"+num+"'>" +
+                "<input type='submit' value='작성'> " +
+                "</form>"
+            );
+        }
+        /*]]>*/
+
+    </script>
     <style>
         td.adcImg{
             width: 40%;
@@ -45,6 +63,14 @@
         img{
             width: 100%;
         }
+        li.indent0{
+            list-style:none;
+        }
+
+        li.indent1{
+            list-style:none;
+            padding-left: 100px;
+        }
 
     </style>
 
@@ -84,8 +110,8 @@
 
 <div>
     <ul>
-        <li th:each="reply:${combiReplyBoard.replyList}">
-            <div th:if="${#strings.equals(reply.rno,rno)}">
+        <div th:each="reply:${combiReplyBoard.replyList}">
+            <li th:if="${#strings.equals(reply.rno,rno)} and ${reply.indent==0}">
                 <form th:action="@{|/awrboard/${combiReplyBoard.allWinrate.engAdc}/${combiReplyBoard.allWinrate.engSup}/${rno}/update|}" method="post">
                     <label>작성자</label>
                     <input type="text" name="writer" th:value="${reply.writer}"/><br />
@@ -97,16 +123,23 @@
                     <input type="hidden" name="rno" th:value="${rno}">
                     <button type="submit">작성</button>
                 </form>
-            </div>
-            <div th:unless="${#strings.equals(reply.rno,rno)}">
+            </li>
+            <li th:unless="${#strings.equals(reply.rno,rno)} or ${reply.indent==1}" class="indent0">
                 <p th:text="|${reply.writer} /${#dates.format(reply.regDate,'yyyy-MM-dd HH:mm')} |"></p>
                 <p th:text="${reply.content}"></p>
                 <a th:href="@{|/awrboard/${combiReplyBoard.allWinrate.engAdc}/${combiReplyBoard.allWinrate.engSup}/${reply.rno}/update|}" th:text="수정">cv</a>
                 <a th:href="@{|/awrboard/${combiReplyBoard.allWinrate.engAdc}/${combiReplyBoard.allWinrate.engSup}/${reply.rno}/delete|}" th:text="삭제">cv</a>
+                <input type="button" value="답글달기" onClick="addSecReplyWrite(3)" th:onclick="|addSecReplyWrite(${reply.rno})|"/>
+                <div th:class="|secReplyWrite${reply.rno}|"></div>
+            </li>
+            <li th:if="${reply.indent}==1" class="indent1">
+                <p th:text="|${reply.writer} /${#dates.format(reply.regDate,'yyyy-MM-dd HH:mm')} |"></p>
+                <p th:text="${reply.content}"></p>
+<!--                <a th:href="@{|/awrboard/${combiReplyBoard.allWinrate.engAdc}/${combiReplyBoard.allWinrate.engSup}/${reply.rno}/update|}" th:text="수정">cv</a>-->
+<!--                <a th:href="@{|/awrboard/${combiReplyBoard.allWinrate.engAdc}/${combiReplyBoard.allWinrate.engSup}/${reply.rno}/delete|}" th:text="삭제">cv</a>-->
+            </li>
+        </div>
 
-
-            </div>
-        </li>
 
     </ul>
 </div>

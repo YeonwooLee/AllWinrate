@@ -135,12 +135,19 @@
             <li th:if="${reply.indent}==1" class="indent1">
                 <p th:text="|${reply.writer} /${#dates.format(reply.regDate,'yyyy-MM-dd HH:mm')} |"></p>
                 <p th:text="${reply.content}"></p>
-                <a th:href="@{|/awrboard/${combiReplyBoard.allWinrate.engAdc}/${combiReplyBoard.allWinrate.engSup}/${reply.rno}/update|}" th:text="수정">cv</a>
-                <a th:href="@{|/awrboard/${combiReplyBoard.allWinrate.engAdc}/${combiReplyBoard.allWinrate.engSup}/${reply.rno}/delete|}" th:text="삭제">cv</a>
+<!--                <a th:href="@{|/awrboard/${combiReplyBoard.allWinrate.engAdc}/${combiReplyBoard.allWinrate.engSup}/${reply.rno}/update|}" th:text="수정">cv</a>-->
+<!--                <a th:href="@{|/awrboard/${combiReplyBoard.allWinrate.engAdc}/${combiReplyBoard.allWinrate.engSup}/${reply.rno}/delete|}" th:text="삭제">cv</a>-->
             </li>
         </div>
 
     </ul>
+</div>
+<div>
+    <form th:action="@{|/awrboard/${combiReplyBoard.allWinrate.engAdc}/${combiReplyBoard.allWinrate.engSup}/${combiReplyBoard.lastReplyIndex+10}|}" method="post">
+        <input type="hidden" name="adc" th:value="${combiReplyBoard.allWinrate.engAdc}">
+        <input type="hidden" name="sup" th:value="${combiReplyBoard.allWinrate.engSup}">
+        <input type="submit" value="더보기">
+    </form>
 </div>
 </body>
 </html>

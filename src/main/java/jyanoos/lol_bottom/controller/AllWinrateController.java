@@ -31,9 +31,13 @@ public class AllWinrateController {
     }
 
     //awr 조합댓글판 보기
-    @RequestMapping("/awrboard/{adc}/{sup}")
-    public String viewCombiBoard(@PathVariable("adc") String adc, @PathVariable("sup") String sup, Model model) throws IOException {
-        CombiReplyBoard combiReplyBoard = allWinrateService.mkViewCombiBoard(adc, sup);
+    @RequestMapping(value = {"/awrboard/{adc}/{sup}/{lastReplyIndex}","/awrboard/{adc}/{sup}"})
+    public String viewCombiBoard(@PathVariable("adc") String adc, @PathVariable("sup") String sup, @PathVariable(value="lastReplyIndex",required = false) Integer lastReplyIndex, Model model) throws IOException {
+        if(lastReplyIndex==null){
+            lastReplyIndex=20;
+        }
+        CombiReplyBoard combiReplyBoard = allWinrateService.mkViewCombiBoard(adc, sup,lastReplyIndex);
+        combiReplyBoard.setLastReplyIndex(lastReplyIndex);
         model.addAttribute("combiReplyBoard",combiReplyBoard);
         return "/allWinrate/awrBoard";
     }
@@ -58,7 +62,7 @@ public class AllWinrateController {
                                   @PathVariable("supEng") String supEng,
                                   @PathVariable("rno") int rno,
                                   Model model) throws IOException {
-        CombiReplyBoard combiReplyBoard = allWinrateService.mkViewCombiBoard(adcEng,supEng);
+        CombiReplyBoard combiReplyBoard = allWinrateService.mkViewCombiBoard(adcEng,supEng,20);
         model.addAttribute("combiReplyBoard",combiReplyBoard);
         model.addAttribute("rno",rno);
 
@@ -96,10 +100,14 @@ public class AllWinrateController {
             @RequestParam("content") String content,
             @RequestParam("adcE") String adcE,
             @RequestParam("supE") String supE,
-            @RequestParam("rno") int rno
+            @RequestParam("rno") int rno,
+            RedirectAttributes redirectAttributes
     ){
         allWinrateService.writeSecReply(adcE,supE,rno,writer,content);
-        return "/awrMain";
+        redirectAttributes.addAttribute("adcE",adcE);
+        redirectAttributes.addAttribute("supE",supE);
+
+        return "redirect:/awrboard/{adcE}/{supE}";
     }
 
 }
