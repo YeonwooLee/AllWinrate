@@ -3,6 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script type="text/javascript">
+    /*<![CDATA[*/
+        function addSecReplyWrite(num){
+            $("div.secReplyWrite"+num).append(
+                "<form action='[[ @{/secReply/write   } ]]' method='post'>" +
+                "<input type='text' placeholder='작성자' name='writer'><br>" +
+                "<textarea cols='50' rows='5' name='content'></textarea>" +
+                "<input type='hidden' name='adcE' value='[[ ${combiReplyBoard.allWinrate.engAdc}]]'>" +
+                "<input type='hidden' name='supE' value='[[ ${combiReplyBoard.allWinrate.engSup}]]'>" +
+                "<input type='submit' value='작성'> " +
+                "</form>"
+            );
+        }
+    /*]]>*/
+
+    </script>
     <style>
         td.adcImg{
             width: 40%;
@@ -101,6 +118,8 @@
                 <p th:text="${reply.content}"></p>
                 <a th:href="@{|/awrboard/${combiReplyBoard.allWinrate.engAdc}/${combiReplyBoard.allWinrate.engSup}/${reply.rno}/update|}" th:text="수정">cv</a>
                 <a th:href="@{|/awrboard/${combiReplyBoard.allWinrate.engAdc}/${combiReplyBoard.allWinrate.engSup}/${reply.rno}/delete|}" th:text="삭제">cv</a>
+                <input type="button" value="댓글" onClick="addSecReplyWrite(3)" th:onclick="|addSecReplyWrite(${reply.rno})|"/>
+                <div th:class="|secReplyWrite${reply.rno}|"></div>
 
             </div>
         </li>

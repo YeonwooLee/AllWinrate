@@ -2,6 +2,8 @@ package jyanoos.lol_bottom.mapper;
 
 import jyanoos.lol_bottom.domain.AllWinrate;
 import jyanoos.lol_bottom.domain.CombiReply;
+import jyanoos.lol_bottom.domain.CombiSecReply;
+import jyanoos.lol_bottom.domain.Reply;
 import jyanoos.lol_bottom.lolSetting.LolSetting;
 import org.apache.ibatis.annotations.*;
 
@@ -21,7 +23,14 @@ public interface AllWinrateMapper {
             @Param("content") String content
     );
 
-
+    //대댓글 입력: 원글번호, 대댓글쓴이, 대댓내용
+    @Insert("INSERT INTO ${adc}_${sup}_secreply(rno,writer,content)\n" +
+            "VALUES(${rno},#{writer},#{content})")
+    int insertSecReply(@Param("adc") String adc,
+                       @Param("sup") String sup,
+                       @Param("rno") int rno,
+                       @Param("writer") String writer,
+                       @Param("content") String content);
 
 
 
@@ -51,7 +60,17 @@ public interface AllWinrateMapper {
             "WHERE bot_combi LIKE CONCAT('%',#{adc},'_',#{sup},'%','"+version+"')")
     AllWinrate getAllwinrate(@Param("adc") String adc,@Param("sup") String sup);
 
+    //조합댓글판 대댓목록 가져오기
+    @Select("SELECT * FROM ${adc}_${sup}_secreply")
+    List<CombiSecReply> getListSecReply(@Param("adc") String adc, @Param("sup") String sup);
 
+    //조합댓글판 rno, secrno로 단일 대댓 가져오기
+    @Select("SELECT * FROM ${adc}_${sup}_secreply\n" +
+            "WHERE secRno=${secRno} AND rno=${rno}")
+    CombiSecReply getSecReply(@Param("adc") String adc,
+                      @Param("sup") String sup,
+                      @Param("secRno") int secRno,
+                      @Param("rno") int rno);
 
 
     //adc_sup라는 이름의 테이블 생성함
@@ -63,6 +82,21 @@ public interface AllWinrateMapper {
             "\tPRIMARY KEY(rno)\n" +
             "\t)")
     int createAwrTbl(@Param("adc") String adc, @Param("sup") String sup);
+
+
+    //adc_sup_secReply라는 테이블 생성함 대댓 저장용
+    @Update("CREATE TABLE ${adc}_${sup}_secReply(\n" +
+            "\tsecRno INT NOT NULL AUTO_INCREMENT,\n" +
+            "\trno INT NOT NULL,\n" +
+            "\twriter VARCHAR(30) NOT NULL,\n" +
+            "\tcontent TEXT NOT NULL,\n" +
+            "\tregDate TIMESTAMP NOT NULL DEFAULT NOW(),\n" +
+            "\tPRIMARY KEY(secRno,rno),\n" +
+            "\tFOREIGN KEY(rno)\n" +
+            "\tREFERENCES ${adc}_${sup}(rno)\n" +
+            "\t)")
+    int createAwrSecTbl(@Param("adc") String adc, @Param("sup") String sup);
+
 
     //조합댓글판 수정 필요정보: 영문원딜서폿명, 보낼정보:수정내용, 수정저자
     @Update("UPDATE ${adcEng}_${supEng} SET\n" +
@@ -77,7 +111,17 @@ public interface AllWinrateMapper {
             @Param("rno") int rno
     );
 
-
+    //-- 대댓글 수정: 원글번호, 대댓글 번호
+    @Update("UPDATE ${adc}_${sup}_secreply SET\n" +
+            "writer=#{writer}, content=#{content}\n" +
+            "WHERE secRno=${secRno} AND rno=${rno}")
+    int updateSecReply(@Param("adc") String adc,
+                       @Param("sup") String sup,
+                       @Param("writer") String writer,
+                       @Param("content") String content,
+                       @Param("secRno") int secRno,
+                       @Param("rno") int rno
+                       );
 
 
 
@@ -87,4 +131,12 @@ public interface AllWinrateMapper {
     int deleteAwrTbl(@Param("adcEng") String adcEng,
                      @Param("supEng") String supEng,
                      @Param("rno") int rno);
+
+
+    @Delete("DELETE FROM ${adc}_${sup}_secreply\n" +
+            "WHERE secRno=${secRno} AND rno=${rno}")
+    int deleteSecReply(@Param("adc") String adc,
+                       @Param("sup") String sup,
+                       @Param("secRno") int secRno,
+                       @Param("rno") int rno);
 }

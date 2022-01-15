@@ -69,6 +69,14 @@ public class AllWinrateServiceImpl implements AllWinrateService {
             allWinrateMapper.createAwrTbl(allWinrate.getEngAdc(),allWinrate.getEngSup()); //만들고
             allWinrateMapper.writeAwlReply(allWinrate.getEngAdc(),allWinrate.getEngSup(),manager,mkBoardMessage); // 환영인사 남김
         }
+        //대댓글용 db도 있나 확인후 없으면 생성함
+        int existSecTbl = allWinrateMapper.tblExist("lol_data",allWinrate.getEngAdc()+"_"+allWinrate.getEngSup()+"_secreply");
+        if(existSecTbl==0){
+            allWinrateMapper.createAwrSecTbl(allWinrate.getEngAdc(),allWinrate.getEngSup()); //대댓db도 생성
+        }
+
+
+
 
         //해당 조합 게시판 댓글들
         List<CombiReply> replyList = allWinrateMapper.combiReplyList(allWinrate.getEngAdc(), allWinrate.getEngSup());
