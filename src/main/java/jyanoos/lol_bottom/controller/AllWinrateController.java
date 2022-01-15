@@ -90,5 +90,16 @@ public class AllWinrateController {
         return "redirect:/awrboard/{adcEng}/{supEng}";
     }
 
+    @PostMapping("awr_secReply/write")
+    public String writeSecReply(
+            @RequestParam("writer") String writer,
+            @RequestParam("content") String content,
+            @RequestParam("adcE") String adcE,
+            @RequestParam("supE") String supE,
+            @RequestParam("rno") int rno
+    ){
+        allWinrateService.writeSecReply(adcE,supE,rno,writer,content);
+        return "/awrMain";
+    }
 
 }

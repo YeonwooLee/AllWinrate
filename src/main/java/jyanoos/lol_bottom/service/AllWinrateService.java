@@ -21,4 +21,7 @@ public interface AllWinrateService {
 
     //댓글삭제
     int deleteReply(String adcEng, String supEng, int rno);
+
+    //대댓작성
+    int writeSecReply(String adc, String sup, int rno, String writer, String content);
 }

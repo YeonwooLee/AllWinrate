@@ -81,6 +81,9 @@ public class AllWinrateServiceImpl implements AllWinrateService {
         //해당 조합 게시판 댓글들
         List<CombiReply> replyList = allWinrateMapper.combiReplyList(allWinrate.getEngAdc(), allWinrate.getEngSup());
 
+
+
+
         combiReplyBoard.setAllWinrate(allWinrate);
         combiReplyBoard.setReplyList(replyList);
 
@@ -105,6 +108,13 @@ public class AllWinrateServiceImpl implements AllWinrateService {
     public int deleteReply(String adcEng, String supEng, int rno) {
         int i = allWinrateMapper.deleteAwrTbl(adcEng, supEng, rno);
         log.info("AllWinrateServiceImpl.deleteReply return>>>{}",i);
+        return i;
+    }
+
+    @Override
+    public int writeSecReply(String adc, String sup, int rno, String writer, String content) {
+        int i = allWinrateMapper.insertSecReply(adc, sup, rno, writer, content);
+        log.info("writeSecReply success={}",i);
         return i;
     }
 
