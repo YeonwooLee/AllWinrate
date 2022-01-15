@@ -60,9 +60,18 @@ public interface AllWinrateMapper {
             "WHERE bot_combi LIKE CONCAT('%',#{adc},'_',#{sup},'%','"+version+"')")
     AllWinrate getAllwinrate(@Param("adc") String adc,@Param("sup") String sup);
 
-    //조합댓글판 대댓목록 가져오기
+    //조합댓글판 대댓목록 가져오기 원딜,서폿명필요~
     @Select("SELECT * FROM ${adc}_${sup}_secreply")
     List<CombiSecReply> getListSecReply(@Param("adc") String adc, @Param("sup") String sup);
+
+    //조합 댓글판 대댓글 rno 하위 댓글 전체 조회: 원글번호필요
+    @Select("SELECT * FROM ${adc}_${sup}_secreply WHERE rno=${rno} ORDER BY secRno desc")
+    List<CombiSecReply> getListSecReplyByRno(
+            @Param("adc") String adcE,
+            @Param("sup") String supE,
+            @Param("rno") int rno
+    );
+
 
     //조합댓글판 rno, secrno로 단일 대댓 가져오기
     @Select("SELECT * FROM ${adc}_${sup}_secreply\n" +
