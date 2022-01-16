@@ -5,20 +5,25 @@
     <title>Title</title>
 </head>
 <body>
-<div th:fragment="header" align="center">
-    <div>
+<div th:fragment="header">
+    <div align="center">
+        <span style="font-size: 30px">BOTTOM OF LEGENDS</span>
+    </div>
+    <div align="right">
         <a href="#" onClick="top.location='javascript:location.reload()'" th:text="|${session.loginMember.userNickname}님 안녕하세요!|">asdf</a><br>
         <a th:href="@{member/logout}" th:text="Logout">로가웃</a>
     </div>
-<table border="1">
-    <thead>
-    <tr class="tempTr">
-        <th><a th:href="@{/recommend}" th:text="챔피언추천"></a></th>
-        <th><a th:href="@{/awrmain}" th:text="메인으로"></a></th>
-        <th><a th:href="@{/free_board/listpage/20/0}" th:text="자유게시판"></a></th>
-    </tr>
-    </thead>
-</table>
+    <div align="center">
+        <table border="1">
+            <thead>
+            <tr class="tempTr">
+                <th><a th:href="@{/recommend}" th:text="챔피언추천"></a></th>
+                <th><a th:href="@{/awrmain}" th:text="메인으로"></a></th>
+                <th><a th:href="@{/free_board/listpage/20/0}" th:text="자유게시판"></a></th>
+            </tr>
+            </thead>
+        </table>
+    </div>
 </div>
 </body>
 </html>
