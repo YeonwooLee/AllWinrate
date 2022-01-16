@@ -1,10 +1,15 @@
 package jyanoos.lol_bottom.controller;
 
+import jyanoos.lol_bottom.domain.member.Member;
 import jyanoos.lol_bottom.domain.member.MemberResult;
+import jyanoos.lol_bottom.domain.member.SessionConst;
 import jyanoos.lol_bottom.service.MemberService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/member*")
@@ -44,9 +49,30 @@ public class MemberController {
     @PostMapping("/login")
     public String join(@RequestParam("userEmail") String userEmail,
                        @RequestParam("userPassword") String userPassword,
-                       Model model){
+                       Model model, HttpServletRequest request){
         MemberResult memberResult = memberService.memberLogin(userEmail,userPassword);
+
+        HttpSession session = request.getSession();
+
+
+        //세션테스트용
+        if(memberResult.isSuccess()){//로그인 성공
+            Member loginMember = memberResult.getMember();
+            session.setAttribute(SessionConst.LOGIN_MEMBER,loginMember); //세션에 {"loginMember":Member loginMember} 저장
+            return "redirect:/awrmain";
+        }
+        //세션테스트끝
+
         model.addAttribute("memberResult",memberResult);
         return "/member/result";
     }
+    //로그아웃
+    @RequestMapping("/logout")
+    public String logout(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        session.invalidate();
+        return "redirect:/";
+    }
+
+
 }

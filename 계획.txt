@@ -106,30 +106,32 @@ https://kuzuro.blogspot.com/search/label/%EC%8A%A4%ED%94%84%EB%A7%81%20%EA%B2%8C
 
 #챔피언추천(minpansoo, wellCompareTo, wellView)
 1.원딜추천
-	1-아무것도 모름
-	2-mSup 앎        		서폿vs
-	3-mSup, eAdc 앎 		원딜vs서폿
-	4-mSup, eSup 앎 		서폿vs서폿
-	5-mSup, eAdc, eSup 앎 	원딜서폿vs서폿
-	6-eAdc 앎 		원딜vs
-	7-eSup 앎 		
-	8-eAdc, eSup 앎 			
+	1-아무것도 모름	minpansoo200~300
+	2-mSup 앎        	minpansoo200		서폿vs
+	3-mSup, eAdc 앎	minpansoo10 		원딜vs서폿
+	4-mSup, eSup 앎 	minpansoo10 	서폿vs서폿
+	5-mSup, eAdc, eSup 앎 minpansoo5? 	원딜서폿vs서폿
+	6-eAdc 앎 	minpansoo100	원딜vs
+	7-eSup 앎 	minpansoo10	
+	8-eAdc, eSup 앎 	minpansoo10		
 
-2.서폿추천
-	-아무것도 모름	wellCompareTo
-	-mAdc 앎		
-	-mAdc, eAdc 앎 		원딜vs원딜
-	-mAdc, eSup 앎		
-	-mAdc, eAdc, eSup 앎	원딜서폿vs원딜
-	-eAdc 앎			
-	-eSup 앎			
-	-eAdc, eSup 앎		원딜서폿vs
+2.서폿추천 (MINPANSOO는 되도록  여기에 맞출 것)
+	-아무것도 모름	minpansoo200~300, wellCompareTo
+	-mAdc 앎		minpansoo200
+	-mAdc, eAdc 앎 	minpansoo20판	원딜vs원딜
+	-mAdc, eSup 앎	MINPANSOO5	
+	-mAdc, eAdc, eSup 앎 minpansoo5?도 많은듯 ㅠ	원딜서폿vs원딜
+	-eAdc 앎		minpansoo80	
+	-eSup 앎		minpansoo50		
+	-eAdc, eSup 앎	minpansoo10		원딜서폿vs
 
 3.조합추천
-	-아무것도 모름	minpansoo, wellCompareTo
-	-eAdc 앎
-	-eAdc, eSup 앎
-	-eSup 앎
+	-아무것도 모름	minpansoo200, wellCompareTo
+	-eAdc 앎		minpansoo50, 
+	-eAdc, eSup 앎	minpansoo5?
+	-eSup 앎		minpansoo30
+
+
 (minpansoo, wellCompareTo, wellView) 작업
 minpansoo = 최솟값
 wellCompareTo = compareTo 메소드 0반영
@@ -159,44 +161,3 @@ wellView = 상단메뉴바, 챔피언초상화, 기본적인이쁨
 recommendAdcKnowEadc.html 참고하여 
 승률 원서 vs 원서 승률 <<<이런 기본 베이직 테이블 생성, 
 모든 recommendView에 적용
-
-
-
-
-
-
-
-
-
-	
-0.수정전화면띄워두기
-	
-1.<link 복붙
-	
-2.table 클래스 복붙
-	
-3.tbody 복붙 
-
-4.★${}복사할때 List붙은거 복사 확인
-	
-5.서버재실행, 웹 뒤로가기 후 재실행 사진확인
-
-1.serviceImpl
-resultList.add(~~~) 부분을 아래로 교체함
-if(whole>=minPansoo) {
-                resultList.add();//dd
-            }
-
-2.service에서 함수마다 매개변수 int minPansoo 배정
-
-3. controller에서 함수마다 맨 뒤 매개변수에 개별 민판수 설정
-
-
-
-
-
-
-
-
-
-

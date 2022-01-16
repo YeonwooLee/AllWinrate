@@ -1,46 +1,143 @@
 댓글판 페이징 계획
 
+ 
+
 1. 댓글판 테이블 생성시에 대댓판 테이블도 생성
 
-	대댓판 테이블: 댓글번호/대댓번호/작성자/글내용/작성시점
+ 
 
+   대댓판 테이블: 댓글번호/대댓번호/작성자/글내용/작성시점
+
+ 
+
+ 
 
 Reply에 들여쓰기 추가(타임리프에서 들여쓰기 단계에 따라 <li></li>태그 깊이 설정
 
+ 
 
+ 
 
-#########################댓글판 페이징용 리스트 작성#############
-finalResult = List<Reply>
+ 
 
-//댓글판총 = 댓글:대댓리스트
-ConcurrentHashMap wholeReplies = <Reply reply ,List<Reply> secReplies>
+#########ConcurrentHashMap wholeReplies(댓글판총 = 댓글:대댓리스트) 생성계획##############
 
+//댓글리스트가져옴
 
-for (reply:wholeReplies.keyset()){ //기본댓글 : 기본댓글에달린댓글리스트
-	finalResult.add(reply)//
-	for(secReply:wholeReplies.get(reply)){
-		secReply.setIndent=1
-		finalResult.add(secReply)
+list<Reply> replies = awrMapper.getReplie(adcE,supE) //adc_sup테이블
+
+ 
+
+for(reply:replies){
+
+	//댓글별 대댓 리스트 가져옴
+
+	list<Reply> secReplies = awrMapper.getSecReplies(bno,adcE,supE) //adc_sup_secReplies테이블
+
+	for(secReply:secReplies){
+
+		
+
 	}
+
+ 
+
 }
 
+ 
+
+ 
+
+return wholeReplies
+
+########################################################
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+#########################댓글판 페이징용 리스트 작성#############
+
+finalResult = List<Reply>
+
+ 
+
+//댓글판총 = 댓글:대댓리스트
+
+ConcurrentHashMap wholeReplies = <Reply reply ,List<Reply> secReplies>
+
+ 
+
+ 
+
+for (reply:wholeReplies.keyset()){ //기본댓글 : 기본댓글에달린댓글리스트
+
+   finalResult.add(reply)//
+
+   for(secReply:wholeReplies.get(reply)){
+
+      secReply.setIndent=1
+
+      finalResult.add(secReply)
+
+   }
+
+}
+
+ 
+
 return finalresult; 
+
 ##########################################################
 
-2. 대댓 crud
-C
-	Controller: 
-	Service: <>
-	Mapper: <>
+ 
 
+2. 대댓 crud
+전제
+	댓글판이 있으면 대댓db도 있어야함
+
+C 완료
+
+   Controller: 대댓입력(adcE,supE,rno)
+
+   Service: <>
+
+   Mapper: <>
+
+1. 대댓 입력용 form을 띄우기 위한 "댓글" 버튼을 view페이지에 생성함
+2. 댓글버튼 누르면 대댓 입력용 form 나오게 함(thymeleaf, jquery)
+
+ 
 
 R
 
+ 
 
+ 
+
+ 
 
 U
 
+ 
+
 D
 
+1.페이지당 댓글 수 정하기
+2. 첫 요청시 댓글 수 = 
 
-3.
+
+ 
+

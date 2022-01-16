@@ -2,6 +2,8 @@ package jyanoos.lol_bottom.controller;
 
 import jyanoos.lol_bottom.domain.AllWinrate;
 import jyanoos.lol_bottom.domain.CombiReplyBoard;
+import jyanoos.lol_bottom.domain.member.Member;
+import jyanoos.lol_bottom.domain.member.SessionConst;
 import jyanoos.lol_bottom.mapper.AllWinrateMapper;
 import jyanoos.lol_bottom.service.AllWinrateService;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +14,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 @Slf4j
@@ -23,9 +27,11 @@ public class AllWinrateController {
 
     //awr 기본페이지 구성
     @RequestMapping("/awrmain")
-    public String awrMain(Model model) throws IOException {
+    public String awrMain(Model model, HttpServletRequest request) throws IOException {
         List<AllWinrate> allWinrateList = allWinrateService.mkAllWinrateList(200,7);
         model.addAttribute("allWinrateList",allWinrateList);
+
+
 
         return "awrMain";
     }
