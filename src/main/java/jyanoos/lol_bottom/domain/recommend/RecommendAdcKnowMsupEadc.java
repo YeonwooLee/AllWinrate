@@ -31,6 +31,8 @@ public class RecommendAdcKnowMsupEadc implements Comparable<RecommendAdcKnowMsup
         }else if(this.winrate==o.winrate){
             if(this.whole>o.whole){
                 return -1;
+            }else if(this.whole==o.whole){
+                return 0;
             }else{
                 return 1;
             }

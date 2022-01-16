@@ -30,8 +30,10 @@ public class RecommendSupKnowMadc implements Comparable<RecommendSupKnowMadc>{
             return -1;
             //승률 같으면 등장 수 많은게 위로
         }else if(this.winrate==o.winrate){
-            if(this.whole>=o.whole){
+            if(this.whole>o.whole){
                 return -1;
+            }else if(this.whole==o.whole){
+                return 0;
             }else{
                 return 1;
             }
