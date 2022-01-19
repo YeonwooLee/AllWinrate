@@ -4,14 +4,14 @@
   <meta charset="utf-8">
 </head>
 <body>
-<div class="container" style="max-width: 600px">
-  <div class="py-5 text-center">
+<div style="max-width: 600px">
+  <div>
     <h2>500 오류</h2>
   </div>
   <div>
-    <p>추정되는 원인은 아래와 같습니다.</p>
+    <p>추정되는 원인은 아래와 같습니다.</p><input type="button" value="메인으로" th:onclick="'window.location.href = \'' + @{/awrmain} + '\''">
   </div>
-  <hr class="my-4">
+  <hr>
   <p>1. 챔피언 추천 기능 사용 중 추천받을 포지션에 챔피언 기입</p>
   <p>     ex)추천 종류를 '원딜'로 설정 후 '우리팀 원딜' 입력란에 내용을 기입한 경우</p>
   <p>     ex)추천 종류를 '서폿'으로 설정 후 '우리팀 서폿' 입력란에 내용을 기입한 경우</p>

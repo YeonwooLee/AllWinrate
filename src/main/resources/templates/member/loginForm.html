@@ -5,10 +5,15 @@
     <title>Title</title>
 </head>
 <body>
+<div align="center">
+    <span style="font-size: 30px">BOTTOM OF LEGENDS</span>
+</div>
+<div align="center">
 <form th:action="@{/member/login}" method="post">
     <label>E-mail</label><input type="text" name="userEmail"><br>
-    <label>Password</label><input type="text" name="userPassword"><br>
-    <input type="submit" value="로그인">
+    <label>Password</label><input type="password" name="userPassword"><br>
+    <input type="submit" value="로그인"> <input type="button" value="회원가입" th:onclick="'window.location.href = \'' + @{/member/join-form} + '\''">
 </form>
+</div>
 </body>
 </html>

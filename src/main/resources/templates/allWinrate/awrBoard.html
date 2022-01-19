@@ -78,14 +78,7 @@
 </head>
 <body>
 <div align="right">
-<table>
-    <thead>
-    <tr class="tempTr">
-        <th>로그인</th>
-        <th>회원가입</th>
-    </tr>
-    </thead>
-</table>
+
 </div>
 <div th:replace="header::header"></div>
 
@@ -124,6 +117,7 @@
     <ul>
         <div th:each="reply:${combiReplyBoard.replyList}">
             <li th:if="${reply.indent}==0" class="indent0">
+                <hr>
                 <p th:text="|${reply.writer} /${#dates.format(reply.regDate,'yyyy-MM-dd HH:mm')} |"></p>
                 <p th:text="${reply.content}"></p>
                 <a th:href="@{|/awrboard/${combiReplyBoard.allWinrate.engAdc}/${combiReplyBoard.allWinrate.engSup}/${reply.rno}/update|}" th:text="수정">cv</a>

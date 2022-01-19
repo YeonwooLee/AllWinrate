@@ -111,8 +111,14 @@ public interface FreeBoardMapper {
             @Param("content") String content
     );
 
-
-
+    //조회수수정 (자게)
+    @Update("UPDATE tbl_free_board\n" +
+            "SET\n" +
+            "viewCnt = ${viewCnt}\n" +
+            "WHERE\n" +
+            "bno=#{bno};")
+    boolean updateViewCnt(@Param("viewCnt") int viewCnt,
+                          @Param("bno") int bno);
 
     @Update("UPDATE tbl_free_board\n" +
             "SET\n" +
@@ -123,7 +129,6 @@ public interface FreeBoardMapper {
                                  @Param("contentSql") String content,
                                  @Param("writerSql") String writer,
                                  @Param("bnoSql") int bno);
-
 
 
     @Update("UPDATE tbl_free_board_reply SET\n" +

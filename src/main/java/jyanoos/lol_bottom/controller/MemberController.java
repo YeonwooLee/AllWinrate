@@ -4,13 +4,14 @@ import jyanoos.lol_bottom.domain.member.Member;
 import jyanoos.lol_bottom.domain.member.MemberResult;
 import jyanoos.lol_bottom.domain.member.SessionConst;
 import jyanoos.lol_bottom.service.MemberService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
+@Slf4j
 @Controller
 @RequestMapping("/member*")
 public class MemberController {
@@ -54,7 +55,7 @@ public class MemberController {
 
         HttpSession session = request.getSession();
 
-
+        log.info("로그인요청 email:{} pw:{}",userEmail,userPassword);
         //세션테스트용
         if(memberResult.isSuccess()){//로그인 성공
             Member loginMember = memberResult.getMember();
@@ -72,6 +73,14 @@ public class MemberController {
         HttpSession session = request.getSession();
         session.invalidate();
         return "redirect:/";
+    }
+
+    @RequestMapping("/{userNickName}")
+    public String userInfo(@PathVariable("userNickName") String userNickName,Model model){
+        Member member = memberService.findMemberByNickname(userNickName);
+        model.addAttribute("member",member);
+        return "/member/info";
+
     }
 
 

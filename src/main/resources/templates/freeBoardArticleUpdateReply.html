@@ -3,40 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link th:href="@{/style/freeBoardArticle.css}" href="../static/style/freeBoard.css" rel="stylesheet" />
 </head>
 <body>
 <div th:replace="header::header"></div>
+<div class="maindiv">
+    <div>
+        <a th:href="@{|/free_board/${freeBoard.bno}/update|}">글 수정</a>
+        <a th:href="@{/free_board/list}">글 목록</a>
+    </div>
+    <table border="1" class="contentTbl">
+        <thead>
+        <tr>
+            <th>글번호</th>
+            <th>제목</th>
 
-<div>
-    <a th:href="@{|/free_board/${freeBoard.bno}/update|}">글 수정</a>
-    <a th:href="@{/free_board/list}">글 목록</a>
-</div>
-<table>
-    <thead>
-    <tr>
-        <th>글번호</th>
-        <th>제목</th>
-        <th>내용</th>
-        <th>작성자</th>
-        <th>작성일</th>
-        <th>조회수</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td th:text="${freeBoard.bno}"></td>
-        <td th:text="${freeBoard.title}"></td>
-        <td th:text="${freeBoard.content}"></td>
-        <td th:text="${freeBoard.writer}"></td>
-        <td th:text="${#dates.format(freeBoard.regDate,'yyyy-MM-dd HH:mm')}"></td>
-        <td th:text="${freeBoard.viewCnt}"></td>
-    </tr>
-    </tbody>
-</table>
-<div>
-    <a th:href="@{|/free_board/${freeBoard.bno}/update|}">글 수정</a>
-    <a th:href="@{|/free_board/${freeBoard.bno}/delete|}">글 삭제</a>
-    <a th:href="@{/free_board/list}">글 목록</a>
+            <th>작성자</th>
+            <th>작성일</th>
+            <th>조회수</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td th:text="${freeBoard.bno}"></td>
+            <td th:text="${freeBoard.title}"></td>
+
+            <td th:text="${freeBoard.writer}"></td>
+            <td th:text="${#dates.format(freeBoard.regDate,'yyyy-MM-dd HH:mm')}"></td>
+            <td th:text="${freeBoard.viewCnt}"></td>
+        </tr>
+        <tr>
+            <td>내용</td><td th:text="${freeBoard.content}" colspan="4"></td>
+        </tr>
+        </tbody>
+    </table>
+    <div>
+        <a th:href="@{|/free_board/${freeBoard.bno}/update|}">글 수정</a>
+        <a th:href="@{|/free_board/${freeBoard.bno}/delete|}">글 삭제</a>
+        <a th:href="@{/free_board/list}">글 목록</a>
+    </div>
 </div>
 <div>
 <form th:action="@{/free_board/reply/save}" method="post">

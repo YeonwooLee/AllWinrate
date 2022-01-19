@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link th:href="@{/style/freeBoard.css}" href="../static/style/freeBoard.css" rel="stylesheet" />
     <script>
 
     </script>
@@ -10,49 +11,52 @@
 <body>
 <div th:replace="header::header"></div>
 
-<div>
-    <a th:href="@{/free_board/write}" th:text="글쓰기"></a>
-</div>
-<table border="1">
-    <thead>
-        <tr>
-            <th>번호</th>
-            <th>제목</th>
-            <th>작성일</th>
-            <th>작성자</th>
-            <th>조회수</th>
-        </tr>
-    </thead>
 
-    <tbody>
-        <tr th:each="frbd:${paging.nowPageList}">
-            <td th:text="${frbd.bno}"></td>
-            <td><a th:text="${frbd.title}" th:href="@{|/free_board/${frbd.bno}|}"></a> </td>
-            <td th:text="${#dates.format(frbd.regDate,'yyyy-MM-dd HH:mm')}"></td>
-            <td th:text="${frbd.writer}"></td>
-            <td th:text="${frbd.viewCnt}"></td>
-        </tr>
-    </tbody>
-</table>
-<div>
-    <a th:href="@{/free_board/write}" th:text="글쓰기"></a>
-</div>
-<div>
-    <a th:if="${paging.pageList.get(0)>=10}" th:text="이전" th:href="@{|/free_board/listFindpage/20/${paging.pageList.get(0)-10}|(searchType=${searchType},keyword=${keyword})}"></a>
-    <a th:each="page:${paging.pageList}" th:text="|${page} |" th:href="@{|/free_board/listFindpage/20/${page-1}|(searchType=${searchType},keyword=${keyword})}"></a>
-    <a th:if="${paging.lastIndex}<${paging.needPagePlusOne}" th:text="다음" th:href="@{|/free_board/listFindpage/20/${paging.pageList.get(0)+10}|(searchType=${searchType},keyword=${keyword})}"></a>
-</div>
-<div>
-    <form th:action="@{/free_board/listFindpage/20/0}", method="get">
-        <select name="searchType">
-            <option value="searchByTitle">제목</option>
-            <option value="searchByContent">내용</option>
-            <option value="searchByWriter">글쓴이</option>
-            <option value="searchByTitleOrContent">제목+내용</option>
-        </select>
-        <input type="text" name="keyword">
-        <input type="submit" th:value="제출">
-    </form>
+<div class="maindiv">
+    <div class="writeBtn">
+        <a th:href="@{/free_board/write}" th:text="글쓰기"></a>
+    </div>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>번호</th>
+                <th>제목</th>
+                <th>작성일</th>
+                <th>작성자</th>
+                <th>조회수</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr th:each="frbd:${paging.nowPageList}">
+                <td th:text="${frbd.bno}"></td>
+                <td><a th:text="${frbd.title}" th:href="@{|/free_board/${frbd.bno}|}"></a> </td>
+                <td th:text="${#dates.format(frbd.regDate,'yyyy-MM-dd HH:mm')}"></td>
+                <td th:text="${frbd.writer}"></td>
+                <td th:text="${frbd.viewCnt}"></td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="writeBtn">
+        <a th:href="@{/free_board/write}" th:text="글쓰기">as</a>
+    </div>
+    <div>
+        <a th:if="${paging.pageList.get(0)>=10}" th:text="이전" th:href="@{|/free_board/listFindpage/20/${paging.pageList.get(0)-10}|(searchType=${searchType},keyword=${keyword})}"></a>
+        <a th:each="page:${paging.pageList}" th:text="|${page} |" th:href="@{|/free_board/listFindpage/20/${page-1}|(searchType=${searchType},keyword=${keyword})}"></a>
+        <a th:if="${paging.lastIndex}<${paging.needPagePlusOne}" th:text="다음" th:href="@{|/free_board/listFindpage/20/${paging.pageList.get(0)+10}|(searchType=${searchType},keyword=${keyword})}"></a>
+    </div>
+    <div>
+        <form th:action="@{/free_board/listFindpage/20/0}", method="get">
+            <select name="searchType">
+                <option value="searchByTitle">제목</option>
+                <option value="searchByContent">내용</option>
+                <option value="searchByWriter">글쓴이</option>
+                <option value="searchByTitleOrContent">제목+내용</option>
+            </select>
+            <input type="text" name="keyword">
+            <input type="submit" th:value="제출">
+        </form>
+    </div>
 </div>
 </body>
 </html>

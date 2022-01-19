@@ -4,14 +4,14 @@
     <meta charset="utf-8">
 </head>
 <body>
-<div class="container" style="max-width: 600px">
-    <div class="py-5 text-center">
-        <h2>404 오류</h2>
+<div style="max-width: 600px">
+    <div>
+        <h2>404 오류</h2><input type="button" value="메인으로" th:onclick="'window.location.href = \'' + @{/awrmain} + '\''">
     </div>
     <div>
         <p>추정되는 원인은 아래와 같습니다.</p>
     </div>
-    <hr class="my-4">
+    <hr>
     <p>주소창 입력을 잘못한 경우</p>
 </div> <!-- /container -->
 </body>

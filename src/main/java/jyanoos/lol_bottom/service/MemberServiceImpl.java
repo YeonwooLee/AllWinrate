@@ -22,7 +22,7 @@ public class MemberServiceImpl implements MemberService{
     public MemberResult memberJoin(String userEmail, String userPassword, String userPasswordCheck, String userNickname) {
         MemberResult memberResult = new MemberResult(); //결과 저장용 객체
         Member member = new Member();
-
+        log.info("회원가입요청 email: {}, pw: {}, pwchk: {}, nick:",userEmail,userPassword,userPasswordCheck,userNickname);
         if(memberMapper.existMemberByNickname(userNickname)==1){
             memberResult.setMessage("회원가입실패: 이미 존재하는 닉네임");
             return memberResult;
@@ -33,7 +33,7 @@ public class MemberServiceImpl implements MemberService{
             return memberResult;
         }
 
-        if(userPassword!=userPasswordCheck){
+        if(!userPassword.equals(userPasswordCheck)){
             memberResult.setMessage("회원가입실패: 비밀번호, 비밀번호 확인 불일치");
             return memberResult;
         }
@@ -74,5 +74,11 @@ public class MemberServiceImpl implements MemberService{
         log.info("로그인실패-비밀번호불일치 찐비번:{} 입력비번:",member.getUserPassword(),userPassword);
         return memberResult;
 
+    }
+
+    @Override
+    public Member findMemberByNickname(String userNickName) {
+        Member member = memberMapper.findMemberByNickname(userNickName);
+        return member;
     }
 }

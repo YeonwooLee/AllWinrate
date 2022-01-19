@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div align="center">
+    <span style="font-size: 30px" th:text="'BOTTOM OF LEGENDS'">BOTTOM OF LEGENDS</span><br><br><br>
+    <span style="font-size: 20px" th:text="|-${member.userNickname} 님의 회원정보-|">BOTTOM OF LEGENDS</span><br><br>
+    <form>
+        <label>Email: </label><input type="text" th:value="${member.userEmail}" value="asdfasdfsadf" readonly><br>
+        <label>닉네임: </label><input type="text" th:value="${member.userNickname}" readonly><br>
+        <label>가입일: </label><input type="text" th:value="${#dates.format(member.userJoinDate,'yyyy-MM-dd HH:mm')}" readonly>
+    </form>
+    <input type="button" value="메인으로" th:onclick="'window.location.href = \'' + @{/awrmain} + '\''">
+</body>
+</html>

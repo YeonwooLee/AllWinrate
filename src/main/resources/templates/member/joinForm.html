@@ -1,15 +1,27 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+<style>
+    div.inner{
 
+        position: relative;
+        width: 20%;
+    }
+</style>
 </head>
 <body>
-<form th:action="@{/member/join}" method="post">
-    <label>Email</label><input type="text" name="userEmail" id="userEmail"><br>
-    <label>비밀번호</label><input type="text" name="userPassword" id="userPassword"><br>
-    <label>비밀번호 확인</label><input type="text" name="userPasswordCheck" id="userPasswordCheck"><br>
-    <label>닉네임</label><input type="text" name="userNickname" id="userNickname"><br>
-    <label></label><input type="submit" value="가입하기">
-</form>
+
+<div align="center">
+    <span style="font-size: 30px" th:text="'BOTTOM OF LEGENDS'">BOTTOM OF LEGENDS</span><br><br><br>
+    <div class="inner">
+    <form th:action="@{/member/join}" method="post" align="left">
+        <label>Email <input type="text" style="width: 300px" name="userEmail" id="userEmail"></label><br><br>
+        <label>비밀번호 <input type="password" style="width: 273px" name="userPassword" id="userPassword"></label><br><br>
+        <label>비밀번호 확인 <input type="password" style="width: 220px" name="userPasswordCheck" id="userPasswordCheck"></label><br><br>
+        <label>닉네임 <input type="text" style="width: 270px" name="userNickname" id="userNickname"></label><br><br><br>
+        <label><input type="submit" value="가입하기"> <input type="button" value="메인으로" th:onclick="'window.location.href = \'' + @{/awrmain} + '\''"></label>
+    </form>
+    </div>
+</div>
 </body>
 </html>

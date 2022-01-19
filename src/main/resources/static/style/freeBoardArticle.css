@@ -1,0 +1,10 @@
+div.maindiv{
+    display: grid;
+    place-items: center;
+}
+table.contentTbl{
+    width: 60%;
+}
+li{
+    list-style: none;
+}

@@ -49,4 +49,7 @@ public interface FreeBoardService {
 
     //페이징된 댓글
     FreeBoardReplyPaging freeBoardReplyPaging(int bno, int nowPage);
+
+    //조회수수정
+    int updateViewCnt(int bno);
 }

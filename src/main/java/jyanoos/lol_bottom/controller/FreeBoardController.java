@@ -69,7 +69,10 @@ public class FreeBoardController {
     @GetMapping("/{bno}/{nowPage}")
     public String readFreeBoard(@PathVariable("bno") int bno, @PathVariable("nowPage") int nowPage, Model model){
         //게시글 상세
+        freeBoardService.updateViewCnt(bno);//조회수+1
         FreeBoard freeBoard = freeBoardService.findByBno(bno);
+//        freeBoard.setViewCnt(freeBoard.getViewCnt()+1);
+
         model.addAttribute("freeBoard",freeBoard);
 
         //댓글

@@ -63,7 +63,7 @@
         img{
             width: 100%;
         }
-        li.indent0{
+        li{
             list-style:none;
         }
 
@@ -77,14 +77,7 @@
 </head>
 <body>
 <div align="right">
-<table>
-    <thead>
-    <tr class="tempTr">
-        <th>로그인</th>
-        <th>회원가입</th>
-    </tr>
-    </thead>
-</table>
+
 </div>
 <div th:replace="header::header"></div>
 
@@ -112,6 +105,7 @@
     <ul>
         <div th:each="reply:${combiReplyBoard.replyList}">
             <li th:if="${#strings.equals(reply.rno,rno)} and ${reply.indent==0}">
+                <hr>
                 <form th:action="@{|/awrboard/${combiReplyBoard.allWinrate.engAdc}/${combiReplyBoard.allWinrate.engSup}/${rno}/update|}" method="post">
                     <label>작성자</label>
                     <input type="text" name="writer" th:value="${reply.writer}"/><br />
@@ -125,6 +119,7 @@
                 </form>
             </li>
             <li th:unless="${#strings.equals(reply.rno,rno)} or ${reply.indent==1}" class="indent0">
+                <hr>
                 <p th:text="|${reply.writer} /${#dates.format(reply.regDate,'yyyy-MM-dd HH:mm')} |"></p>
                 <p th:text="${reply.content}"></p>
                 <a th:href="@{|/awrboard/${combiReplyBoard.allWinrate.engAdc}/${combiReplyBoard.allWinrate.engSup}/${reply.rno}/update|}" th:text="수정">cv</a>

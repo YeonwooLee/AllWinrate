@@ -188,6 +188,13 @@ public class FreeBoardServiceImpl implements FreeBoardService {
         return freeBoardReplyPaging;
     }
 
+    @Override
+    public int updateViewCnt(int bno) {
+        FreeBoard freeBoard = freeBoardMapper.findByBno(bno);
+        boolean b = freeBoardMapper.updateViewCnt(freeBoard.getViewCnt() + 1, bno);
+        return b?1:0;
+    }
+
     public Paging pagingByCol(int num, int nowPage, String findKeyword, String findCol) {
         //List<Object> result = new ArrayList<Object>(); //object타입으로 받은 후 controller에서 int[]와 List<FreeBoard>로 캐스팅하여 사용 -->버전2로 변경
 

@@ -1,0 +1,9 @@
+div.maindiv{
+    display: grid;
+    place-items: center;
+}
+
+div.writeBtn{
+    width: 30%;
+    float: right;
+}

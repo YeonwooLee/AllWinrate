@@ -10,8 +10,9 @@
         <span style="font-size: 30px">BOTTOM OF LEGENDS</span>
     </div>
     <div align="right">
-        <a href="#" onClick="top.location='javascript:location.reload()'" th:text="|${session.loginMember.userNickname}님 안녕하세요!|">asdf</a><br>
-        <a th:href="@{member/logout}" th:text="Logout">로가웃</a>
+<!--        <a href="#" onClick="top.location='javascript:location.reload()'" th:text="|${session.loginMember.userNickname}님 안녕하세요!|">asdf</a><br>-->
+        <a href="#" th:onclick="'window.location.href = \'' + @{/member/{nickName}(nickName=${session.loginMember.userNickname})} + '\''" th:text="|${session.loginMember.userNickname}|">asdf</a><span>님 안녕하세요!</span></span><br>
+        <a th:href="@{/member/logout}" th:text="Logout">로가웃</a>
     </div>
     <div align="center">
         <table border="1">
