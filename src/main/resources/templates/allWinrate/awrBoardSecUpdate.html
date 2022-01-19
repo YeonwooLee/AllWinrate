@@ -104,20 +104,7 @@
 <div>
     <ul>
         <div th:each="reply:${combiReplyBoard.replyList}">
-            <li th:if="${#strings.equals(reply.rno,rno)} and ${reply.indent==0}">
-                <hr>
-                <form th:action="@{|/awrboard/${combiReplyBoard.allWinrate.engAdc}/${combiReplyBoard.allWinrate.engSup}/${rno}/update/${combiReplyBoard.lastReplyIndex}|}" method="post">
-                    <label>작성자</label>
-                    <input type="text" name="writer" th:value="${reply.writer}"/><br />
-                    <label>내용</label>
-                    <textarea cols="50" rows="5" name="content" th:text="${reply.content}"></textarea><br />
-                    <input type="hidden" name="adcEng" th:value="${combiReplyBoard.allWinrate.engAdc}">
-                    <input type="hidden" name="supEng" th:value="${combiReplyBoard.allWinrate.engSup}">
-                    <input type="hidden" name="rno" th:value="${rno}">
-                    <button type="submit">작성</button>
-                </form>
-            </li>
-            <li th:unless="${#strings.equals(reply.rno,rno)} or ${reply.indent==1}" class="indent0">
+            <li th:if="${reply.indent}==0" class="indent0">
                 <hr>
                 <p th:text="|${reply.writer} /${#dates.format(reply.regDate,'yyyy-MM-dd HH:mm')} |"></p>
                 <p th:text="${reply.content}"></p>
@@ -126,14 +113,30 @@
                 <input type="button" value="답글달기" onClick="addSecReplyWrite(3)" th:onclick="|addSecReplyWrite(${reply.rno})|"/>
                 <div th:class="|secReplyWrite${reply.rno}|"></div>
             </li>
-            <li th:if="${reply.indent}==1" class="indent1">
+
+            <div th:if="${reply.indent}==1">
+            <li th:if="${reply.indent}==1 and ${#strings.equals(reply.secRnoBeforeConvert,secRno)}and ${#strings.equals(reply.rno,rno)}" class="indent1">
+                <form th:action="@{|/awrboard/${combiReplyBoard.allWinrate.engAdc}/${combiReplyBoard.allWinrate.engSup}/${reply.secRnoBeforeConvert}/${reply.rno}/update/${combiReplyBoard.lastReplyIndex}|}" method="post">
+                    <label>작성자</label>
+                    <input type="text" name="writer" th:value="${reply.writer}"/><br />
+
+                    <label>내용</label>
+                    <textarea cols="50" rows="5" name="content" th:text="${reply.content}"></textarea><br />
+                    <input type="hidden" name="adcEng" th:value="${combiReplyBoard.allWinrate.engAdc}">
+                    <input type="hidden" name="supEng" th:value="${combiReplyBoard.allWinrate.engSup}">
+                    <input type="hidden" name="rno" th:value="${rno}">
+                    <input type="hidden" name="secRno" th:value="${secRno}">
+                    <button type="submit">작성</button>
+                </form>
+            </li>
+
+            <li th:unless="${reply.indent}==1 and ${#strings.equals(reply.secRnoBeforeConvert,secRno)}and ${#strings.equals(reply.rno,rno)}" class="indent1">
                 <p th:text="|${reply.writer} /${#dates.format(reply.regDate,'yyyy-MM-dd HH:mm')} |"></p>
                 <p th:text="${reply.content}"></p>
                 <a th:href="@{|/awrboard/${combiReplyBoard.allWinrate.engAdc}/${combiReplyBoard.allWinrate.engSup}/${reply.secRnoBeforeConvert}/${reply.rno}/updateForm/${combiReplyBoard.lastReplyIndex}|}" th:text="대댓수정">cv</a>
                 <a th:href="@{|/awrboard/${combiReplyBoard.allWinrate.engAdc}/${combiReplyBoard.allWinrate.engSup}/${reply.secRnoBeforeConvert}/${reply.rno}/delete/${combiReplyBoard.lastReplyIndex}|}" th:text="대댓삭제">cv</a>
-<!--                <a th:href="@{|/awrboard/${combiReplyBoard.allWinrate.engAdc}/${combiReplyBoard.allWinrate.engSup}/${reply.rno}/update|}" th:text="수정">cv</a>-->
-<!--                <a th:href="@{|/awrboard/${combiReplyBoard.allWinrate.engAdc}/${combiReplyBoard.allWinrate.engSup}/${reply.rno}/delete|}" th:text="삭제">cv</a>-->
             </li>
+            </div>
         </div>
 
 

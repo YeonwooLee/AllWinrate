@@ -14,7 +14,9 @@
                 "<input type='hidden' name='adcE' value='[[ ${combiReplyBoard.allWinrate.engAdc}]]'>" +
                 "<input type='hidden' name='supE' value='[[ ${combiReplyBoard.allWinrate.engSup}]]'>" +
                 "<input type='hidden' name='rno' value='"+num+"'>" +
+                "<input type='hidden' name='lastReplyIndex' value='[[ ${combiReplyBoard.lastReplyIndex}]]'>" +
                 "<input type='submit' value='작성'> " +
+
                 "</form>"
             );
         }
@@ -100,7 +102,6 @@
 </div>
 
 
-
 <div>
     <form th:action="@{/awrboard/reply/save}" method="post">
         <label>작성자</label>
@@ -120,8 +121,8 @@
                 <hr>
                 <p th:text="|${reply.writer} /${#dates.format(reply.regDate,'yyyy-MM-dd HH:mm')} |"></p>
                 <p th:text="${reply.content}"></p>
-                <a th:href="@{|/awrboard/${combiReplyBoard.allWinrate.engAdc}/${combiReplyBoard.allWinrate.engSup}/${reply.rno}/update|}" th:text="수정">cv</a>
-                <a th:href="@{|/awrboard/${combiReplyBoard.allWinrate.engAdc}/${combiReplyBoard.allWinrate.engSup}/${reply.rno}/delete|}" th:text="삭제">cv</a>
+                <a th:href="@{|/awrboard/${combiReplyBoard.allWinrate.engAdc}/${combiReplyBoard.allWinrate.engSup}/${reply.rno}/update/${combiReplyBoard.lastReplyIndex}|}" th:text="수정">cv</a>
+                <a th:href="@{|/awrboard/${combiReplyBoard.allWinrate.engAdc}/${combiReplyBoard.allWinrate.engSup}/${reply.rno}/delete/${combiReplyBoard.lastReplyIndex}|}" th:text="삭제">cv</a>
                 <input type="button" value="답글달기" onClick="addSecReplyWrite(3)" th:onclick="|addSecReplyWrite(${reply.rno})|"/>
                 <div th:class="|secReplyWrite${reply.rno}|"></div>
             </li>
@@ -129,8 +130,8 @@
             <li th:if="${reply.indent}==1" class="indent1">
                 <p th:text="|${reply.writer} /${#dates.format(reply.regDate,'yyyy-MM-dd HH:mm')} |"></p>
                 <p th:text="${reply.content}"></p>
-<!--                <a th:href="@{|/awrboard/${combiReplyBoard.allWinrate.engAdc}/${combiReplyBoard.allWinrate.engSup}/${reply.rno}/update|}" th:text="수정">cv</a>-->
-<!--                <a th:href="@{|/awrboard/${combiReplyBoard.allWinrate.engAdc}/${combiReplyBoard.allWinrate.engSup}/${reply.rno}/delete|}" th:text="삭제">cv</a>-->
+                <a th:href="@{|/awrboard/${combiReplyBoard.allWinrate.engAdc}/${combiReplyBoard.allWinrate.engSup}/${reply.secRnoBeforeConvert}/${reply.rno}/updateForm/${combiReplyBoard.lastReplyIndex}|}" th:text="대댓수정">cv</a>
+                <a th:href="@{|/awrboard/${combiReplyBoard.allWinrate.engAdc}/${combiReplyBoard.allWinrate.engSup}/${reply.secRnoBeforeConvert}/${reply.rno}/delete/${combiReplyBoard.lastReplyIndex}|}" th:text="대댓삭제">cv</a>
             </li>
         </div>
 

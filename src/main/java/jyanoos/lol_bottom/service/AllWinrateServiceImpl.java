@@ -99,6 +99,7 @@ public class AllWinrateServiceImpl implements AllWinrateService {
                 combiReply.setRegDate(secReply.getRegDate());
                 combiReply.setRno(secReply.getRno());
                 combiReply.setWriter(secReply.getWriter());
+                combiReply.setSecRnoBeforeConvert(secReply.getSecRno());
 
                 replyAndSecReply.add(combiReply);//대댓글을 형변환하여 결과 리스트에 넣음<같은맥락1>
             }
@@ -110,6 +111,7 @@ public class AllWinrateServiceImpl implements AllWinrateService {
 
         combiReplyBoard.setAllWinrate(allWinrate);
         combiReplyBoard.setReplyList(replyList);
+        combiReplyBoard.setLastReplyIndex(lastReplyIndex);
 
         return combiReplyBoard;
     }
@@ -141,5 +143,18 @@ public class AllWinrateServiceImpl implements AllWinrateService {
         log.info("writeSecReply success={}",i);
         return i;
     }
+
+    @Override
+    public int updateSecReply(String adcEng, String supEng, String writer, String content, int secRno, int rno) {
+        int i = allWinrateMapper.updateSecReply(adcEng, supEng, writer, content, secRno, rno);
+        return i;
+    }
+
+    @Override
+    public int deleteSecReply(String adcEng, String supEng, int secRno, int rno) {
+        int i = allWinrateMapper.deleteSecReply(adcEng, supEng, secRno, rno);
+        return i;
+    }
+
 
 }
