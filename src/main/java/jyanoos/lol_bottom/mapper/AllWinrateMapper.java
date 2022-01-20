@@ -14,26 +14,39 @@ public interface AllWinrateMapper {
     String version= LolSetting.version;
 
     //adc_sup 게시판에 writer이름으로 content라는 내용의 댓글 달기
-    @Insert("INSERT INTO ${adc}_${sup}(writer,content)\n" +
-            "VALUES(#{writer},#{content})")
+    @Insert("INSERT INTO ${adc}_${sup}(writer,content,nowVersion)\n" +
+            "VALUES(#{writer},#{content},#{nowVersion})")
     int writeAwlReply(
             @Param("adc") String adc,
             @Param("sup") String sup,
             @Param("writer") String writer,
-            @Param("content") String content
+            @Param("content") String content,
+            @Param("nowVersion") String nowVersion
     );
 
     //대댓글 입력: 원글번호, 대댓글쓴이, 대댓내용
-    @Insert("INSERT INTO ${adc}_${sup}_secreply(rno,writer,content)\n" +
-            "VALUES(${rno},#{writer},#{content})")
+    @Insert("INSERT INTO ${adc}_${sup}_secreply(rno,writer,content,nowVersion)\n" +
+            "VALUES(${rno},#{writer},#{content},#{nowVersion})")
     int insertSecReply(@Param("adc") String adc,
                        @Param("sup") String sup,
                        @Param("rno") int rno,
                        @Param("writer") String writer,
-                       @Param("content") String content);
+                       @Param("content") String content,
+                       @Param("nowVersion") String nowVersion);
 
 
 
+
+    //원딜_서폿 테이블에 컬럼 유무 확인
+    @Select("SELECT COUNT(*) FROM information_schema.columns\n" +
+            "WHERE table_schema = 'lol_data' AND TABLE_NAME ='${tableName}' AND COLUMN_NAME='${colName}'")
+    int checkColExist(@Param("tableName") String tableName,
+                      @Param("colName") String colName);
+
+
+    // --테이블에 column 추가
+    @Update("ALTER TABLE `${tableName}` ADD `nowVersion` VARCHAR(10) NULL")
+    int addColumn(@Param("tableName") String tableName);
 
 
     //all_winrate_version(버전은 lolsetting에서 관리) 모든 행 가져옴
@@ -88,6 +101,7 @@ public interface AllWinrateMapper {
             "\twriter VARCHAR(30) NOT NULL,\n" +
             "\tcontent TEXT NOT NULL,\n" +
             "\tregDate TIMESTAMP NOT NULL DEFAULT NOW(),\n" +
+            "\tnowVersion VARCHAR(10) NULL,\n" +
             "\tPRIMARY KEY(rno)\n" +
             "\t)")
     int createAwrTbl(@Param("adc") String adc, @Param("sup") String sup);
@@ -110,6 +124,7 @@ public interface AllWinrateMapper {
             "\twriter VARCHAR(30) NOT NULL,\n" +
             "\tcontent TEXT NOT NULL,\n" +
             "\tregDate TIMESTAMP NOT NULL DEFAULT NOW(),\n" +
+            "\tnowVersion VARCHAR(10) NULL,\n" +
             "\tPRIMARY KEY(secRno,rno),\n" +
             "\tFOREIGN KEY(rno)\n" +
             "\tREFERENCES ${adc}_${sup} (rno) ON DELETE CASCADE\n" +

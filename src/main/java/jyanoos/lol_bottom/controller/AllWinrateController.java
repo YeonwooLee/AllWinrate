@@ -2,6 +2,7 @@ package jyanoos.lol_bottom.controller;
 
 import jyanoos.lol_bottom.domain.AllWinrate;
 import jyanoos.lol_bottom.domain.CombiReplyBoard;
+import jyanoos.lol_bottom.lolSetting.LolSetting;
 import jyanoos.lol_bottom.service.AllWinrateService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +21,7 @@ public class AllWinrateController {
     private final AllWinrateService allWinrateService;
 
 
-    //awr 기본페이지 구성
+    //awr 기본페이지 구성!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!minPansoo세팅
     @RequestMapping("/awrmain")
     public String awrMain(Model model, HttpServletRequest request) throws IOException {
         List<AllWinrate> allWinrateList = allWinrateService.mkAllWinrateList(200,7);
@@ -52,9 +53,10 @@ public class AllWinrateController {
             @RequestParam("writer") String writer,
             @RequestParam("content") String content,
             RedirectAttributes redirectAttribute){
+        String nowVersion=LolSetting.versionDot;
         redirectAttribute.addAttribute("adc",adc);
         redirectAttribute.addAttribute("sup",sup);
-        allWinrateService.writeReply(adc,sup,writer,content);
+        allWinrateService.writeReply(adc,sup,writer,content, nowVersion);
         return "redirect:/awrboard/{adc}/{sup}";
     }
 
@@ -89,6 +91,7 @@ public class AllWinrateController {
         return "redirect:/awrboard/{adcEng}/{supEng}/{lastReplyIndex}";
     }
 
+    //댓글삭제
     @GetMapping("/awrboard/{adcEng}/{supEng}/{rno}/delete/{lastReplyIndex}")
     public String deleteReply(@PathVariable("adcEng") String adcEng,
                               @PathVariable("supEng") String supEng,
@@ -102,6 +105,7 @@ public class AllWinrateController {
         return "redirect:/awrboard/{adcEng}/{supEng}/{lastReplyIndex}";
     }
 
+    //대댓작성성
     @PostMapping("awr_secReply/write")
     public String writeSecReply(
             @RequestParam("writer") String writer,
@@ -112,7 +116,8 @@ public class AllWinrateController {
             @RequestParam("lastReplyIndex") int lastReplyIndex,
             RedirectAttributes redirectAttributes
     ){
-        allWinrateService.writeSecReply(adcE,supE,rno,writer,content);
+        String nowVersion = LolSetting.versionDot;
+        allWinrateService.writeSecReply(adcE,supE,rno,writer,content,nowVersion);
         redirectAttributes.addAttribute("adcE",adcE);
         redirectAttributes.addAttribute("supE",supE);
         redirectAttributes.addAttribute("lastReplyIndex",lastReplyIndex);

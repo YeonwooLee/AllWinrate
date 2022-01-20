@@ -119,7 +119,7 @@
         <div th:each="reply:${combiReplyBoard.replyList}">
             <li th:if="${reply.indent}==0" class="indent0">
                 <hr>
-                <p th:text="|${reply.writer} /${#dates.format(reply.regDate,'yyyy-MM-dd HH:mm')} |"></p>
+                <p th:text="|${reply.writer} /${#dates.format(reply.regDate,'yyyy-MM-dd HH:mm')} ----- ${reply.nowVersion}|"></p>
                 <p th:text="${reply.content}"></p>
                 <a th:href="@{|/awrboard/${combiReplyBoard.allWinrate.engAdc}/${combiReplyBoard.allWinrate.engSup}/${reply.rno}/update/${combiReplyBoard.lastReplyIndex}|}" th:text="수정">cv</a>
                 <a th:href="@{|/awrboard/${combiReplyBoard.allWinrate.engAdc}/${combiReplyBoard.allWinrate.engSup}/${reply.rno}/delete/${combiReplyBoard.lastReplyIndex}|}" th:text="삭제">cv</a>
@@ -128,7 +128,7 @@
             </li>
 
             <li th:if="${reply.indent}==1" class="indent1">
-                <p th:text="|${reply.writer} /${#dates.format(reply.regDate,'yyyy-MM-dd HH:mm')} |"></p>
+                <p th:text="|${reply.writer} /${#dates.format(reply.regDate,'yyyy-MM-dd HH:mm')} ----- ${reply.nowVersion}|"></p>
                 <p th:text="${reply.content}"></p>
                 <a th:href="@{|/awrboard/${combiReplyBoard.allWinrate.engAdc}/${combiReplyBoard.allWinrate.engSup}/${reply.secRnoBeforeConvert}/${reply.rno}/updateForm/${combiReplyBoard.lastReplyIndex}|}" th:text="대댓수정">cv</a>
                 <a th:href="@{|/awrboard/${combiReplyBoard.allWinrate.engAdc}/${combiReplyBoard.allWinrate.engSup}/${reply.secRnoBeforeConvert}/${reply.rno}/delete/${combiReplyBoard.lastReplyIndex}|}" th:text="대댓삭제">cv</a>

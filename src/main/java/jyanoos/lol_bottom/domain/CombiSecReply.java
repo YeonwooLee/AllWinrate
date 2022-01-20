@@ -1,5 +1,6 @@
 package jyanoos.lol_bottom.domain;
 
+import jyanoos.lol_bottom.lolSetting.LolSetting;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,4 +14,5 @@ public class CombiSecReply {
     String writer;
     String content;
     Date regDate;
+    String nowVersion;
 }

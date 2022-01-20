@@ -33,10 +33,12 @@ public class AllWinrate implements Comparable<AllWinrate>{
         //this쪽이 승률이 높다면 -1 리턴
         if(this.win_rate>o.win_rate){
             return -1;
-        //승률 같으면 등장 수 많은게 위로
+            //승률 같으면 등장 수 많은게 위로
         }else if(this.win_rate==o.win_rate){
             if(this.whole>o.whole){
                 return -1;
+            }else if(this.whole==o.whole){
+                return 0;
             }else{
                 return 1;
             }

@@ -5,8 +5,8 @@ import java.io.IOException;
 import java.util.Map;
 
 public interface LolSetting {
-    static String version = "12_1";
-    static String versionDot="12.1";
+    static String version = "12_2"; //이거 세팅 바꿀 때 koToEngV_v.json도 같이 변경해주세요
+    static String versionDot="12.2";//이거 세팅 바꿀 때 koToEngV_v.json도 같이 변경해주세요
     static String tier="GOLD";
     //한글챔프명 -> 영어챔프명
     String convertKoToEng(String korChamp) throws IOException;

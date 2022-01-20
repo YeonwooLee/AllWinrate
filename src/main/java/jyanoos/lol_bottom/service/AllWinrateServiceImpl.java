@@ -69,15 +69,15 @@ public class AllWinrateServiceImpl implements AllWinrateService {
         if(exsistInt==0) {
             log.info("{}&{}테이블 없어서 생성중",adc,sup);
             allWinrateMapper.createAwrTbl(allWinrate.getEngAdc(),allWinrate.getEngSup()); //만들고
-            allWinrateMapper.writeAwlReply(allWinrate.getEngAdc(),allWinrate.getEngSup(),manager,mkBoardMessage); // 환영인사 남김
+            allWinrateMapper.writeAwlReply(allWinrate.getEngAdc(),allWinrate.getEngSup(),manager,mkBoardMessage,LolSetting.versionDot); // 환영인사 남김
         }
         //대댓글용 db도 있나 확인후 없으면 생성함
         int existSecTbl = allWinrateMapper.tblExist("lol_data",allWinrate.getEngAdc()+"_"+allWinrate.getEngSup()+"_secreply");
         if(existSecTbl==0){
             allWinrateMapper.createAwrSecTbl(allWinrate.getEngAdc(),allWinrate.getEngSup()); //대댓db도 생성
         }
-
-
+        //nowVersion column 없으면 만드는 부분
+        addColumnNameNowVersion(adc,sup);
 
 
         //해당 조합 게시판 댓글들
@@ -100,6 +100,7 @@ public class AllWinrateServiceImpl implements AllWinrateService {
                 combiReply.setRno(secReply.getRno());
                 combiReply.setWriter(secReply.getWriter());
                 combiReply.setSecRnoBeforeConvert(secReply.getSecRno());
+                combiReply.setNowVersion(secReply.getNowVersion());
 
                 replyAndSecReply.add(combiReply);//대댓글을 형변환하여 결과 리스트에 넣음<같은맥락1>
             }
@@ -116,9 +117,10 @@ public class AllWinrateServiceImpl implements AllWinrateService {
         return combiReplyBoard;
     }
 
+    //댓글작성
     @Override
-    public void writeReply(String adc, String sup, String writer, String content) {
-        int i = allWinrateMapper.writeAwlReply(adc,sup,writer,content);
+    public void writeReply(String adc, String sup, String writer, String content,String nowVersion) {
+        int i = allWinrateMapper.writeAwlReply(adc,sup,writer,content, nowVersion);
         log.info("AllWinrateServiceImpl.writeReply return>>>{}",i);
     }
 
@@ -138,8 +140,8 @@ public class AllWinrateServiceImpl implements AllWinrateService {
     }
 
     @Override
-    public int writeSecReply(String adc, String sup, int rno, String writer, String content) {
-        int i = allWinrateMapper.insertSecReply(adc, sup, rno, writer, content);
+    public int writeSecReply(String adc, String sup, int rno, String writer, String content,String nowVersion) {
+        int i = allWinrateMapper.insertSecReply(adc, sup, rno, writer, content,nowVersion);
         log.info("writeSecReply success={}",i);
         return i;
     }
@@ -156,5 +158,21 @@ public class AllWinrateServiceImpl implements AllWinrateService {
         return i;
     }
 
+    //원딜_서폿 테이블에 nowVersion column이 있나 확인하고 없으면 추가함
+    public void addColumnNameNowVersion(String adcEng, String supEng){
+        String tableName = adcEng+"_"+supEng;
+        String secTableName = adcEng+"_"+supEng+"_secreply";
 
+        int nowVersion = allWinrateMapper.checkColExist(tableName, "nowVersion");
+        if(nowVersion==0){
+            log.info("{}테이블에 nowVersion 없어서 추가함",tableName);
+            allWinrateMapper.addColumn(tableName);
+        }
+
+        int secNowVersion = allWinrateMapper.checkColExist(secTableName, "nowVersion");
+        if(secNowVersion==0){
+            log.info("{}테이블에 nowVersion 없어서 추가함",secTableName);
+            allWinrateMapper.addColumn(secTableName);
+        }
+    }
 }

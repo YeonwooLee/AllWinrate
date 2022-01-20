@@ -14,7 +14,7 @@ public interface AllWinrateService {
     CombiReplyBoard mkViewCombiBoard(String adc, String sup, int lastReplyIndex) throws IOException;
 
     //댓글 작성
-    void writeReply(String adc, String sup, String writer, String content);
+    void writeReply(String adc, String sup, String writer, String content,String nowVersion);
 
     //댓글 수정
     int updateReply(String adcEng, String supEng, String writer, String content, int rno);
@@ -23,7 +23,7 @@ public interface AllWinrateService {
     int deleteReply(String adcEng, String supEng, int rno);
 
     //대댓작성
-    int writeSecReply(String adc, String sup, int rno, String writer, String content);
+    int writeSecReply(String adc, String sup, int rno, String writer, String content,String nowVersion);
 
     //대댓글 수정
     int updateSecReply(String adcEng, String supEng, String writer, String content, int secRno, int rno);
