@@ -1,16 +1,23 @@
 package jyanoos.lol_bottom.controller;
 
+import jyanoos.lol_bottom.domain.member.KaKao.KakaoLoginResult;
+import jyanoos.lol_bottom.domain.member.KaKao.KakaoMember;
+import jyanoos.lol_bottom.domain.member.KaKao.KakaoToken;
 import jyanoos.lol_bottom.domain.member.Member;
 import jyanoos.lol_bottom.domain.member.MemberResult;
 import jyanoos.lol_bottom.domain.member.SessionConst;
 import jyanoos.lol_bottom.service.MemberService;
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+
 import org.springframework.web.bind.annotation.*;
+
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
 @Slf4j
 @Controller
 @RequestMapping("/member*")
@@ -76,12 +83,34 @@ public class MemberController {
     }
 
     @RequestMapping("/{userNickName}")
-    public String userInfo(@PathVariable("userNickName") String userNickName,Model model){
+    public String userInfo(@PathVariable("userNickName") String userNickName,Model model,HttpServletRequest request){
         Member member = memberService.findMemberByNickname(userNickName);
+        HttpSession session = request.getSession();
+        member=(Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
+
         model.addAttribute("member",member);
         return "/member/info";
 
     }
 
+    //카카오로 로그인 리디렉션션
+   @RequestMapping("/kakaologin")
+    public String loginTest(@RequestParam(value = "code",required = false) String code,HttpServletRequest request) {
+        if (code != null) {
+            log.info("카카오 인가 코드: {}", code);
+            KakaoToken kakaoToken = memberService.getKakaoAccessToken(code); //accessToken과 refreshToken 받아옴
+            KakaoLoginResult kakaoLoginResult = memberService.getKakaoUserInfo(kakaoToken.getAccess_token());//토큰으로 유저정보 받아옴
+            log.info("kakaoLoginResult={}",kakaoLoginResult);
 
+            HttpSession session = request.getSession();
+            if(kakaoLoginResult.isSuccess()){//로그인 성공
+                KakaoMember loginMember = kakaoLoginResult.getKakaoMember();
+
+                session.setAttribute(SessionConst.LOGIN_MEMBER,(Member)loginMember); //세션에 {"loginMember":Member loginMember} 저장
+                log.info("loginmember>>{}",loginMember);
+                return "redirect:/awrmain";
+            }
+        }
+        return "member/redirectURI";
+    }
 }

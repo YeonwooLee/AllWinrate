@@ -1,5 +1,6 @@
 package jyanoos.lol_bottom.mapper;
 
+import jyanoos.lol_bottom.domain.member.KaKao.KakaoMember;
 import jyanoos.lol_bottom.domain.member.Member;
 import org.apache.ibatis.annotations.*;
 
@@ -11,6 +12,13 @@ public interface MemberMapper {
     int insertMember(@Param("userEmail") String userEmail,
                      @Param("userPassword") String userPassword,
                      @Param("userNickname") String userNickname);
+    //소셜 카카오 회원 저장(이메일 없음)
+    @Insert("INSERT INTO member_social_kakao(userId,userNickname) VALUES(${userId},#{userNickname})")
+    int saveKaKaoNoEmail(@Param("userId") Long userId, @Param("userNickname") String userNickname);
+
+    //소셜 카카오 회원 저장(이메일 있음)
+    @Insert("INSERT INTO member_social_kakao(userId,userNickname,userEmail) VALUES(${userId},#{userNickname},#{userEmail})")
+    int saveKaKaoYesEmail(@Param("userId") Long userId, @Param("userNickname") String userNickname, @Param("userEmail") String userEmail);
 
 
     //-- 이메일로 유저 read
@@ -19,6 +27,12 @@ public interface MemberMapper {
     //-- 닉네임으로 유저 read
     @Select("SELECT * FROM member WHERE userNickname=#{userNickname}")
     Member findMemberByNickname(@Param("userNickname") String userNickname);
+    //-- 카카오userId로 회원조회
+    @Select("SELECT * FROM member_social_kakao WHERE userId=${userId}")
+    KakaoMember findKakaoByUserId(@Param("userId")Long userId);
+
+
+
 
     //이메일로 유저유무 확인
     @Select("SELECT count(*) FROM member WHERE userEmail=#{userEmail}")
@@ -27,6 +41,9 @@ public interface MemberMapper {
     @Select("SELECT count(*) FROM member WHERE userNickname=#{userNickname}")
     int existMemberByNickname(@Param("userNickname") String userNickname);
 
+    //userId로 카카오 회원 유무 확인
+    @Select("SELECT COUNT(*) FROM member_social_kakao WHERE userId=${userId}")
+    int existKakaoByUserId(@Param("userId")Long userId);
 
 
     //-- 닉네임으로 닉네임 update

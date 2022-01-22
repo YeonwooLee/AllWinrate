@@ -16,6 +16,7 @@ public class AllWinrateConfig implements WebMvcConfigurer {
         registry.addInterceptor(new LoginInterceptor())
                 .order(1)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/css/**", "/*.ico", "/error","/member/login","/member/join","/member/join-form");
+                .excludePathPatterns("/css/**", "/*.ico", "/error","/member/login","/member/join","/member/join-form",
+                        "/loginImg/**","/member/kakaologin");
     }
 }

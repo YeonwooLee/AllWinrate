@@ -15,5 +15,15 @@
     <input type="submit" value="로그인"> <input type="button" value="회원가입" th:onclick="'window.location.href = \'' + @{/member/join-form} + '\''">
 </form>
 </div>
+<br><br><br>
+<div align="center">
+    <a th:href="@{https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=a527f058ade4d6b7075f0a57318df2d4&redirect_uri=http://116.33.177.58:8080/member/kakaologin}">
+        <img th:src="@{/loginImg/kakao.png}">
+    </a>
+</div>
 </body>
+<!--소셜로그인-->
+<!--파라미터종류: https://developers.kakao.com/docs/latest/ko/kakaologin/rest-api-->
+<!--csrf관련 문제가 생기면 state 파라미터 추가를 고려해야할듯-->
+
 </html>
