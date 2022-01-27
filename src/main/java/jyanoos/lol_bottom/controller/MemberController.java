@@ -81,7 +81,8 @@ public class MemberController {
         session.invalidate();
         return "redirect:/";
     }
-
+    
+    //회원정보
     @RequestMapping("/{userNickName}")
     public String userInfo(@PathVariable("userNickName") String userNickName,Model model,HttpServletRequest request){
         Member member = memberService.findMemberByNickname(userNickName);
