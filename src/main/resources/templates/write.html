@@ -6,19 +6,20 @@
 </head>
 <body>
 <div th:replace="header::header"></div>
-
+<div align="center">
 <form th:action="@{/free_board/write}" method="post">
-    <label>제목</label>
-    <input type="text" name="title" /><br />
+    <label>제목
+    <input type="text" name="title" style="width:250px"/></label>
 
-    <label>작성자</label>
-    <input type="text" name="writer" th:value="${session.loginMember.userNickname}" readonly/><br />
+    <label>작성자
+    <input type="text" name="writer" th:value="${session.loginMember.userNickname}" readonly/></label><br />
 
-    <label>내용</label>
-    <textarea cols="50" rows="5" name="content"></textarea><br />
+    <label>내용</label><br>
+    <textarea cols="150" rows="25" name="content"></textarea><br />
 
     <button type="submit">작성</button>
 
 </form>
+</div>
 </body>
 </html>
