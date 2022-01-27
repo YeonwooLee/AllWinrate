@@ -1,0 +1,14 @@
+combireply
+combisecreply
+
+에
+String nowVer = LolSetting.versionDot;
+필드 생성(기본값 배정)
+
+웹비중
+학원 ㅡ 
+포폴 우ㅞㅂ
+
+길다
+
+소셜 로그인

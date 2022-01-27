@@ -9,7 +9,7 @@
         function addSecReplyWrite(num){
             $("div.secReplyWrite"+num).html(
                 "<form action='[[ @{/awr_secReply/write   } ]]' method='post'>" +
-                "<input type='text' placeholder='작성자' name='writer'><br>" +
+                "<input type='text' name='writer' value='[[${session.loginMember.userNickname}]]' readonly><br>" +
                 "<textarea cols='50' rows='5' placeholder='내용' name='content'></textarea>" +
                 "<input type='hidden' name='adcE' value='[[ ${combiReplyBoard.allWinrate.engAdc}]]'>" +
                 "<input type='hidden' name='supE' value='[[ ${combiReplyBoard.allWinrate.engSup}]]'>" +
@@ -108,7 +108,7 @@
                 <hr>
                 <form th:action="@{|/awrboard/${combiReplyBoard.allWinrate.engAdc}/${combiReplyBoard.allWinrate.engSup}/${rno}/update/${combiReplyBoard.lastReplyIndex}|}" method="post">
                     <label>작성자</label>
-                    <input type="text" name="writer" th:value="${reply.writer}"/><br />
+                    <input type="text" name="writer" th:value="${session.loginMember.userNickname}" readonly/><br />
                     <label>내용</label>
                     <textarea cols="50" rows="5" name="content" th:text="${reply.content}"></textarea><br />
                     <input type="hidden" name="adcEng" th:value="${combiReplyBoard.allWinrate.engAdc}">

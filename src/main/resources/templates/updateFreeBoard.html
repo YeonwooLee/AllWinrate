@@ -12,7 +12,7 @@
     <input type="text" name="title" th:value="${freeBoard.title}"/><br />
 
     <label>작성자</label>
-    <input type="text" name="writer" th:value="${freeBoard.writer}" /><br />
+    <input type="text" name="writer" th:value="${session.loginMember.userNickname}" readonly /><br />
 
     <label>내용</label>
     <textarea cols="50" rows="5" name="content" th:text="${freeBoard.content}"></textarea><br />
