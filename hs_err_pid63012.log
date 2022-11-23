@@ -1,0 +1,197 @@
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (mmap) failed to map 134217728 bytes for Failed to commit area from 0x0000000080800000 to 0x0000000088800000 of length 134217728.
+# Possible reasons:
+#   The system is out of physical RAM or swap space
+#   The process is running with CompressedOops enabled, and the Java Heap may be blocking the growth of the native heap
+# Possible solutions:
+#   Reduce memory load on the system
+#   Increase physical memory or swap space
+#   Check if swap backing store is full
+#   Decrease Java heap size (-Xmx/-Xms)
+#   Decrease number of Java threads
+#   Decrease Java thread stack sizes (-Xss)
+#   Set larger code cache with -XX:ReservedCodeCacheSize=
+# This output file may be truncated or incomplete.
+#
+#  Out of Memory Error (t:/workspace/open/src/hotspot/os/windows/os_windows.cpp:3269), pid=63012, tid=96248
+#
+# JRE version:  (11.0.2+9) (build )
+# Java VM: OpenJDK 64-Bit Server VM (11.0.2+9, mixed mode, aot, sharing, tiered, compressed oops, g1 gc, windows-amd64)
+# No core dump will be written. Minidumps are not enabled by default on client versions of Windows
+#
+
+---------------  S U M M A R Y ------------
+
+Command Line: -XX:TieredStopAtLevel=1 -Xverify:none -Dspring.output.ansi.enabled=always -javaagent:C:\Program Files\ideaIU-2021.3.win\lib\idea_rt.jar=53545:C:\Program Files\ideaIU-2021.3.win\bin -Dcom.sun.management.jmxremote -Dspring.jmx.enabled=true -Dspring.liveBeansView.mbeanDomain -Dspring.application.admin.enabled=true -Dfile.encoding=UTF-8 jyanoos.lol_bottom.LolBottomApplication
+
+Host: Intel(R) Core(TM) i5-3470 CPU @ 3.20GHz, 4 cores, 7G,  Windows 10 , 64 bit Build 19041 (10.0.19041.1645)
+Time: Sun May  8 09:10:30 2022 대한민국 표준시 elapsed time: 0 seconds (0d 0h 0m 0s)
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x000002981a8d4800):  JavaThread "Unknown thread" [_thread_in_vm, id=96248, stack(0x000000fbcbc00000,0x000000fbcbd00000)]
+
+Stack: [0x000000fbcbc00000,0x000000fbcbd00000]
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+V  [jvm.dll+0x63489a]
+V  [jvm.dll+0x771f9f]
+V  [jvm.dll+0x773648]
+V  [jvm.dll+0x773d03]
+V  [jvm.dll+0x25eba8]
+V  [jvm.dll+0x631d3a]
+V  [jvm.dll+0x626775]
+V  [jvm.dll+0x313ffc]
+V  [jvm.dll+0x313e82]
+V  [jvm.dll+0x3196e6]
+V  [jvm.dll+0x36579f]
+V  [jvm.dll+0x3651c0]
+V  [jvm.dll+0x2f0ff8]
+V  [jvm.dll+0x2f2156]
+V  [jvm.dll+0x74b4f7]
+V  [jvm.dll+0x74cc3f]
+V  [jvm.dll+0x372609]
+V  [jvm.dll+0x731b69]
+V  [jvm.dll+0x3e1bad]
+V  [jvm.dll+0x3e3e81]
+C  [java.exe+0x3607]
+C  [java.exe+0x1746c]
+C  [KERNEL32.DLL+0x17034]
+C  [ntdll.dll+0x52651]
+
+
+---------------  P R O C E S S  ---------------
+
+Threads class SMR info:
+_java_thread_list=0x00000298186baa90, length=0, elements={
+}
+
+Java Threads: ( => current thread )
+
+Other Threads:
+  0x000002981a8ed800 GCTaskThread "GC Thread#0" [stack: 0x000000fbcbd00000,0x000000fbcbe00000] [id=103596]
+  0x000002981a920800 ConcurrentGCThread "G1 Main Marker" [stack: 0x000000fbcbe00000,0x000000fbcbf00000] [id=103892]
+  0x000002981a922000 ConcurrentGCThread "G1 Conc#0" [stack: 0x000000fbcbf00000,0x000000fbcc000000] [id=105324]
+
+[error occurred during error reporting (printing all threads), id 0xc0000005, EXCEPTION_ACCESS_VIOLATION (0xc0000005) at pc=0x00007ff98820f5b7]
+
+VM state:not at safepoint (not fully initialized)
+
+VM Mutex/Monitor currently owned by a thread:  ([mutex/lock_event])
+[0x000002981a8d42a0] Heap_lock - owner thread: 0x000002981a8d4800
+
+Heap address: 0x0000000080800000, size: 2040 MB, Compressed Oops mode: Non-zero based: 0x0000000080800000
+Narrow klass base: 0x0000000000000000, Narrow klass shift: 0
+
+GC Heap History (0 events):
+No events
+
+Deoptimization events (0 events):
+No events
+
+Classes redefined (0 events):
+No events
+
+Internal exceptions (0 events):
+No events
+
+Events (0 events):
+No events
+
+
+Dynamic libraries:
+0x00007ff653a20000 - 0x00007ff653a65000 	C:\jdk11\bin\java.exe
+0x00007ff9dd410000 - 0x00007ff9dd605000 	C:\WINDOWS\SYSTEM32\ntdll.dll
+0x00007ff9dd310000 - 0x00007ff9dd3ce000 	C:\WINDOWS\System32\KERNEL32.DLL
+0x00007ff9db150000 - 0x00007ff9db418000 	C:\WINDOWS\System32\KERNELBASE.dll
+0x00007ff9dc3b0000 - 0x00007ff9dc550000 	C:\WINDOWS\System32\USER32.dll
+0x00007ff9dadf0000 - 0x00007ff9dae12000 	C:\WINDOWS\System32\win32u.dll
+0x00007ff9dd0e0000 - 0x00007ff9dd10a000 	C:\WINDOWS\System32\GDI32.dll
+0x00007ff9dae90000 - 0x00007ff9daf9b000 	C:\WINDOWS\System32\gdi32full.dll
+0x00007ff9dab60000 - 0x00007ff9dabfd000 	C:\WINDOWS\System32\msvcp_win.dll
+0x00007ff9dafa0000 - 0x00007ff9db0a0000 	C:\WINDOWS\System32\ucrtbase.dll
+0x00007ff9d2660000 - 0x00007ff9d28fa000 	C:\WINDOWS\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.19041.1110_none_60b5254171f9507e\COMCTL32.dll
+0x00007ff9dd270000 - 0x00007ff9dd30e000 	C:\WINDOWS\System32\msvcrt.dll
+0x00007ff9dbca0000 - 0x00007ff9dbcd0000 	C:\WINDOWS\System32\IMM32.DLL
+0x00007ff9beb50000 - 0x00007ff9beb66000 	C:\jdk11\bin\vcruntime140.dll
+0x00007ff9aba80000 - 0x00007ff9abb2a000 	C:\jdk11\bin\msvcp140.dll
+0x00007ff987f10000 - 0x00007ff988a33000 	C:\jdk11\bin\server\jvm.dll
+0x00007ff9db520000 - 0x00007ff9db5ce000 	C:\WINDOWS\System32\ADVAPI32.dll
+0x00007ff9dbfb0000 - 0x00007ff9dc04c000 	C:\WINDOWS\System32\sechost.dll
+0x00007ff9dcdd0000 - 0x00007ff9dcef5000 	C:\WINDOWS\System32\RPCRT4.dll
+0x00007ff9db820000 - 0x00007ff9db828000 	C:\WINDOWS\System32\PSAPI.DLL
+0x00007ff9c50b0000 - 0x00007ff9c50b9000 	C:\WINDOWS\SYSTEM32\WSOCK32.dll
+0x00007ff9db7b0000 - 0x00007ff9db81b000 	C:\WINDOWS\System32\WS2_32.dll
+0x00007ff9d2fc0000 - 0x00007ff9d2fe7000 	C:\WINDOWS\SYSTEM32\WINMM.dll
+0x00007ff9d4970000 - 0x00007ff9d497a000 	C:\WINDOWS\SYSTEM32\VERSION.dll
+0x00007ff9d8a70000 - 0x00007ff9d8a82000 	C:\WINDOWS\SYSTEM32\kernel.appcore.dll
+0x00007ff9beb30000 - 0x00007ff9beb41000 	C:\jdk11\bin\verify.dll
+0x00007ff9ceab0000 - 0x00007ff9cec94000 	C:\WINDOWS\SYSTEM32\DBGHELP.DLL
+0x00007ff9cd640000 - 0x00007ff9cd66c000 	C:\WINDOWS\SYSTEM32\dbgcore.DLL
+0x00007ff9dac00000 - 0x00007ff9dac82000 	C:\WINDOWS\System32\bcryptPrimitives.dll
+0x00007ff9b2d80000 - 0x00007ff9b2da8000 	C:\jdk11\bin\java.dll
+0x00007ff9a6fb0000 - 0x00007ff9a6fdf000 	C:\jdk11\bin\instrument.dll
+0x00007ff9b2d60000 - 0x00007ff9b2d76000 	C:\jdk11\bin\zip.dll
+0x00007ff9bec60000 - 0x00007ff9bec6a000 	C:\jdk11\bin\jimage.dll
+
+dbghelp: loaded successfully - version: 4.0.5 - missing functions: none
+symbol engine: initialized successfully - sym options: 0x614 - pdb path: .;C:\jdk11\bin;C:\WINDOWS\SYSTEM32;C:\WINDOWS\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.19041.1110_none_60b5254171f9507e;C:\jdk11\bin\server
+
+VM Arguments:
+jvm_args: -XX:TieredStopAtLevel=1 -Xverify:none -Dspring.output.ansi.enabled=always -javaagent:C:\Program Files\ideaIU-2021.3.win\lib\idea_rt.jar=53545:C:\Program Files\ideaIU-2021.3.win\bin -Dcom.sun.management.jmxremote -Dspring.jmx.enabled=true -Dspring.liveBeansView.mbeanDomain -Dspring.application.admin.enabled=true -Dfile.encoding=UTF-8 
+java_command: jyanoos.lol_bottom.LolBottomApplication
+java_class_path (initial): C:\Users\yeonw\inflearn\myproject\lol_bottom\out\production\classes;C:\Users\yeonw\inflearn\myproject\lol_bottom\out\production\resources;C:\Users\yeonw\.gradle\caches\modules-2\files-2.1\org.projectlombok\lombok\1.18.22\9c08ea24c6eb714e2d6170e8122c069a0ba9aacf\lombok-1.18.22.jar;C:\Users\yeonw\.gradle\caches\modules-2\files-2.1\org.springframework.boot\spring-boot-starter-thymeleaf\2.6.2\fa6c963c2537e5c1c0ed84dd9528062dba30e1a\spring-boot-starter-thymeleaf-2.6.2.jar;C:\Users\yeonw\.gradle\caches\modules-2\files-2.1\org.springframework.boot\spring-boot-starter-web\2.6.2\685b236afc0144a52383cd2c52731dd016f9badd\spring-boot-starter-web-2.6.2.jar;C:\Users\yeonw\.gradle\caches\modules-2\files-2.1\org.mariadb.jdbc\mariadb-java-client\2.1.2\2484a99a6a86491531d17d491c931de8942ae0\mariadb-java-client-2.1.2.jar;C:\Users\yeonw\.gradle\caches\modules-2\files-2.1\org.mybatis.spring.boot\mybatis-spring-boot-starter\2.1.2\724ae339bf7d1087612c7186133ed9701f103ddd\mybatis-spring-boot-starter-2.1.2.jar;C:\Users\yeonw\.gradle\caches\modules-2\files-2.1\org.springframework.boot\spring-boot-starter\2.6.2\c36f1f6886cdbedc5347fdea62b97b44b053b0ba\spring-boot-starter-2.6.2.jar;C:\Users\yeonw\.gradle\caches\modules-2\files-2.1\org.thymeleaf\thymeleaf-spring5\3.0.14.RELEASE\a0588f30a1e7dcadfc5c260ef6c6078ef377384\thymeleaf-spring5-3.0.14.RELEASE.jar;C:\Users\yeonw\.gradle\caches\modules-2\files-2.1\org.thymeleaf.extras\thymeleaf-extras-java8time\3.0.4.RELEASE\36e7175ddce36c486fff4578b5af7bb32f54f5df\thymeleaf-extras-java8time-3.0.4.RELEASE.jar;C:\Users\yeonw\.gradle\caches\modules-2\files-2.1\org.springframework.boot\spring-boot-starter-json\2.6.2\c0d457ff259c487521706fd2efac75d61595d527\spring-boot-starter-json-2.6.2.jar;C:\Users\yeonw\.gradle\caches\modules-2\files-2.1\org.springframework.boot\spring-boot-starter-tomcat\2.6.2\81bc9a57c0df9787e122c3b2a66e5a1ac0e139a5\spring-boot-starter-tomcat-2.6.2.jar;C:\Users\yeonw\.gradle\caches\modules-2\files-2.1\org.spri
+Launcher Type: SUN_STANDARD
+
+[Global flags]
+     bool BytecodeVerificationLocal                = false                                     {product} {command line}
+     bool BytecodeVerificationRemote               = false                                     {product} {command line}
+     intx CICompilerCount                          = 3                                         {product} {ergonomic}
+     uint ConcGCThreads                            = 1                                         {product} {ergonomic}
+     uint G1ConcRefinementThreads                  = 4                                         {product} {ergonomic}
+   size_t G1HeapRegionSize                         = 1048576                                   {product} {ergonomic}
+    uintx GCDrainStackTargetSize                   = 64                                        {product} {ergonomic}
+   size_t InitialHeapSize                          = 134217728                                 {product} {ergonomic}
+     bool ManagementServer                         = true                                      {product} {command line}
+   size_t MarkStackSize                            = 4194304                                   {product} {ergonomic}
+   size_t MaxHeapSize                              = 2139095040                                {product} {ergonomic}
+   size_t MinHeapDeltaBytes                        = 1048576                                   {product} {ergonomic}
+    uintx NonNMethodCodeHeapSize                   = 6973028                                {pd product} {ergonomic}
+    uintx NonProfiledCodeHeapSize                  = 244685212                              {pd product} {ergonomic}
+    uintx ProfiledCodeHeapSize                     = 0                                      {pd product} {ergonomic}
+    uintx ReservedCodeCacheSize                    = 251658240                              {pd product} {ergonomic}
+     bool SegmentedCodeCache                       = true                                      {product} {ergonomic}
+     intx TieredStopAtLevel                        = 1                                         {product} {command line}
+     bool UseCompressedClassPointers               = true                                 {lp64_product} {ergonomic}
+     bool UseCompressedOops                        = true                                 {lp64_product} {ergonomic}
+     bool UseG1GC                                  = true                                      {product} {ergonomic}
+     bool UseLargePagesIndividualAllocation        = false                                  {pd product} {ergonomic}
+
+Logging:
+Log output configuration:
+ #0: stdout all=warning uptime,level,tags
+ #1: stderr all=off uptime,level,tags
+
+Environment Variables:
+JAVA_HOME=C:\Program Files\Java\java-1.8.0-openjdk-1.8.0.322-1.b06.ojdkbuild.windows.x86_64
+PATH=C:\Program Files\Java\java-1.8.0-openjdk-1.8.0.322-1.b06.ojdkbuild.windows.x86_64\bin;C:\Program Files\Java\java-1.8.0-openjdk-1.8.0.322-1.b06.ojdkbuild.windows.x86_64;C:\ProgramData\Anaconda3;C:\ProgramData\Anaconda3\Library\mingw-w64\bin;C:\ProgramData\Anaconda3\Library\usr\bin;C:\ProgramData\Anaconda3\Library\bin;C:\ProgramData\Anaconda3\Scripts;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\app\yeonw\product\18.0.0\dbhomeXE\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Users\yeonw\libs\java_libs\apache-tomcat-9.0.53bin;C:\Program Files\Git\cmd;C:\Program Files (x86)\ePapyrus\Papyrus-PlugIn-web;C:\Program Files (x86)\ePapyrus\Papyrus-PlugIn-web\Addins;C:\Program Files\Microsoft VS Code\bin;C:\Users\yeonw\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Bandizip\;C:\Program Files\JetBrains\PyCharm 2021.3\bin;
+USERNAME=yeonw
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 58 Stepping 9, GenuineIntel
+
+
+
+---------------  S Y S T E M  ---------------
+
+OS: Windows 10 , 64 bit Build 19041 (10.0.19041.1645)
+
+CPU:total 4 (initial active 4) (4 cores per cpu, 1 threads per core) family 6 model 58 stepping 9, cmov, cx8, fxsr, mmx, sse, sse2, sse3, ssse3, sse4.1, sse4.2, popcnt, avx, aes, clmul, erms, tsc, tscinvbit, tscinv
+
+Memory: 4k page, system-wide physical 8157M (337M free)
+TotalPageFile size 22325M (AvailPageFile size 132M)
+current process WorkingSet (physical memory assigned to process): 10M, peak: 10M
+current process commit charge ("private bytes"): 49M, peak: 177M
+
+vm_info: OpenJDK 64-Bit Server VM (11.0.2+9) for windows-amd64 JRE (11.0.2+9), built on Jan 18 2019 05:23:22 by "mach5one" with MS VC++ 15.5 (VS2017)
+
+END.

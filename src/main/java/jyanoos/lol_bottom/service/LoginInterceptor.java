@@ -1,6 +1,7 @@
 package jyanoos.lol_bottom.service;
 
 import jyanoos.lol_bottom.domain.member.SessionConst;
+import jyanoos.lol_bottom.lolSetting.LolSetting;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -14,9 +15,10 @@ import java.util.UUID;
 @Slf4j
 public class LoginInterceptor implements HandlerInterceptor {
     public static final String LOG_ID = "logId";
-
+    String nowVersion = LolSetting.versionDot;
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+
 
         String requestURI = request.getRequestURI();
         log.info("로그인 인증 >>{}",requestURI);
@@ -27,6 +29,8 @@ public class LoginInterceptor implements HandlerInterceptor {
             log.info("미인증 사용자 요청");
             response.sendRedirect("/member/login?redirectURL="+requestURI);
             return false;
+        }else{
+            session.setAttribute("nowVersion",nowVersion);
         }
 
         //request.setAttribute(SessionConst.LOGIN_MEMBER,session.getAttribute(SessionConst.LOGIN_MEMBER));
